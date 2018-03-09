@@ -5,8 +5,8 @@ Shader "Custom/OutLine1"
     Properties
     {
         _MainTex("Main Tex", 2D) = ""{}
-        _Factor("Factor", Range(0,0.1)) = 0.01
-        _OutLineColor("Outline Color", Color) = (0,0,0,1)
+        _Factor("Factor", Range(0, 0.1)) = 0.01
+        _OutLineColor("Outline Color", Color) = (0, 0, 0, 1)
     }
  
     SubShader 

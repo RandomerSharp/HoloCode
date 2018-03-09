@@ -5,8 +5,20 @@ using UnityEngine;
 public class CubeRotate : MonoBehaviour
 {
     [SerializeField]
-    [Range(1f, 10f)]
+    [Range(0f, 10f)]
     private float rotateSpeed = 1f;
+
+    public float RotateSpeed
+    {
+        get
+        {
+            return rotateSpeed;
+        }
+        set
+        {
+            rotateSpeed = value;
+        }
+    }
 
     void Update()
     {
