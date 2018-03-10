@@ -30,8 +30,9 @@ public class EnableInput : MonoBehaviour, IFocusable
         Debug.Log(gameObject.name + ": On focus enter");
         EventSystem.current.SetSelectedGameObject(inputField.gameObject);
         inputField.MoveTextEnd(false);
+
         background.color = highLightColor;
-        StartCoroutine(CodeInput());
+        //StartCoroutine(CodeInput());
     }
 
     public void OnFocusExit()
@@ -39,7 +40,7 @@ public class EnableInput : MonoBehaviour, IFocusable
         Debug.Log(gameObject.name + ": On focus exit");
         EventSystem.current.SetSelectedGameObject(null);
         background.color = normalColor;
-        StopAllCoroutines();
+        //StopAllCoroutines();
     }
 
     private void Update()
@@ -49,7 +50,7 @@ public class EnableInput : MonoBehaviour, IFocusable
         }
     }
 
-    private IEnumerator CodeInput()
+    /*private IEnumerator CodeInput()
     {
         while (true)
         {
@@ -59,5 +60,5 @@ public class EnableInput : MonoBehaviour, IFocusable
             }
             yield return null;
         }
-    }
+    }*/
 }

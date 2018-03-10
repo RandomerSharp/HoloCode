@@ -8,15 +8,11 @@ using UnityEngine.SceneManagement;
 public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
 {
     [SerializeField]
-    private UnityEvent onClick;
-    [SerializeField]
-    private UnityEvent onFocusEnter;
-    [SerializeField]
-    private UnityEvent onFocusExit;
+    protected UnityEvent onClick;
 
     private bool isFocused;
 
-    public void OnFocusEnter()
+    public virtual void OnFocusEnter()
     {
         foreach (var child in GetComponentsInChildren<Transform>())
         {
@@ -24,20 +20,20 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
             //Debug.Log(child.name);
         }
         isFocused = true;
-        if (onFocusEnter != null) onFocusEnter.Invoke();
+        //if (onFocusEnter != null) onFocusEnter.Invoke();
     }
 
-    public void OnFocusExit()
+    public virtual void OnFocusExit()
     {
         isFocused = false;
         foreach (var child in GetComponentsInChildren<Transform>())
         {
             child.gameObject.layer = LayerMask.NameToLayer("Default");
         }
-        if (onFocusExit != null) onFocusExit.Invoke();
+        //if (onFocusExit != null) onFocusExit.Invoke();
     }
 
-    public void OnInputClicked(InputClickedEventData eventData)
+    public virtual void OnInputClicked(InputClickedEventData eventData)
     {
         onClick.Invoke();
     }

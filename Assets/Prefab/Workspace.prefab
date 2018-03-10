@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 114138561605907014}
   - component: {fileID: 114454658282682996}
   m_Layer: 0
-  m_Name: Folder
+  m_Name: Workspace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -254,7 +254,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114454658282682996}
-        m_MethodName: OpenFolder
+        m_MethodName: OpenWorkspace
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

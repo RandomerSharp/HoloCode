@@ -3,54 +3,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
-public class FolderItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
+public class FolderItemSelect : ItemSelect
 {
-    [SerializeField]
-    private UnityEvent onClick;
-
-    private bool isFocused;
-
-    public void OnFocusEnter()
+    public override void OnFocusEnter()
     {
-        foreach (var child in GetComponentsInChildren<Transform>())
-        {
-            child.gameObject.layer = LayerMask.NameToLayer("Highlight");
-            //Debug.Log(child.name);
-        }
-        isFocused = true;
+        base.OnFocusEnter();
 
         GetComponentInChildren<CubeRotate>().RotateSpeed = 3f;
     }
 
-    public void OnFocusExit()
+    public override void OnFocusExit()
     {
-        isFocused = false;
-        foreach (var child in GetComponentsInChildren<Transform>())
-        {
-            child.gameObject.layer = LayerMask.NameToLayer("Default");
-        }
+        base.OnFocusExit();
 
         GetComponentInChildren<CubeRotate>().RotateSpeed = 0f;
     }
 
-    public void OnInputClicked(InputClickedEventData eventData)
+    public override void OnInputClicked(InputClickedEventData eventData)
     {
-        onClick.Invoke();
+        base.OnInputClicked(eventData);
     }
 
     public void OpenFolder()
     {
     }
 
-
-
-
-    private void Update()
+    public void OpenFile()
     {
-        if (isFocused && Input.GetKeyUp(KeyCode.Return))
-        {
-            onClick.Invoke();
-        }
+        GameObject.Find("Editor").GetComponent<EditorManager>().Create(Application.dataPath + "/Workspace/" + GameObject.Find("DictionaryTree").GetComponent<ScanDictionary>().WorkspacePath, GetComponentInChildren<TextMesh>().text);
+    }
+
+    public void OpenWorkspace()
+    {
+        string workspaceName = GetComponentInChildren<TextMesh>().text;
+        GameObject.Find("DataCache").GetComponent<DataCache>().Add("WorkspaceName", workspaceName);
+        SceneManager.LoadScene("Editor");
     }
 }

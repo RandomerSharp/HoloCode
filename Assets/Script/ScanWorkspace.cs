@@ -13,6 +13,13 @@ public class ScanWorkspace : MonoBehaviour
 
     private void Awake()
     {
+        var folders = Folder.GetDirectories(Application.dataPath);
+        foreach (var f in folders)
+        {
+            if (f == "Workspace") goto LLL;
+        }
+        Folder.CreateDirectory(Application.dataPath + "/Workspace");
+        LLL:
         workspacePath = Application.dataPath + "/Workspace";
         GengerateDictionaryTree(workspacePath);
     }
@@ -30,7 +37,7 @@ public class ScanWorkspace : MonoBehaviour
             o.transform.localPosition = Vector3.down * i;
             o.transform.localRotation = Quaternion.identity;
             o.transform.localScale = Vector3.one;
-            
+
             o.GetComponentInChildren<TextMesh>().text = l;
         }
     }
