@@ -30,7 +30,7 @@ public class EnableInput : MonoBehaviour, IFocusable
         Debug.Log(gameObject.name + ": On focus enter");
         EventSystem.current.SetSelectedGameObject(inputField.gameObject);
         inputField.MoveTextEnd(false);
-
+        inputField.Select();
         background.color = highLightColor;
         //StartCoroutine(CodeInput());
     }

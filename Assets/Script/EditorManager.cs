@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using HoloToolkit.Unity;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -44,6 +45,7 @@ public class EditorManager : MonoBehaviour
                 g.gameObject.SetActive(workspacePanelActive = !workspacePanelActive);
             }
         }
+        Debug.DrawLine(tabsList[0].transform.position - Vector3.left * 5, tabsList[0].transform.position + Vector3.left * 5);
     }
 
     public void Create(string path, string fileName)
@@ -58,7 +60,7 @@ public class EditorManager : MonoBehaviour
         var c = Instantiate(codeTab);
         c.name = fileName;
         c.transform.parent = transform;
-        c.transform.localPosition = Vector3.zero;
+        c.transform.localPosition = Vector3.down;
         c.transform.localRotation = Quaternion.identity;
         c.transform.localScale = Vector3.one;
         //c.transform.Find("Title").Find("Text1").GetComponent<TextMesh>().text = fileName;
@@ -68,10 +70,16 @@ public class EditorManager : MonoBehaviour
         using (StreamReader reader = new StreamReader(path + '\\' + fileName))
         {
             string code = reader.ReadToEnd();
-            c.transform.Find("UI/InputField").GetComponent<UnityEngine.UI.InputField>().text = code;
-            c.transform.Find("UI/InputField").GetComponent<UnityEngine.UI.InputField>().caretPosition = code.Length;
+            //c.transform.Find("UI/InputField").GetComponent<UnityEngine.UI.InputField>().text = code;
+            //c.transform.Find("UI/InputField").GetComponent<UnityEngine.UI.InputField>().caretPosition = code.Length;
+            //c.GetComponentInChildren<MyInputField>().SetText(code);
+            c.GetComponentInChildren<TMPro.TextMeshPro>().text = code;
         }
-
         tabsList.Add(c);
+        var dt = GameObject.Find("DictionaryTree");
+        dt.GetComponent<SphereBasedTagalong>().enabled = false;
+        dt.GetComponent<MySnapping>().MoveToLeftAndSnap();
+        //dt.transform.position = c.GetComponent<BoxCollider>().bounds.center - c.GetComponent<BoxCollider>().bounds.size / 2;
+        //tabsList.Sort(delegate (GameObject a, GameObject b) { return 0; });
     }
 }

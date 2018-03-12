@@ -21,6 +21,13 @@ public class ScanDictionary : MonoBehaviour
             return workspacePath;
         }
     }
+    public int ItemCount
+    {
+        get
+        {
+            return folderCount + fileCount;
+        }
+    }
 
     private void Awake()
     {
