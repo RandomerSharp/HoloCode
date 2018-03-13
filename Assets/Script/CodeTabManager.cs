@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class CodeTabManager : MonoBehaviour
 {
-    private string fileName;
-    private string path;
     //private RenderTexture rt;
+    private string path;
+    private string fileName;
+    private float width;
+    private float angle;
 
     public string FileName
     {
@@ -32,14 +34,46 @@ public class CodeTabManager : MonoBehaviour
             path = value;
         }
     }
+    public float Width
+    {
+        get
+        {
+            return width;
+        }
+    }
+    public float Angle
+    {
+        get
+        {
+            return angle;
+        }
+        set
+        {
+            angle = value;
+            UpdatePosition();
+        }
+    }
 
-
-    void Start()
+    void Awake()
     {
         transform.Find("Title/Text1").GetComponent<TextMesh>().text = fileName;
-        //rt = RenderTexture.GetTemporary(1440, 1440);
-        //GetComponentInChildren<Camera>().targetTexture = rt;
-        //transform.Find("Input").GetComponent<MeshRenderer>().material.mainTexture = rt;
+        var size = transform.localPosition + GetComponent<BoxCollider>().size;
+        width = size.x;
+        //Debug.Log(width);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawCube(transform.position, GetComponent<BoxCollider>().size);
+    }
+
+    private void UpdatePosition()
+    {
+        float r = transform.parent.GetComponent<EditorManager>().radius;
+        float x = r * Mathf.Cos(angle);
+        float z = r * Mathf.Sin(angle);
+        float y = 0f;
+        transform.localPosition = new Vector3(x, y, z);
     }
 
     private void OnDestroy()

@@ -465,8 +465,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 11, y: 12, z: 0.2}
-  m_Center: {x: -0.5, y: 0, z: 0}
+  m_Size: {x: 12, y: 12, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65286041388026434
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -670,7 +670,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8d5b128a1d8204fb76c86f47b75912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PivotAxis: 0
+  PivotAxis: 1
   TargetTransform: {fileID: 0}
 --- !u!114 &114415490547233380
 MonoBehaviour:

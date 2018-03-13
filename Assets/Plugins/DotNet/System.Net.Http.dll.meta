@@ -34,7 +34,7 @@ PluginImporter:
   - first:
       Any: 
     second:
-      enabled: 0
+      enabled: 1
       settings: {}
   - first:
       Editor: Editor
@@ -101,7 +101,7 @@ PluginImporter:
         DontProcess: False
         PlaceholderPath: 
         SDK: AnySDK
-        ScriptingBackend: AnyScriptingBackend
+        ScriptingBackend: DotNet
   userData: 
   assetBundleName: 
   assetBundleVariant: 

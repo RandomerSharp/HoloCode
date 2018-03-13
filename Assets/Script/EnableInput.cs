@@ -28,9 +28,10 @@ public class EnableInput : MonoBehaviour, IFocusable
     public void OnFocusEnter()
     {
         Debug.Log(gameObject.name + ": On focus enter");
-        EventSystem.current.SetSelectedGameObject(inputField.gameObject);
-        inputField.MoveTextEnd(false);
-        inputField.Select();
+        //EventSystem.current.SetSelectedGameObject(inputField.gameObject);
+        //inputField.MoveTextEnd(false);
+        //inputField.Select();
+        GetComponentInChildren<MyInputField>().enabled = true;
         background.color = highLightColor;
         //StartCoroutine(CodeInput());
     }
@@ -38,7 +39,8 @@ public class EnableInput : MonoBehaviour, IFocusable
     public void OnFocusExit()
     {
         Debug.Log(gameObject.name + ": On focus exit");
-        EventSystem.current.SetSelectedGameObject(null);
+        //EventSystem.current.SetSelectedGameObject(null);
+        GetComponentInChildren<MyInputField>().enabled = false;
         background.color = normalColor;
         //StopAllCoroutines();
     }

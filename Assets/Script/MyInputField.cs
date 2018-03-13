@@ -134,6 +134,7 @@ public class MyInputField : MonoBehaviour
     private TextMeshPro textMesh;
     private int posX, posY;
     private bool codeUpdate;
+    private List<string> codeLine;
 
     private float lineHeight = 4.22f;
 
@@ -142,6 +143,9 @@ public class MyInputField : MonoBehaviour
         textMesh = GetComponent<TextMeshPro>();
         posX = 1;
         posY = 0;
+        if (codeLine != null) codeLine.Clear();
+        else codeLine = new List<string>();
+        codeLine.Add(string.Empty);
     }
 
     private void OnEnable()
@@ -165,7 +169,7 @@ public class MyInputField : MonoBehaviour
         {
             if (Input.anyKey)
             {
-                UpdateCode();
+                textMesh.text += Input.inputString;
             }
             yield return null;
         }
@@ -173,6 +177,12 @@ public class MyInputField : MonoBehaviour
 
     private void UpdateCode()
     {
+        System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+        for (int i = 1; i < codeLine.Count; i++)
+        {
+            stringBuilder.AppendLine(codeLine[i]);
+        }
+        textMesh.text = stringBuilder.ToString();
     }
 
     public void SetText(string codeText)
@@ -185,5 +195,10 @@ public class MyInputField : MonoBehaviour
 
         posX = 1;
         posY = 0;
+
+        foreach (var s in codeText.Split(new string[] { Environment.NewLine }, StringSplitOptions.None))
+        {
+            codeLine.Add(s);
+        }
     }
 }
