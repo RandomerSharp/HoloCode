@@ -1,4 +1,6 @@
 ﻿using HoloToolkit.Unity;
+using HoloToolkit.Unity.Collections;
+using HoloToolkit.Unity.InputModule;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -93,7 +95,10 @@ public class EditorManager : MonoBehaviour
             }
         }
         GameObject.Find("DictionaryTree").GetComponent<SphereBasedTagalong>().enabled = false;
-        SelectAndInsert(c);
+
+        tabsList.AddLast(c);
+        GetComponent<ObjectCollection>().UpdateCollection();    
+        //SelectAndInsert(c);
     }
 
     private void SelectAndInsert(GameObject newTab)
@@ -104,41 +109,53 @@ public class EditorManager : MonoBehaviour
         Vector3 camera2D = Vector3.ProjectOnPlane(cameraForward, planeNormal);
         Debug.DrawRay(transform.position, camera2D);
         GameObject nearest = null;
+        if (GazeManager.Instance.HitObject != null)
+        {
 
-        foreach (var item in tabsList)
-        {
-            Vector3 ray = item.transform.position - center;
-            Vector3 ray2D = Vector3.ProjectOnPlane(ray, planeNormal);
-            float angle = Vector3.Angle(camera2D, ray2D);
-            if (angle < minAngle)
-            {
-                nearest = item;
-                minAngle = angle;
-            }
-        }
-        Vector3 ray1 = nearest.transform.position - center;
-        Vector3 ray2D1 = Vector3.ProjectOnPlane(ray1, planeNormal);
-        Debug.Log(newTab.GetComponent<CodeTabManager>().Width);
-        float transAngle = Mathf.Atan(newTab.GetComponent<CodeTabManager>().Width / (2f * radius));
-        if (Vector3.SignedAngle(camera2D, ray2D1, planeNormal) <= 0)
-        {
-            float f = -1f;
             foreach (var item in tabsList)
             {
-                item.transform.RotateAround(center, planeNormal, f * transAngle * Mathf.Rad2Deg);
-                if (item == nearest) f = 1f;
+                Vector3 ray = item.transform.position - center;
+                Vector3 ray2D = Vector3.ProjectOnPlane(ray, planeNormal);
+                float angle = Vector3.Angle(camera2D, ray2D);
+                if (angle < minAngle)
+                {
+                    nearest = item;
+                    minAngle = angle;
+                }
             }
+            Vector3 ray1 = nearest.transform.position - center;
+            Vector3 ray2D1 = Vector3.ProjectOnPlane(ray1, planeNormal);
+            Debug.Log(newTab.GetComponent<CodeTabManager>().Width);
+            float transAngle = Mathf.Atan(newTab.GetComponent<CodeTabManager>().Width / (2f * radius));
+            float deltaAngle = Vector3.Angle(ray2D1, camera2D);
+            Debug.Log(deltaAngle);
+            if (Vector3.SignedAngle(camera2D, ray2D1, planeNormal) <= 0)
+            {
+                float f = -1f;
+                foreach (var item in tabsList)
+                {
+                    item.transform.RotateAround(center, planeNormal, f * (transAngle + f * deltaAngle) * Mathf.Rad2Deg);
+                    if (item == nearest) f = 1f;
+                }
+            }
+            else
+            {
+                float f = -1f;
+                foreach (var item in tabsList)
+                {
+                    if (item == nearest) f = 1f;
+                    item.transform.RotateAround(center, planeNormal, f * (transAngle - f * deltaAngle) * Mathf.Rad2Deg);
+                }
+            }
+            tabsList.AddAfter(tabsList.Find(nearest), newTab);
         }
         else
         {
-            float f = -1f;
-            foreach (var item in tabsList)
-            {
-                if (item == nearest) f = 1f;
-                item.transform.RotateAround(center, planeNormal, f * transAngle * Mathf.Rad2Deg);
-            }
         }
-        tabsList.AddAfter(tabsList.Find(nearest), newTab);
+    }
+
+    private void AutoSort()
+    {
     }
 
     public void CloseTab(GameObject tab)

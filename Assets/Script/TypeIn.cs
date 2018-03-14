@@ -19,19 +19,21 @@ public class TypeIn : MonoBehaviour, IFocusable
     {
         background = GetComponent<MeshRenderer>();
         background.material.color = normalColor;
-        text = transform.GetChild(0).gameObject;
+        //transform.GetChild(0).gameObject;
+        text = transform.Find("TextMeshPro").gameObject;
+        Debug.Log("sadasdsa" + text.name);
     }
 
     public void OnFocusEnter()
     {
-        Debug.Log(gameObject.name + ": On focus enter");
+        //Debug.Log(gameObject.name + ": On focus enter");
         background.material.color = highLightColor;
         text.GetComponent<MyInputField>().enabled = true;
     }
 
     public void OnFocusExit()
     {
-        Debug.Log(gameObject.name + ": On focus exit");
+        //Debug.Log(gameObject.name + ": On focus exit");
         background.material.color = normalColor;
         text.GetComponent<MyInputField>().enabled = false;
     }

@@ -59,7 +59,7 @@ namespace HoloToolkit.Unity.Collections
         /// <summary>
         /// This is the radius of either the Cylinder or Sphere mapping and is ignored when using the plane mapping.
         /// </summary>
-        [Range(0.05f, 5.0f)]
+        [Range(0.05f, 50.0f)]
         [Tooltip("Radius for the sphere or cylinder")]
         public float Radius = 2f;
 

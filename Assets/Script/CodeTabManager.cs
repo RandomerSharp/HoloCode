@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -56,15 +57,16 @@ public class CodeTabManager : MonoBehaviour
 
     void Awake()
     {
-        transform.Find("Title/Text1").GetComponent<TextMesh>().text = fileName;
+        StartCoroutine(SetTitle());
         var size = transform.localPosition + GetComponent<BoxCollider>().size;
         width = size.x;
         //Debug.Log(width);
     }
 
-    private void OnDrawGizmos()
+    private IEnumerator SetTitle()
     {
-        Gizmos.DrawCube(transform.position, GetComponent<BoxCollider>().size);
+        yield return null;
+        transform.Find("Title/Text1").GetComponent<TextMesh>().text = fileName;
     }
 
     private void UpdatePosition()

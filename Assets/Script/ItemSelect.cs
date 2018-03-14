@@ -14,6 +14,7 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
 
     public virtual void OnFocusEnter()
     {
+        Debug.Log("Focus Enter!");
         foreach (var child in GetComponentsInChildren<Transform>())
         {
             child.gameObject.layer = LayerMask.NameToLayer("Highlight");
@@ -25,6 +26,7 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
 
     public virtual void OnFocusExit()
     {
+        Debug.Log("Focus Exit!");
         isFocused = false;
         foreach (var child in GetComponentsInChildren<Transform>())
         {
@@ -66,7 +68,7 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
 
     private void Update()
     {
-        if (isFocused && Input.GetKeyUp(KeyCode.Return))
+        if (isFocused && (Input.GetKeyUp(KeyCode.Return) || Input.GetMouseButtonDown(0)))
         {
             onClick.Invoke();
         }

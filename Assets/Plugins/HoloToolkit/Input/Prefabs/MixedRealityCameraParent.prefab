@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 81867938468442352}
   - component: {fileID: 114061490341948574}
   - component: {fileID: 114504390558679740}
+  - component: {fileID: 114209178296834870}
   m_Layer: 0
   m_Name: MixedRealityCamera
   m_TagString: MainCamera
@@ -514,19 +515,20 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 16
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294965759
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
   m_AllowMSAA: 0
+  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -668,9 +670,24 @@ MonoBehaviour:
   FloorQuad: {fileID: 1520281459093612, guid: 08d25ccfbbc595b4a820c7edd551d095, type: 2}
   boundaryHeight: 10
   opaqueTrackingSpaceType: 1
-  transparentTrackingSpaceType: 0
-  renderFloor: 1
-  renderBoundary: 1
+  renderFloor: 0
+  renderBoundary: 0
+--- !u!114 &114209178296834870
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1372541880982678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: defde9099dc481b4eb0e4b8f4a4b7aa5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shader: {fileID: 4800000, guid: 0ebce4d97d7e4b44fa0c4cfd65fb1b01, type: 3}
+  outlineShader: {fileID: 4800000, guid: 06d9877cab73f7549acca76468889c64, type: 3}
+  samplerScale: 3
+  downSample: 1
+  iteration: 1
 --- !u!114 &114225625019075894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -828,7 +845,7 @@ MonoBehaviour:
   StrafeAmount: 0.5
   teleportMarker: {fileID: 1503526479864244, guid: 10d95b99055c6ad40b735cc8b3593745,
     type: 2}
-  useCustomMapping: 0
+  useCustomMapping: 1
 --- !u!114 &114828096048444974
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -67,12 +67,18 @@ public class OutlinePostProcess : PostEffectBase
     void OnEnable()
     {
         SetAdditionalCam();
-        additionalCamera.enabled = true;
+        if (additionalCamera != null)
+        {
+            additionalCamera.enabled = true;
+        }
     }
 
     void OnDisable()
     {
-        additionalCamera.enabled = false;
+        if (additionalCamera != null)
+        {
+            additionalCamera.enabled = false;
+        }
     }
 
     void OnDestroy()
@@ -88,7 +94,7 @@ public class OutlinePostProcess : PostEffectBase
     void OnPreRender()
     {
         //使用OutlinePrepass进行渲染，得到RT
-        if (additionalCamera.enabled)
+        if (additionalCamera != null && additionalCamera.enabled)
         {
             if (renderTexture != null && (renderTexture.width != Screen.width >> downSample || renderTexture.height != Screen.height >> downSample))
             {
