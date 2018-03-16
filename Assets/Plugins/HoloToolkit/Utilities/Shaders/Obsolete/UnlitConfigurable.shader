@@ -60,7 +60,7 @@ Shader "MixedRealityToolkit/Obsolete/Unlit Configurable"
             #pragma shader_feature _USEMAINTEX_ON
             #pragma multi_compile  __ _NEAR_PLANE_FADE_ON
 
-            #include "HoloToolkitCommon.cginc"
+            #include "./HoloToolkitCommon.cginc"
             #include "UnlitConfigurable.cginc"
 
             ENDCG

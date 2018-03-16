@@ -61,14 +61,14 @@ public class PointOfReferenceManager : Singleton<PointOfReferenceManager>
 #if UNITY_EDITOR
         m_LoadedAndPlaced = true;
 #else
-        WorldAnchorStore.GetAsync(StoreLoaded);
+        UnityEngine.XR.WSA.Persistence.WorldAnchorStore.GetAsync(StoreLoaded);
 #endif
-        
-		InputSources.Instance.hands.OnFingerPressed += OnFingerPressed;
+
+        InputSources.Instance.hands.OnFingerPressed += OnFingerPressed;
     }
-    
+
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
         lock (m_MessagesAsync)
         {
@@ -284,38 +284,38 @@ public class PointOfReferenceManager : Singleton<PointOfReferenceManager>
         switch (m_ManualAnchorAcquisitionState)
         {
             case ManualPointOfReferenceAcquisitionStage.Idle:
-            {
-                break;
-            }
+                {
+                    break;
+                }
 
             case ManualPointOfReferenceAcquisitionStage.FirstPoint:
-            {
-                if (StatusText.Instance)
                 {
-                    StatusText.Instance.SetTextUntimed("Click Second Point for Point-of-Reference");
+                    if (StatusText.Instance)
+                    {
+                        StatusText.Instance.SetTextUntimed("Click Second Point for Point-of-Reference");
+                    }
+                    m_ManualAnchorPos = HUX.Focus.FocusManager.Instance.GazeFocuser.Cursor.transform.position;
+                    m_ManualAnchorAcquisitionState = ManualPointOfReferenceAcquisitionStage.SecondPoint;
+                    break;
                 }
-                m_ManualAnchorPos = HUX.Focus.FocusManager.Instance.GazeFocuser.Cursor.transform.position;
-                m_ManualAnchorAcquisitionState = ManualPointOfReferenceAcquisitionStage.SecondPoint;
-                break;
-            }
 
             case ManualPointOfReferenceAcquisitionStage.SecondPoint:
-            {
-                if (StatusText.Instance)
                 {
-                    StatusText.Instance.SetText("Point of Reference Created!");
-                }
-                m_ManualAnchorForward = (HUX.Focus.FocusManager.Instance.GazeFocuser.Cursor.transform.position - m_ManualAnchorPos).normalized;
-                m_ManualAnchorAcquisitionState = ManualPointOfReferenceAcquisitionStage.Acquired;
+                    if (StatusText.Instance)
+                    {
+                        StatusText.Instance.SetText("Point of Reference Created!");
+                    }
+                    m_ManualAnchorForward = (HUX.Focus.FocusManager.Instance.GazeFocuser.Cursor.transform.position - m_ManualAnchorPos).normalized;
+                    m_ManualAnchorAcquisitionState = ManualPointOfReferenceAcquisitionStage.Acquired;
 
-                CreatePointOfReference(m_ManualAnchorPos, Quaternion.LookRotation(m_ManualAnchorForward));
-                break;
-            }
+                    CreatePointOfReference(m_ManualAnchorPos, Quaternion.LookRotation(m_ManualAnchorForward));
+                    break;
+                }
 
             case ManualPointOfReferenceAcquisitionStage.Acquired:
-            {
-                break;
-            }
+                {
+                    break;
+                }
         }
     }
 

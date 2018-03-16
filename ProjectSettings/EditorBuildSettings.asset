@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scene/NeverDestory.unity
+    guid: 30b8f27f4d633cc4db6f8a49497faa1f
+  - enabled: 1
     path: Assets/Scene/Start.unity
     guid: 571aa896879424343af54c5b81ef43f6
   - enabled: 1
@@ -14,6 +17,3 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scene/Editor.unity
     guid: 0d377109afe546a41b6aedfc8d6d9edd
-  - enabled: 1
-    path: Assets/Scene/NeverDestory.unity
-    guid: 30b8f27f4d633cc4db6f8a49497faa1f

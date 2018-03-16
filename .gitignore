@@ -29,6 +29,10 @@ ExportedObj/
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
 
+# Big assets
+/Assets/Model/
+*.tif
+
 # Builds
 *.apk
 *.unitypackage

@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-#if NETFX_CORE 
+using System;
+using System.Linq;
+#if UNITY_WSA && !UNITY_EDITOR 
 using Windows.Storage;
 #endif
 public class FileAndDictionary
 {
-#if NETFX_CORE
+#if UNITY_WSA && !UNITY_EDITOR 
     public async Task<string[]> ReadFolder()
     {
         StorageFolder document = await KnownFolders.DocumentsLibrary.GetFolderAsync("Workspace");

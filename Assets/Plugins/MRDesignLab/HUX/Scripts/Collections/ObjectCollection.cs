@@ -51,7 +51,7 @@ namespace HUX.Collections
             ColumnThenRow,          // Sort by column, then by row
             RowThenColumn,          // Sort by row, then by column
         }
-    
+
         /// <summary>
         /// Collection node is a data storage class for individual data about an object in the collection.
         /// </summary>
@@ -107,7 +107,7 @@ namespace HUX.Collections
         /// <summary>
         /// This is the radius of either the Cylinder or Sphere mapping and is ignored when using the plane mapping.
         /// </summary>
-        [Range(0.05f, 5.0f)]
+        [Range(0.05f, 50.0f)]
         [Tooltip("Radius for the sphere or cylinder")]
         public float Radius = 2f;
 
@@ -115,7 +115,7 @@ namespace HUX.Collections
         /// Number of rows per column, column number is automatically determined
         /// </summary>
         [Tooltip("Number of rows per column")]
-	    public int Rows = 3;
+        public int Rows = 3;
 
         /// <summary>
         /// Width of the cell per object in the collection.
@@ -244,10 +244,11 @@ namespace HUX.Collections
         /// <summary>
         /// Internal function for laying out all the children when UpdateCollection is called.
         /// </summary>
-        private void LayoutChildren() {
-		
-		    int cellCounter = 0;
-		    float startOffsetX, startOffsetY;
+        private void LayoutChildren()
+        {
+
+            int cellCounter = 0;
+            float startOffsetX, startOffsetY;
 
             Vector3[] nodeGrid = new Vector3[NodeList.Count];
             Vector3 newPos = Vector3.zero;
@@ -258,7 +259,7 @@ namespace HUX.Collections
             startOffsetY = ((float)Rows / 2.0f) * CellHeight;
 
             cellCounter = 0;
-            
+
             // First start with a grid then project onto surface
             switch (LayoutType)
             {
@@ -293,7 +294,8 @@ namespace HUX.Collections
 
             }
 
-            switch (SurfaceType) {
+            switch (SurfaceType)
+            {
                 case SurfaceTypeEnum.Plane:
                     for (int i = 0; i < NodeList.Count; i++)
                     {
@@ -391,20 +393,21 @@ namespace HUX.Collections
                     break;
 
                 case SurfaceTypeEnum.Scatter:
-					// TODO fix this rough first commit! Magic numbers galore!
+                    // TODO fix this rough first commit! Magic numbers galore!
                     // Get randomized planar mapping
                     // Calculate radius of each node while we're here
                     // Then use the packer function to shift them into place
                     for (int i = 0; i < NodeList.Count; i++)
                     {
-                        newPos = ScatterMapping (nodeGrid[i], Radius);
+                        newPos = ScatterMapping(nodeGrid[i], Radius);
                         Collider nodeCollider = NodeList[i].transform.GetComponentInChildren<Collider>();
                         if (nodeCollider != null)
                         {
                             // Make the radius the largest of the object's dimensions to avoid overlap
                             Bounds bounds = nodeCollider.bounds;
-                            NodeList[i].Radius = Mathf.Max (Mathf.Max(bounds.size.x, bounds.size.y), bounds.size.z) / 2;
-                        } else
+                            NodeList[i].Radius = Mathf.Max(Mathf.Max(bounds.size.x, bounds.size.y), bounds.size.z) / 2;
+                        }
+                        else
                         {
                             // Make the radius a default value
                             // TODO move this into a public field ?
@@ -437,7 +440,7 @@ namespace HUX.Collections
                     // TODO move center, iterations and padding into a public field
                     for (int i = 0; i < 100; i++)
                     {
-                        IterateScatterPacking (NodeList, Radius);
+                        IterateScatterPacking(NodeList, Radius);
                     }
                     break;
             }
@@ -489,10 +492,11 @@ namespace HUX.Collections
         {
             foreach (CollectionNode cn in NodeList)
             {
-        	    if (cn != null) {
-	                if (cn.transform == node)
-	                    return true;
-	            }
+                if (cn != null)
+                {
+                    if (cn.transform == node)
+                        return true;
+                }
             }
             return false;
         }
@@ -510,7 +514,7 @@ namespace HUX.Collections
             return source;
         }
 
-    
+
         /// <summary>
         /// Internal function to pack randomly spaced nodes so they don't overlap
         /// Usually requires about 25 iterations for decent packing
@@ -521,17 +525,18 @@ namespace HUX.Collections
             // Sort by closest to center (don't worry about z axis)
             // Use the position of the collection as the packing center
             // TODO make it possible to specify?
-            nodes.Sort(delegate (CollectionNode circle1, CollectionNode circle2) {
+            nodes.Sort(delegate (CollectionNode circle1, CollectionNode circle2)
+            {
                 float distance1 = (circle1.transform.localPosition).sqrMagnitude;
                 float distance2 = (circle2.transform.localPosition).sqrMagnitude;
                 return distance1.CompareTo(distance2);
             });
-            
+
             Vector3 difference = Vector3.zero;
             Vector2 difference2D = Vector2.zero;
 
-           // Move them closer together
-           float radiusPaddingSquared = Mathf.Pow(radiusPadding, 2f);
+            // Move them closer together
+            float radiusPaddingSquared = Mathf.Pow(radiusPadding, 2f);
             for (int i = 0; i < nodes.Count - 1; i++)
             {
                 for (int j = i + 1; j < nodes.Count; j++)
