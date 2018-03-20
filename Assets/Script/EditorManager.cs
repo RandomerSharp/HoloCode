@@ -91,13 +91,14 @@ public class EditorManager : MonoBehaviour
             using (StreamReader reader = new StreamReader(stream))
             {
                 string code = reader.ReadToEnd();
-                c.GetComponentInChildren<TMPro.TextMeshPro>().text = code;
+                //c.GetComponentInChildren<TMPro.TextMeshPro>().text = code;
+                c.GetComponentInChildren<MyInputField>().SetText(code);
             }
         }
         GameObject.Find("DictionaryTree").GetComponent<SphereBasedTagalong>().enabled = false;
 
         tabsList.AddLast(c);
-        GetComponent<ObjectCollection>().UpdateCollection();    
+        GetComponent<ObjectCollection>().UpdateCollection();
         //SelectAndInsert(c);
     }
 

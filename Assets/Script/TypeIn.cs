@@ -21,7 +21,8 @@ public class TypeIn : MonoBehaviour, IFocusable
         background.material.color = normalColor;
         //transform.GetChild(0).gameObject;
         text = transform.Find("TextMeshPro").gameObject;
-        Debug.Log("sadasdsa" + text.name);
+        text.GetComponent<MyInputField>().enabled = false;
+        //Debug.Log("sadasdsa" + text.name);
     }
 
     public void OnFocusEnter()

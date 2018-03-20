@@ -15,5 +15,26 @@ public class CompoundButtonClick : InteractionReceiver
     protected override void OnTapped(GameObject obj, InteractionManager.InteractionEventArgs eventArgs)
     {
         base.OnTapped(obj, eventArgs);
+        switch (obj.name)
+        {
+        case "SelectWorkspace":
+        {
+            Debug.Log("SelectWorkspace clicked");
+            break;
+        }
+        case "Setting":
+        {
+            Debug.Log("Setting clicked");
+            break;
+        }
+        case "Quit":
+        {
+            Debug.Log("Quit clicked");
+            Application.Quit();
+            break;
+        }
+        default:
+            break;
+        }
     }
 }
