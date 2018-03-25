@@ -5,10 +5,11 @@ using HoloToolkit.Unity.InputModule;
 using System;
 using UnityEngine.XR.WSA.Input;
 using MRDL.Design;
+using HoloToolkit.Unity;
 
 public class Drag0 : MonoBehaviour
 {
-    private bool holding = false; public InteractionSourceHandedness Handedness { get { return handedness; } }
+    /*private bool holding = false; public InteractionSourceHandedness Handedness { get { return handedness; } }
 
     [Header("AttachToController Elements")]
     [SerializeField]
@@ -118,6 +119,216 @@ public class Drag0 : MonoBehaviour
             if (obj.state.sourcePose.TryGetForward(out v) && obj.state.sourcePose.TryGetPosition(out p))
             {
             }
+        }
+    }*/
+
+    public event Action StartedDragging;
+    public event Action StoppedDragging;
+    public Transform HostTransform;
+
+    public float DistanceScale = 2f;
+
+    [Range(0.01f, 1.0f)]
+    public float PositionLerpSpeed = 0.2f;
+
+    [Range(0.01f, 1.0f)]
+    public float RotationLerpSpeed = 0.2f;
+
+    private bool isDragging;
+    private bool isGazed;
+    private Vector3 objRefForward;
+    private Vector3 objRefUp;
+    private float objRefDistance;
+    private Quaternion gazeAngularOffset;
+    private float handRefDistance;
+    private Vector3 objRefGrabPoint;
+
+    private Vector3 draggingPosition;
+    private Quaternion draggingRotation;
+
+    private IInputSource currentInputSource;
+    private uint currentInputSourceId;
+
+    private void Start()
+    {
+        if (HostTransform == null)
+        {
+            HostTransform = transform;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (isDragging)
+        {
+            StopDragging();
+        }
+
+        if (isGazed)
+        {
+            OnFocusExit();
+        }
+    }
+
+    private void Update()
+    {
+        if (isDragging)
+        {
+            UpdateDragging();
+        }
+    }
+
+    public void StartDragging(Vector3 initialDraggingPosition)
+    {
+        if (isDragging)
+        {
+            return;
+        }
+        InputManager.Instance.PushModalInputHandler(gameObject);
+
+        isDragging = true;
+
+        Transform cameraTransform = CameraCache.Main.transform;
+
+        Vector3 inputPosition = Vector3.zero;
+        InteractionSourceInfo sourceKind;
+        currentInputSource.TryGetSourceKind(currentInputSourceId, out sourceKind);
+        switch (sourceKind)
+        {
+        case InteractionSourceInfo.Hand:
+            currentInputSource.TryGetGripPosition(currentInputSourceId, out inputPosition);
+            break;
+        case InteractionSourceInfo.Controller:
+            currentInputSource.TryGetPointerPosition(currentInputSourceId, out inputPosition);
+            break;
+        }
+
+        Vector3 objForward = HostTransform.forward;
+        Vector3 objUp = HostTransform.up;
+        objRefGrabPoint = cameraTransform.transform.InverseTransformDirection(HostTransform.position - initialDraggingPosition);
+
+
+        objForward = cameraTransform.InverseTransformDirection(objForward);
+        objUp = cameraTransform.InverseTransformDirection(objUp);
+
+        objRefForward = objForward;
+        objRefUp = objUp;
+
+        draggingPosition = initialDraggingPosition;
+
+        StartedDragging.RaiseEvent();
+    }
+
+    private void UpdateDragging()
+    {
+        //Transform cameraTransform = CameraCache.Main.transform;
+
+        Vector3 inputPosition = Vector3.zero;
+        Quaternion inputRotation = Quaternion.identity;
+        InteractionSourceInfo sourceKind;
+        currentInputSource.TryGetSourceKind(currentInputSourceId, out sourceKind);
+        switch (sourceKind)
+        {
+        case InteractionSourceInfo.Hand:
+            currentInputSource.TryGetGripPosition(currentInputSourceId, out inputPosition);
+            break;
+        case InteractionSourceInfo.Controller:
+            currentInputSource.TryGetPointerPosition(currentInputSourceId, out inputPosition);
+            currentInputSource.TryGetPointerRotation(currentInputSourceId, out inputRotation);
+            break;
+        }
+
+        Vector3 newPosition = Vector3.Lerp(HostTransform.position, draggingPosition, PositionLerpSpeed);
+        HostTransform.position = newPosition;
+        Quaternion newRotation = Quaternion.Lerp(HostTransform.rotation, draggingRotation, RotationLerpSpeed);
+        HostTransform.rotation = newRotation;
+    }
+
+    public void StopDragging()
+    {
+        if (!isDragging)
+        {
+            return;
+        }
+
+        InputManager.Instance.PopModalInputHandler();
+
+        isDragging = false;
+        currentInputSource = null;
+        currentInputSourceId = 0;
+        StoppedDragging.RaiseEvent();
+    }
+
+    public void OnFocusEnter()
+    {
+        if (isGazed)
+        {
+            return;
+        }
+
+        isGazed = true;
+    }
+
+    public void OnFocusExit()
+    {
+        if (!isGazed)
+        {
+            return;
+        }
+
+        isGazed = false;
+    }
+
+    public void OnInputUp(InputEventData eventData)
+    {
+        if (currentInputSource != null &&
+            eventData.SourceId == currentInputSourceId)
+        {
+            eventData.Use();
+
+            StopDragging();
+        }
+    }
+
+    public void OnInputDown(InputEventData eventData)
+    {
+        if (isDragging)
+        {
+            return;
+        }
+        InteractionSourceInfo sourceKind;
+        eventData.InputSource.TryGetSourceKind(eventData.SourceId, out sourceKind);
+        if (sourceKind != InteractionSourceInfo.Hand)
+        {
+            if (!eventData.InputSource.SupportsInputInfo(eventData.SourceId, SupportedInputInfo.Position))
+            {
+                return;
+            }
+        }
+
+        eventData.Use();
+
+        currentInputSource = eventData.InputSource;
+        currentInputSourceId = eventData.SourceId;
+
+        FocusDetails? details = FocusManager.Instance.TryGetFocusDetails(eventData);
+
+        Vector3 initialDraggingPosition = (details == null)
+            ? HostTransform.position
+            : details.Value.Point;
+
+        StartDragging(initialDraggingPosition);
+    }
+
+    public void OnSourceDetected(SourceStateEventData eventData)
+    {
+    }
+
+    public void OnSourceLost(SourceStateEventData eventData)
+    {
+        if (currentInputSource != null && eventData.SourceId == currentInputSourceId)
+        {
+            StopDragging();
         }
     }
 }

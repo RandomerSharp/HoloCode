@@ -16,7 +16,7 @@ public class ConvolutionalLayer : BaseNode
         None
     }
     #region Param
-    public Activation readerType = Activation.ReLU;
+    public Activation activation = Activation.ReLU;
     public int inSize = 32;
     public bool pad = true;
     public Init init = Init.gaussian;

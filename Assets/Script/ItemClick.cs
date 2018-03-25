@@ -1,37 +1,17 @@
-﻿using System.Collections;
+﻿using HoloToolkit.Unity.InputModule;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
-using HoloToolkit.Unity.InputModule;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
+public class ItemClick : MonoBehaviour, IInputClickHandler
 {
     [SerializeField]
     protected UnityEvent onClick;
 
     private bool isFocused;
-
-    public virtual void OnFocusEnter()
-    {
-        foreach (var child in GetComponentsInChildren<Transform>())
-        {
-            child.gameObject.layer = LayerMask.NameToLayer("Highlight");
-            //Debug.Log(child.name);
-        }
-        isFocused = true;
-        //if (onFocusEnter != null) onFocusEnter.Invoke();
-    }
-
-    public virtual void OnFocusExit()
-    {
-        isFocused = false;
-        foreach (var child in GetComponentsInChildren<Transform>())
-        {
-            child.gameObject.layer = LayerMask.NameToLayer("Default");
-        }
-        //if (onFocusExit != null) onFocusExit.Invoke();
-    }
 
     public virtual void OnInputClicked(InputClickedEventData eventData)
     {
@@ -54,6 +34,8 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
 
     public void Quit()
     {
+        //var as1 = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        //while (!as1.isDone) ;
         Application.Quit();
     }
 
@@ -62,6 +44,11 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
         //var as1 = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
         //while (!as1.isDone) ;
         SceneManager.LoadScene(fromScene, LoadSceneMode.Single);
+    }
+
+    public void GenerateBS()
+    {
+        FindObjectsOfType<MenuWheelSelector>()[0].Generate();
     }
 
     private void Update()
