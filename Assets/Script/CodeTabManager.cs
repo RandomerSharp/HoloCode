@@ -42,7 +42,7 @@ public class CodeTabManager : MonoBehaviour
             return width;
         }
     }
-    public float Angle
+    /*public float Angle
     {
         get
         {
@@ -53,14 +53,11 @@ public class CodeTabManager : MonoBehaviour
             angle = value;
             UpdatePosition();
         }
-    }
+    }*/
 
     void Awake()
     {
         StartCoroutine(SetTitle());
-        var size = transform.localPosition + GetComponent<BoxCollider>().size;
-        width = size.x;
-        //Debug.Log(width);
     }
 
     private IEnumerator SetTitle()
@@ -69,17 +66,12 @@ public class CodeTabManager : MonoBehaviour
         transform.Find("Title/Text1").GetComponent<TextMesh>().text = fileName;
     }
 
-    private void UpdatePosition()
+    /*private void UpdatePosition()
     {
-        float r = transform.parent.GetComponent<EditorManager>().radius;
+        //float r = transform.parent.GetComponent<EditorManager>().radius;
         float x = r * Mathf.Cos(angle);
         float z = r * Mathf.Sin(angle);
         float y = 0f;
         transform.localPosition = new Vector3(x, y, z);
-    }
-
-    private void OnDestroy()
-    {
-        //RenderTexture.ReleaseTemporary(rt);
-    }
+    }*/
 }

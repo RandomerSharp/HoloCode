@@ -21,7 +21,7 @@
 
 				CGPROGRAM
 				#pragma target 5.0
-				#pragma only_renderers d3d11
+				#pragma only_renderers d3d12
 				#pragma surface surf BlinnPhong vertex:vert alpha
 
 				fixed3 _Color;

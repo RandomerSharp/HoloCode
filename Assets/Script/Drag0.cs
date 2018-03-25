@@ -40,11 +40,8 @@ public class Drag0 : MonoBehaviour
 
     protected MotionControllerInfo controllerRight;
 
-    private Line rightLine;
-
     private void Awake()
     {
-        rightLine = GameObject.Find("ControllerLine/Right").GetComponent<Line>();
     }
 
     protected void OnEnable()
@@ -120,8 +117,6 @@ public class Drag0 : MonoBehaviour
             Vector3 p = new Vector3();
             if (obj.state.sourcePose.TryGetForward(out v) && obj.state.sourcePose.TryGetPosition(out p))
             {
-                rightLine.Start = p;
-                rightLine.End = p + v.normalized * 10;
             }
         }
     }

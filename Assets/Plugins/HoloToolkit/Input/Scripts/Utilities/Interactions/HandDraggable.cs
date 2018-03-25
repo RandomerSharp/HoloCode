@@ -127,12 +127,12 @@ namespace HoloToolkit.Unity.InputModule
             currentInputSource.TryGetSourceKind(currentInputSourceId, out sourceKind);
             switch (sourceKind)
             {
-                case InteractionSourceInfo.Hand:
-                    currentInputSource.TryGetGripPosition(currentInputSourceId, out inputPosition);
-                    break;
-                case InteractionSourceInfo.Controller:
-                    currentInputSource.TryGetPointerPosition(currentInputSourceId, out inputPosition);
-                    break;
+            case InteractionSourceInfo.Hand:
+                currentInputSource.TryGetGripPosition(currentInputSourceId, out inputPosition);
+                break;
+            case InteractionSourceInfo.Controller:
+                currentInputSource.TryGetPointerPosition(currentInputSourceId, out inputPosition);
+                break;
             }
 #else
             currentInputSource.TryGetPointerPosition(currentInputSourceId, out inputPosition);
@@ -206,12 +206,12 @@ namespace HoloToolkit.Unity.InputModule
             currentInputSource.TryGetSourceKind(currentInputSourceId, out sourceKind);
             switch (sourceKind)
             {
-                case InteractionSourceInfo.Hand:
-                    currentInputSource.TryGetGripPosition(currentInputSourceId, out inputPosition);
-                    break;
-                case InteractionSourceInfo.Controller:
-                    currentInputSource.TryGetPointerPosition(currentInputSourceId, out inputPosition);
-                    break;
+            case InteractionSourceInfo.Hand:
+                currentInputSource.TryGetGripPosition(currentInputSourceId, out inputPosition);
+                break;
+            case InteractionSourceInfo.Controller:
+                currentInputSource.TryGetPointerPosition(currentInputSourceId, out inputPosition);
+                break;
             }
 #else
             currentInputSource.TryGetPointerPosition(currentInputSourceId, out inputPosition);

@@ -1,12 +1,13 @@
 ﻿using HoloToolkit.Unity.InputModule;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
 /// 控制输入状态和输入事件（例如快捷键）
 /// </summary>
-public class TypeIn : MonoBehaviour, IFocusable
+public class TypeIn : MonoBehaviour, IInputClickHandler //IFocusable
 {
     [SerializeField]
     private Color normalColor;
@@ -15,28 +16,62 @@ public class TypeIn : MonoBehaviour, IFocusable
     private MeshRenderer background;
     private GameObject text;
 
+    private bool isFocus;
+
+    public bool IsFocus
+    {
+        get
+        {
+            return isFocus;
+        }
+
+        set
+        {
+            isFocus = value;
+        }
+    }
+
+    public void OnInputClicked(InputClickedEventData eventData)
+    {
+        background.material.color = highLightColor;
+
+        var typeins = (from i in FindObjectsOfType(typeof(TypeIn))
+                       where i is TypeIn && ((TypeIn)i).IsFocus == true
+                       select ((TypeIn)i)).ToArray();
+        foreach (var item in typeins)
+        {
+            item.OnFocusExit();
+        }
+
+        text.GetComponent<MyInputField>().enabled = true;
+        isFocus = true;
+    }
+
     private void Awake()
     {
-        background = GetComponent<MeshRenderer>();
+        background = transform.parent.Find("Title").GetComponent<MeshRenderer>();
         background.material.color = normalColor;
         //transform.GetChild(0).gameObject;
         text = transform.Find("TextMeshPro").gameObject;
         text.GetComponent<MyInputField>().enabled = false;
         //Debug.Log("sadasdsa" + text.name);
+
+        OnInputClicked(null);
     }
 
-    public void OnFocusEnter()
+    /*public void OnFocusEnter()
     {
         //Debug.Log(gameObject.name + ": On focus enter");
         background.material.color = highLightColor;
         text.GetComponent<MyInputField>().enabled = true;
-    }
+    }*/
 
     public void OnFocusExit()
     {
         //Debug.Log(gameObject.name + ": On focus exit");
         background.material.color = normalColor;
         text.GetComponent<MyInputField>().enabled = false;
+        isFocus = false;
     }
 
     private void Update()

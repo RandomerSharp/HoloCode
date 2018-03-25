@@ -81,6 +81,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -96,6 +97,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -192,7 +194,7 @@ MonoBehaviour:
     Text: Text
     Icon: E700
   TitleText: {fileID: 102215584945625844}
-  parentCollection: {fileID: 114436451913679716}
+  parentCollection: {fileID: 0}
 --- !u!114 &114436451913679716
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -109,6 +109,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -124,6 +125,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -153,6 +155,10 @@ MonoBehaviour:
   Interactibles: []
   Targets: []
   bLockFocus: 0
+  TimeoutInterval: 10
+  Timeout: 0
+  HoverOffsetYScale: 0.25
+  HoverOffsetZ: 0
   SquareButtonPrefab: {fileID: 1820333246347296, guid: 7bcb89df8599d00448726407181348bd,
     type: 2}
   UseRemove: 1
@@ -172,8 +178,8 @@ MonoBehaviour:
     OnTappedEvent:
       m_PersistentCalls:
         m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
   - DefaultPosition: 0
     ManipulationPosition: 0
     Type: 0
@@ -184,8 +190,8 @@ MonoBehaviour:
     OnTappedEvent:
       m_PersistentCalls:
         m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
   - DefaultPosition: 0
     ManipulationPosition: 0
     Type: 0
@@ -196,8 +202,8 @@ MonoBehaviour:
     OnTappedEvent:
       m_PersistentCalls:
         m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
   - DefaultPosition: 0
     ManipulationPosition: 0
     Type: 0
@@ -208,8 +214,8 @@ MonoBehaviour:
     OnTappedEvent:
       m_PersistentCalls:
         m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
   - DefaultPosition: 0
     ManipulationPosition: 0
     Type: 0
@@ -220,8 +226,8 @@ MonoBehaviour:
     OnTappedEvent:
       m_PersistentCalls:
         m_Calls: []
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
   buttonParent: {fileID: 4691479528535670}
   baseRenderer: {fileID: 1374918788334882}
   backgroundBar: {fileID: 1093294406509342}

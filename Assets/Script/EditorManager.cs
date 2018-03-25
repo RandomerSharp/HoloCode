@@ -14,7 +14,7 @@ public class EditorManager : MonoBehaviour
     [SerializeField]
     private GameObject codeTab;
     private Vector3 center;
-    public float radius;
+    //public float radius;
 
     private LinkedList<GameObject> tabsList;
 
@@ -59,13 +59,13 @@ public class EditorManager : MonoBehaviour
         {
         }
     }
-
+    /*
     private void MoveAll()
     {
         var dt = GameObject.Find("DictionaryTree");
         dt.GetComponent<SphereBasedTagalong>().enabled = false;
         dt.GetComponent<MySnapping>().MoveToLeftAndSnap();
-    }
+    }*/
 
     public void Create(string path, string fileName)
     {
@@ -96,12 +96,13 @@ public class EditorManager : MonoBehaviour
             }
         }
         GameObject.Find("DictionaryTree").GetComponent<SphereBasedTagalong>().enabled = false;
+        transform.position = new Vector3(CameraCache.Main.transform.position.x, transform.position.y, CameraCache.Main.transform.position.z);
 
         tabsList.AddLast(c);
         GetComponent<ObjectCollection>().UpdateCollection();
         //SelectAndInsert(c);
     }
-
+    /*
     private void SelectAndInsert(GameObject newTab)
     {
         float minAngle = 180f;
@@ -185,9 +186,9 @@ public class EditorManager : MonoBehaviour
         Vector3 ray2D1 = ray1 - Vector3.Dot(ray1, planeNormal) * planeNormal;
         float transAngle = Mathf.Atan(tab.GetComponent<CodeTabManager>().Width / (2 * radius));
     }
-
-    public void ResetCenter(Vector3 newCenter)
+    */
+    /*public void ResetCenter(Vector3 newCenter)
     {
         center = newCenter;
-    }
+    }*/
 }
