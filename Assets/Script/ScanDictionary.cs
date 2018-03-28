@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Folder = System.IO.Directory;
+#if UNITY_WSA && NETFX_CORE 
+using Windows.Storage;
+#endif
 
 public class ScanDictionary : MonoBehaviour
 {
@@ -32,10 +35,14 @@ public class ScanDictionary : MonoBehaviour
     private void Awake()
     {
         //workspacePath = GameObject.Find("DataCache").GetComponent<DataCache>().Find("WorkspaceName");
+        var dataPath = Application.dataPath;
+#if UNITY_WSA && NETFX_CORE 
+        dataPath = KnownFolders.DocumentsLibrary.Path;
+#endif
         workspacePath = "Demo";
         folderList = new List<GameObject>();
         fileList = new List<GameObject>();
-        GengerateDictionaryTree(Application.dataPath + "/Workspace/" + workspacePath);
+        GengerateDictionaryTree(dataPath + "/Workspace/" + workspacePath);
     }
 
     private void GengerateDictionaryTree(string path)

@@ -1,0 +1,3 @@
+<#0707a0ff>var</color> a = 1;
+<#0707a0ff>var</color> b = 2;
+<#07a007ff>console</color>.log(a + b);

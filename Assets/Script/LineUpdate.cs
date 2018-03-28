@@ -51,11 +51,15 @@ public class LineUpdate : MonoBehaviour
         if (a == start && b == end)
         {
             Destroy(gameObject);
+            a.GetComponent<BaseNode>().RemoveNext(b.GetComponent<BaseNode>());
+            b.GetComponent<BaseNode>().RemoveLast(a.GetComponent<BaseNode>());
             return true;
         }
         if (a == end && b == start)
         {
             Destroy(gameObject);
+            b.GetComponent<BaseNode>().RemoveNext(a.GetComponent<BaseNode>());
+            a.GetComponent<BaseNode>().RemoveLast(b.GetComponent<BaseNode>());
             return true;
         }
         return false;

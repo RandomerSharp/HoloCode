@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_WSA && NETFX_CORE 
+using Windows.Storage;
+#endif
 
 using Folder = System.IO.Directory;
 
@@ -13,14 +16,18 @@ public class ScanWorkspace : MonoBehaviour
 
     private void Awake()
     {
-        var folders = Folder.GetDirectories(Application.dataPath);
+        var dataPath = Application.dataPath;
+#if UNITY_WSA && NETFX_CORE 
+        dataPath = KnownFolders.DocumentsLibrary.Path;
+#endif
+        var folders = Folder.GetDirectories(dataPath);
         foreach (var f in folders)
         {
             if (f == "Workspace") goto LLL;
         }
-        Folder.CreateDirectory(Application.dataPath + "/Workspace");
+        Folder.CreateDirectory(dataPath + "/Workspace");
         LLL:
-        workspacePath = Application.dataPath + "/Workspace";
+        workspacePath = dataPath + "/Workspace";
         GengerateDictionaryTree(workspacePath);
     }
 

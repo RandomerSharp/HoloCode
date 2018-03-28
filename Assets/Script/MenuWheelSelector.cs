@@ -106,7 +106,12 @@ public class MenuWheelSelector : AttachToController
 
         if ((from item in FindObjectsOfType<LineUpdate>()
              where item != null && item.TryDestory(node1.transform, node2.transform)
-             select item).Count() > 0) return;
+             select item).Count() > 0)
+        {
+            node1 = null;
+            node2 = null;
+            return;
+        }
 
         var obj = Instantiate(line);
         obj.GetComponent<LineUpdate>().Start = node1.transform;
@@ -127,18 +132,19 @@ public class MenuWheelSelector : AttachToController
 
     private IEnumerator Generate1()
     {
+        Debug.Log("Generate1");
         var nodes = (from node in FindObjectsOfType<BaseNode>()
                      where node.gameObject.layer == 0
                      select node).ToArray();
         yield return null;
         StringBuilder script = new StringBuilder();
-        script.AppendLine("command = TrainConvNet:Eval");
+        script.AppendLine("command = TrainConvNet");
         script.AppendLine("makeMode = false ; traceLevel = 0; deviceId = \"auto\"");
         script.AppendLine("rootDir = \".\"; dataDir = \"$rootDir$\"; modelDir = \"$rootDir$/Models\"");
         script.AppendLine("modelPath = \"$modelDir$/test.cmf\"");
         script.AppendLine("TrainConvNet = {");
-        script.AppendLine(" action = \"train\"");
-        script.AppendLine(" BrainScriptNetworkBuilder = {");
+        script.AppendLine("\taction = \"train\"");
+        script.AppendLine("\tBrainScriptNetworkBuilder = {");
 
 
         string inputFeature = string.Empty;
@@ -159,26 +165,27 @@ public class MenuWheelSelector : AttachToController
 
         foreach (var node in nodes)
         {
+            if (node.Last.Count == 0 && node.Next.Count == 0) continue;
             if (node.Last.Count == 0 && node is FeatureNode)
             {
                 switch (((FeatureNode)node).readerType)
                 {
                 case FeatureNode.ReaderType.ImageShap:
-                    inputFeature = "imageShap = 32:32:32";
+                    inputFeature = "imageShap" + Mathf.Abs(node.GetHashCode()).ToString() + " = 32:32:32";
                     break;
                 case FeatureNode.ReaderType.Text:
-                    inputFeature = "inputDim = 943";
+                    inputFeature = "inputDim" + Mathf.Abs(node.GetHashCode()).ToString() + " = 943";
                     break;
                 default:
-                    inputFeature = "imageShap = 32:32:32";
+                    inputFeature = "imageShap" + Mathf.Abs(node.GetHashCode()).ToString() + " = 32:32:32";
                     break;
                 }
-                model.AppendLine(inputFeature);
+                script.AppendLine(inputFeature);
             }
             else if (node.Last.Count == 0 && node is LabelNode)
             {
-                inputLabel = "labelDim = " + ((LabelNode)node).labelDim.ToString();
-                model.AppendLine(inputLabel);
+                inputLabel = "labelDim" + Mathf.Abs(node.GetHashCode()).ToString() + " = " + ((LabelNode)node).labelDim.ToString();
+                script.AppendLine(inputLabel);
             }
             else if (node is ConvolutionalLayer)
             {
@@ -194,7 +201,7 @@ public class MenuWheelSelector : AttachToController
                     }
                     else
                     {
-                        convLast += "p" + temp.Last[0].GetHashCode().ToString();
+                        convLast += "p" + Mathf.Abs(temp.Last[0].GetHashCode()).ToString();
                     }
                     for (int i = 1; i < temp.Last.Count; i++)
                     {
@@ -205,16 +212,16 @@ public class MenuWheelSelector : AttachToController
                         }
                         else if (temp.Last[i] is ConvolutionalLayer)
                         {
-                            convLast += ", p" + temp.Last[i].GetHashCode().ToString();
+                            convLast += ", p" + Mathf.Abs(temp.Last[i].GetHashCode()).ToString();
                         }
                     }
                 }
 
                 string poolingParam = string.Format("({0}:{0}), stride = ({1}:{1})", temp.poolingSize, temp.stride);
-                string poolingLast = string.Format("l{0}", node.GetHashCode());
+                string poolingLast = string.Format("l{0}", Mathf.Abs(node.GetHashCode()));
 
-                model.AppendLine(string.Format("l{0} = ConvolutionalLayer {{ {1} }}({2})", node.GetHashCode(), convParam, convLast));
-                model.AppendLine(string.Format("p{0} = MaxPoolingLayer {{ {1} }}({2})", node.GetHashCode(), poolingParam, poolingLast));
+                model.AppendLine(string.Format("l{0} = ConvolutionalLayer {{ {1} }}({2})", Mathf.Abs(node.GetHashCode()), convParam, convLast));
+                model.AppendLine(string.Format("p{0} = MaxPoolingLayer {{ {1} }}({2})", Mathf.Abs(node.GetHashCode()), poolingParam, poolingLast));
             }
             else if (node is DenseLayer)
             {
@@ -231,7 +238,7 @@ public class MenuWheelSelector : AttachToController
                     }
                     else
                     {
-                        last += "p" + temp.Last[0].GetHashCode().ToString();
+                        last += "p" + Mathf.Abs(temp.Last[0].GetHashCode()).ToString();
                     }
                     for (int i = 1; i < temp.Last.Count; i++)
                     {
@@ -242,12 +249,12 @@ public class MenuWheelSelector : AttachToController
                         }
                         else if (temp.Last[i] is ConvolutionalLayer)
                         {
-                            last += ", p" + temp.Last[i].GetHashCode().ToString();
+                            last += ", p" + Mathf.Abs(temp.Last[i].GetHashCode()).ToString();
                         }
                     }
                 }
 
-                model.AppendLine(string.Format("d{0} = DenseLayer {{ {1} }}({2})", node.GetHashCode(), param, last));
+                model.AppendLine(string.Format("d{0} = DenseLayer {{ {1} }}({2})", Mathf.Abs(node.GetHashCode()), param, last));
             }
             else if (node is LinearLayer)
             {
@@ -259,27 +266,27 @@ public class MenuWheelSelector : AttachToController
                 {
                     if (temp.Last[0] is DenseLayer)
                     {
-                        last += "d" + temp.Last[0].GetHashCode().ToString();
+                        last += "d" + Mathf.Abs(temp.Last[0].GetHashCode()).ToString();
                     }
                     else
                     {
-                        last += "p" + temp.Last[0].GetHashCode().ToString();
+                        last += "p" + Mathf.Abs(temp.Last[0].GetHashCode()).ToString();
                     }
                     for (int i = 1; i < temp.Last.Count; i++)
                     {
                         if (temp.Last[i] is DenseLayer)
                         {
-                            last += ", d" + temp.Last[i].GetHashCode().ToString();
+                            last += ", d" + Mathf.Abs(temp.Last[i].GetHashCode()).ToString();
                             continue;
                         }
                         else if (temp.Last[i] is ConvolutionalLayer)
                         {
-                            last += ", p" + temp.Last[i].GetHashCode().ToString();
+                            last += ", p" + Mathf.Abs(temp.Last[i].GetHashCode()).ToString();
                         }
                     }
                 }
 
-                model.AppendLine(string.Format("z = LinearLayer {{ {1} }}({2})", node.GetHashCode(), param, last));
+                model.AppendLine(string.Format("z = LinearLayer {{ {1} }}({2})", Mathf.Abs(node.GetHashCode()), param, last));
             }
             else if (node is EvaluationNode)
             {
@@ -291,21 +298,26 @@ public class MenuWheelSelector : AttachToController
             }
             yield return null;
         }
-        script.AppendLine(model.ToString() + ".z");
-        script.AppendFormat(" features = Input {{ {0} }}" + Environment.NewLine, inputFeature.Substring(0, inputFeature.IndexOf('=')));
-        script.AppendFormat(" labels = Input {{ {0} }}" + Environment.NewLine, inputLabel.Substring(0, inputLabel.IndexOf('=')));
-        script.AppendLine(" z = model (features)");
+        script.AppendLine(model.ToString() + "}.z");
+        script.AppendFormat("\tfeatures = Input {{ {0} }}" + Environment.NewLine, inputFeature.Substring(0, inputFeature.IndexOf('=')));
+        script.AppendFormat("\tlabels = Input {{ {0} }}" + Environment.NewLine, inputLabel.Substring(0, inputLabel.IndexOf('=')));
+        script.AppendLine("\tz = model (features)");
 
         script.AppendLine(ce);
         script.AppendLine(errs);
-        script.AppendLine(" featuresNodes = (features)");
-        script.AppendLine(" labelNodes = (labels)");
-        script.AppendLine(" criterionNodes = (ce)");
-        script.AppendLine(" evaluationNodes = (errs)");
-        script.AppendLine(" outputNodes = (z)");
+        script.AppendLine("\tfeaturesNodes = (features)");
+        script.AppendLine("\tlabelNodes = (labels)");
+        script.AppendLine("\tcriterionNodes = (ce)");
+        script.AppendLine("\tevaluationNodes = (errs)");
+        script.AppendLine("\toutputNodes = (z)");
         script.AppendLine("}");
+        script.Append("}");
         yield return null;
 
+        Debug.Log("Generate complate");
+        Debug.Log(script.ToString());
+
         codeScreen.GetComponentInChildren<TMPro.TextMeshPro>().text = script.ToString();
+        generating = false;
     }
 }

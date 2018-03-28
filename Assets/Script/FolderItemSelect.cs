@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+#if UNITY_WSA && NETFX_CORE 
+using Windows.Storage;
+#endif
 
 public class FolderItemSelect : ItemSelect
 {
@@ -32,7 +35,11 @@ public class FolderItemSelect : ItemSelect
 
     public void OpenFile()
     {
-        GameObject.Find("Editor").GetComponent<EditorManager>().Create(Application.dataPath + "/Workspace/" + GameObject.Find("DictionaryTree").GetComponent<ScanDictionary>().WorkspacePath, GetComponentInChildren<TextMesh>().text);
+        var dataPath = Application.dataPath;
+#if UNITY_WSA && NETFX_CORE 
+        dataPath = KnownFolders.DocumentsLibrary.Path;
+#endif
+        GameObject.Find("Editor").GetComponent<EditorManager>().Create(dataPath + "/Workspace/" + GameObject.Find("DictionaryTree").GetComponent<ScanDictionary>().WorkspacePath, GetComponentInChildren<TextMesh>().text);
     }
 
     public void OpenWorkspace()

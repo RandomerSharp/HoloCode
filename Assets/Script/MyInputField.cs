@@ -247,6 +247,9 @@ public class MyInputField : MonoBehaviour
             dis = dis.Replace("int", "<#0707a0ff>int</color>");
             dis = dis.Replace("using", "<#0707a0ff>using</color>");
             dis = dis.Replace("namespace", "<#0707a0ff>namespace</color>");
+            dis = dis.Replace("float", "<#0707a0ff>float</color>");
+            dis = dis.Replace("var", "<#0707a0ff>var</color>");
+            dis = dis.Replace("console", "<#07a007ff>console</color>");
             stringBuilder.AppendLine(dis);
         }
         textMesh.text = stringBuilder.ToString();

@@ -102,6 +102,24 @@ public class EditorManager : MonoBehaviour
         GetComponent<ObjectCollection>().UpdateCollection();
         //SelectAndInsert(c);
     }
+
+    public void Remove(GameObject obj)
+    {
+        tabsList.Remove(obj);
+        Destroy(obj);
+        GetComponent<ObjectCollection>().UpdateCollection();
+    }
+
+
+    private void OnDestroy()
+    {
+        foreach (var item in tabsList)
+        {
+            DestroyImmediate(item);
+        }
+        tabsList.Clear();
+        //DestroyImmediate(gameObject);
+    }
     /*
     private void SelectAndInsert(GameObject newTab)
     {

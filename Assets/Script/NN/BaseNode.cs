@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using HoloToolkit.Unity.InputModule;
 using HoloToolkit.Unity.Controllers;
+using HoloToolkit.Unity;
 
 public class BaseNode : MonoBehaviour, IInputClickHandler, IHoldHandler
 {
@@ -78,6 +79,20 @@ public class BaseNode : MonoBehaviour, IInputClickHandler, IHoldHandler
         last.Add(node);
     }
 
+    public void RemoveLast(BaseNode node)
+    {
+        if (last.Remove(node))
+            Debug.Log("Remove last " + node.gameObject.name);
+    }
+
+    public void RemoveNext(BaseNode node)
+    {
+        if (next.Remove(node))
+        {
+            Debug.Log("Remove next " + node.name);
+        }
+    }
+
     private void Awake()
     {
         next = new List<BaseNode>();
@@ -88,7 +103,8 @@ public class BaseNode : MonoBehaviour, IInputClickHandler, IHoldHandler
 
     public void CreateOne()
     {
-        var obj = GameObject.Instantiate(gameObject, GameObject.Find("DefaultCursor").transform.position, Quaternion.identity);
+        Vector3 forward = (GameObject.Find("DefaultCursor").transform.position - CameraCache.Main.transform.position).normalized;
+        var obj = GameObject.Instantiate(gameObject, CameraCache.Main.transform.position + forward * 20, Quaternion.identity);
         obj.layer = 0;
     }
 
@@ -102,7 +118,7 @@ public class BaseNode : MonoBehaviour, IInputClickHandler, IHoldHandler
 
     public void OnInputClicked(InputClickedEventData eventData)
     {
-        Debug.Log("Click " + gameObject.name);
+        //Debug.Log("Click " + gameObject.name);
         nodeManager.NodeSelect(gameObject.GetComponent<BaseNode>());
     }
 
