@@ -767,6 +767,10 @@ Prefab:
       propertyPath: InitialModule.startSpeed.minScalar
       value: 0.0010
       objectReference: {fileID: 0}
+    - target: {fileID: 19857228, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.0010
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
   m_IsPrefabParent: 0
@@ -1722,6 +1726,10 @@ Prefab:
       propertyPath: InitialModule.startSpeed.minScalar
       value: 0.0010
       objectReference: {fileID: 0}
+    - target: {fileID: 19857228, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.0010
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
   m_IsPrefabParent: 0
@@ -1965,6 +1973,10 @@ Prefab:
     - target: {fileID: 161158, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 19857228, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.0010
       objectReference: {fileID: 0}
     - target: {fileID: 19857228, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
       propertyPath: InitialModule.startSpeed.minScalar
@@ -3810,6 +3822,10 @@ Prefab:
       propertyPath: InitialModule.startSpeed.minScalar
       value: 0.0010
       objectReference: {fileID: 0}
+    - target: {fileID: 19857228, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.0010
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
   m_IsPrefabParent: 0
@@ -4044,6 +4060,14 @@ Prefab:
     - target: {fileID: 132246, guid: db1220ecbac392f44ad44105768fe420, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 19829004, guid: db1220ecbac392f44ad44105768fe420, type: 2}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 19829004, guid: db1220ecbac392f44ad44105768fe420, type: 2}
+      propertyPath: InitialModule.startLifetime.minScalar
+      value: 5.0000
       objectReference: {fileID: 0}
     - target: {fileID: 19829004, guid: db1220ecbac392f44ad44105768fe420, type: 2}
       propertyPath: InitialModule.startSize.minScalar
@@ -5047,6 +5071,10 @@ Prefab:
     - target: {fileID: 161158, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 19857228, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.0010
       objectReference: {fileID: 0}
     - target: {fileID: 19857228, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
       propertyPath: InitialModule.startSpeed.minScalar
@@ -7822,6 +7850,10 @@ Prefab:
       propertyPath: InitialModule.startSpeed.minScalar
       value: 0.0010
       objectReference: {fileID: 0}
+    - target: {fileID: 19857228, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.0010
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
   m_IsPrefabParent: 0
@@ -8123,6 +8155,10 @@ Prefab:
     - target: {fileID: 161158, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 19857228, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.0010
       objectReference: {fileID: 0}
     - target: {fileID: 19857228, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
       propertyPath: InitialModule.startSpeed.minScalar
@@ -8713,6 +8749,10 @@ Prefab:
     - target: {fileID: 161158, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 19857228, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.0010
       objectReference: {fileID: 0}
     - target: {fileID: 19857228, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
       propertyPath: InitialModule.startSpeed.minScalar
@@ -10529,6 +10569,10 @@ Prefab:
       propertyPath: InitialModule.startSpeed.minScalar
       value: 0.0010
       objectReference: {fileID: 0}
+    - target: {fileID: 19857228, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.0010
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
   m_IsPrefabParent: 0
@@ -11760,11 +11804,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 33173441377274376, guid: 9a623a42b75fa4d4faa5a125f4d26c71,
-        type: 2}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 114146981732012948, guid: 9a623a42b75fa4d4faa5a125f4d26c71,
         type: 2}
       propertyPath: m_havePropertiesChanged
@@ -11774,6 +11813,11 @@ Prefab:
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 33173441377274376, guid: 9a623a42b75fa4d4faa5a125f4d26c71,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1321896200705236, guid: 9a623a42b75fa4d4faa5a125f4d26c71, type: 2}
       propertyPath: m_IsActive
@@ -12070,6 +12114,10 @@ Prefab:
     - target: {fileID: 161158, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 19857228, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.0010
       objectReference: {fileID: 0}
     - target: {fileID: 19857228, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
       propertyPath: InitialModule.startSpeed.minScalar
@@ -13116,6 +13164,10 @@ Prefab:
     - target: {fileID: 161158, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 19857228, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 0.0010
       objectReference: {fileID: 0}
     - target: {fileID: 19857228, guid: de904d1e104cd2b4a895b5530b736421, type: 2}
       propertyPath: InitialModule.startSpeed.minScalar
