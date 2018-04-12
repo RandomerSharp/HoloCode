@@ -4,8 +4,17 @@ using UnityEngine;
 
 public class Keyboard : MonoBehaviour
 {
-    public void ReceiveKey(KeyCode key)
+    [SerializeField]
+    private GameObject inputTarget;
+
+    private void Awake()
     {
 
+    }
+
+    public void ReceiveKey(KeyCode key)
+    {
+        Debug.Log(key.ToString());
+        inputTarget.GetComponent<IVKeyInput>().VKeyInput(key);
     }
 }

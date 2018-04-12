@@ -17,29 +17,32 @@ public class KeyboardKey : MonoBehaviour, IInputClickHandler, IFocusable
 
     private void Awake()
     {
-        GetComponent<Renderer>().material.SetColor("Color", normalColor);
+        GetComponent<Renderer>().material.color = normalColor;
         enableClick = false;
     }
 
     public void OnFocusEnter()
     {
-        GetComponent<Renderer>().material.SetColor("Color", focusColor);
+        GetComponent<Renderer>().material.color = focusColor;
         enableClick = true;
     }
 
     public void OnFocusExit()
     {
-        GetComponent<Renderer>().material.SetColor("Color", normalColor);
+        GetComponent<Renderer>().material.color = normalColor;
         enableClick = false;
     }
 
     public void OnInputClicked(InputClickedEventData eventData)
     {
+        GetComponent<Renderer>().material.color = normalColor;
         enableClick = false;
         if (key == KeyCode.None)
         {
             return;
         }
         keyBoard.ReceiveKey(key);
+        GetComponent<Renderer>().material.color = focusColor;
+        enableClick = true;
     }
 }
