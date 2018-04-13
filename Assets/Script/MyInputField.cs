@@ -131,7 +131,7 @@ codeLine.Add(s);
 }
 }
 }*/
-public class MyInputField : MonoBehaviour
+public class MyInputField : MonoBehaviour, IVKeyInput
 {
     private TextMeshPro textMesh;
     private int posX, posY;
@@ -273,5 +273,69 @@ public class MyInputField : MonoBehaviour
         posY = codeLine.LastOrDefault().Length;
 
         UpdateCode();
+    }
+
+    public void VKeyInput(KeyCode key)
+    {
+        if (key == KeyCode.Return)
+        {
+            posX++;
+            posY = 0;
+            spaceCount = 0;
+            foreach (var item in codeLine[posX - 1])
+            {
+                if (item == '\t') spaceCount += 4;
+                else if (item == ' ') spaceCount += 1;
+                else break;
+            }
+            Debug.Log(spaceCount);
+            string l = string.Empty;
+            for (int i = 0; i < spaceCount; i += 4)
+            {
+                l += '\t';
+            }
+            for (int i = 0; i < spaceCount % 4; i++)
+            {
+                l += ' ';
+            }
+            codeLine.Add(l);
+            posY = l.Length;
+        }
+        else if (key == KeyCode.Backspace)
+        {
+            posY--;
+            if (posY < 0)
+            {
+                posX--;
+                if (posX > 0)
+                {
+                    codeLine.RemoveAt(posX + 1);
+                    posY = codeLine[posX].Length;
+                }
+                else posX++;
+            }
+            else
+            {
+                codeLine[posX] = codeLine[posX].Remove(posY);
+            }
+        }
+        else if ((key <= KeyCode.Z && key >= KeyCode.A) || (key <= KeyCode.Alpha9 && key >= KeyCode.Alpha0))
+        {
+            Debug.Log(key);
+
+            if (posY == 0)
+            {
+                codeLine[posX] = (char)key + codeLine[posX];
+            }
+            else if (posY == codeLine[posX].Length)
+            {
+                codeLine[posX] += (char)key;
+            }
+            else
+            {
+                codeLine[posX] = codeLine[posX].Insert(posY, ((char)key).ToString());
+            }
+            posY++;
+        }
     }
 }

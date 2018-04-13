@@ -171,20 +171,20 @@ public class MenuWheelSelector : AttachToController
                 switch (((FeatureNode)node).readerType)
                 {
                 case FeatureNode.ReaderType.ImageShap:
-                    inputFeature = "imageShap" + Mathf.Abs(node.GetHashCode()).ToString() + " = 32:32:32";
+                    inputFeature = string.Format("imageShap{0} = {1}", Mathf.Abs(node.GetHashCode()), " = 32:32:32");
                     break;
                 case FeatureNode.ReaderType.Text:
-                    inputFeature = "inputDim" + Mathf.Abs(node.GetHashCode()).ToString() + " = 943";
+                    inputFeature = string.Format("inputDim{0} = {1}", Mathf.Abs(node.GetHashCode()), " = 943");
                     break;
                 default:
-                    inputFeature = "imageShap" + Mathf.Abs(node.GetHashCode()).ToString() + " = 32:32:32";
+                    inputFeature = string.Format("imageShap{0} = {1}", Mathf.Abs(node.GetHashCode()), " = 32:32:32");
                     break;
                 }
                 script.AppendLine(inputFeature);
             }
             else if (node.Last.Count == 0 && node is LabelNode)
             {
-                inputLabel = "labelDim" + Mathf.Abs(node.GetHashCode()).ToString() + " = " + ((LabelNode)node).labelDim.ToString();
+                inputLabel = string.Format("labelDim{0} = {1}", Mathf.Abs(node.GetHashCode()), ((LabelNode)node).labelDim.ToString());
                 script.AppendLine(inputLabel);
             }
             else if (node is ConvolutionalLayer)
@@ -285,7 +285,6 @@ public class MenuWheelSelector : AttachToController
                         }
                     }
                 }
-
                 model.AppendLine(string.Format("z = LinearLayer {{ {1} }}({2})", Mathf.Abs(node.GetHashCode()), param, last));
             }
             else if (node is EvaluationNode)
@@ -299,8 +298,8 @@ public class MenuWheelSelector : AttachToController
             yield return null;
         }
         script.AppendLine(model.ToString() + "}.z");
-        script.AppendFormat("\tfeatures = Input {{ {0} }}" + Environment.NewLine, inputFeature.Substring(0, inputFeature.IndexOf('=')));
-        script.AppendFormat("\tlabels = Input {{ {0} }}" + Environment.NewLine, inputLabel.Substring(0, inputLabel.IndexOf('=')));
+        script.AppendFormat("\tfeatures = Input {{ {0} }}{1}", inputFeature.Substring(0, inputFeature.IndexOf('=')), Environment.NewLine);
+        script.AppendFormat("\tlabels = Input {{ {0} }}{1}", inputLabel.Substring(0, inputLabel.IndexOf('=')), Environment.NewLine);
         script.AppendLine("\tz = model (features)");
 
         script.AppendLine(ce);
@@ -315,7 +314,7 @@ public class MenuWheelSelector : AttachToController
         yield return null;
 
         Debug.Log("Generate complate");
-        Debug.Log(script.ToString());
+        //Debug.Log(script.ToString());
 
         codeScreen.GetComponentInChildren<TMPro.TextMeshPro>().text = script.ToString();
         generating = false;
