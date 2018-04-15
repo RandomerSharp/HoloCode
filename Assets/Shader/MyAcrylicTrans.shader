@@ -14,7 +14,7 @@
 
 		SubShader
 		{
-			Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
+			Tags { "RenderType" = "Transparent" "Queue" = "AlphaTest" }
 			Cull Back
 			ZTest Always
 			//Blend SrcAlpha OneMinusSrcAlpha

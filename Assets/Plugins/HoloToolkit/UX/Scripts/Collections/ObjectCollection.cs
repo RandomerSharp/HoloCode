@@ -117,6 +117,7 @@ namespace HoloToolkit.Unity.Collections
         /// Update collection is called from the editor button on the inspector.
         /// This function rebuilds / updates the layout.
         /// </summary>
+        [ContextMenu("Update Collection")]
         public void UpdateCollection()
         {
             // Check for empty nodes and remove them

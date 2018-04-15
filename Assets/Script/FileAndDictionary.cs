@@ -4,11 +4,39 @@ using System.Threading.Tasks;
 using UnityEngine;
 using System;
 using System.Linq;
+
 #if UNITY_WSA && NETFX_CORE 
 using Windows.Storage;
 #endif
-public class FileAndDictionary
+public class FileAndDictionary : HoloToolkit.Unity.Singleton<FileAndDictionary>
 {
+    private string rootPath;
+    private string workspacePath;
+
+    public string RootPath
+    {
+        get
+        {
+            return rootPath;
+        }
+    }
+    public string WorkspacePath
+    {
+        get
+        {
+#if UNITY_EDITOR
+            return "Demo";
+#else
+            return workspacePath;
+#endif
+        }
+
+        set
+        {
+            workspacePath = value;
+        }
+    }
+
 #if UNITY_WSA && NETFX_CORE
     public async Task<string[]> ReadFolder()
     {
@@ -23,4 +51,20 @@ public class FileAndDictionary
 
     }
 #endif
+
+    protected override void Awake()
+    {
+        base.Awake();
+#if UNITY_EDITOR
+        rootPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+#else
+        rootPath = KnownFolders.DocumentsLibrary.Path;
+#endif
+    }
+
+    public void CreateFolder(string folderName)
+    {
+        string absPath;
+        System.IO.Directory.CreateDirectory(folderName);
+    }
 }

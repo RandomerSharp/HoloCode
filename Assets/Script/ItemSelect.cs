@@ -64,6 +64,15 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
         SceneManager.LoadScene(fromScene, LoadSceneMode.Single);
     }
 
+    public void CreateFile()
+    {
+    }
+
+    public void CreateFolder()
+    {
+
+    }
+
     private void Update()
     {
         if (isFocused && (Input.GetKeyUp(KeyCode.Return) || Input.GetMouseButtonDown(0)))

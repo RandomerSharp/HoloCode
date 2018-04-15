@@ -35,7 +35,7 @@ public class ScanDictionary : MonoBehaviour
     private void Awake()
     {
         //workspacePath = GameObject.Find("DataCache").GetComponent<DataCache>().Find("WorkspaceName");
-        var dataPath = Application.dataPath;
+        var dataPath = FileAndDictionary.Instance.RootPath;
 #if UNITY_WSA && NETFX_CORE 
         dataPath = KnownFolders.DocumentsLibrary.Path;
 #endif
@@ -80,6 +80,8 @@ public class ScanDictionary : MonoBehaviour
 
             fileCount++;
             fileList.Add(o);
+
+            if ((folderCount + fileCount) % 10 == 0) transform.position = transform.position + Vector3.up * 2;
         }
     }
 
