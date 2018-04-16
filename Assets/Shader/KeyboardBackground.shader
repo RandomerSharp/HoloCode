@@ -7,6 +7,7 @@
 	{
 		Tags { "RenderType" = "Opaque" }
 		Cull Back
+		ZWrite On
 		LOD 100
 
 		Pass
