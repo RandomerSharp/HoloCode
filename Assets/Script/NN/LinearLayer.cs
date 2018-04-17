@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class LinearLayer : BaseNode
 {
-    public enum Activation
-    {
-        ReLU,
-        None
-    }
-    public enum Init
-    {
-        gaussian,
-        None
-    }
     #region Param
-    public int inSize = 10;
-    public Init init = Init.gaussian;
-    public float initValueScale = 12;
+    public int outDim = 64;
+    public RandomInitialization init = RandomInitialization.gaussian;
+    public float initValueScale = 1;
+    public bool bias = true;
     #endregion
+
+    protected override void Awake()
+    {
+        base.Awake();
+        shortName = string.Format("lin{0}", Mathf.Abs(GetHashCode()));
+    }
+
+    public override string GetParameters()
+    {
+        return string.Format("{0}, init = \"{1}\", initValueScale = {2}, bias = {3}",
+            outDim, init.ToString(), initValueScale, bias.ToString());
+    }
 }

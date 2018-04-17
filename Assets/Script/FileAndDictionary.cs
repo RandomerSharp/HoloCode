@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 using UnityEngine;
 using System;
 using System.Linq;
+using System.IO;
 
-#if UNITY_WSA && NETFX_CORE 
+#if UNITY_WSA && NETFX_CORE
 using Windows.Storage;
 #endif
 public class FileAndDictionary : HoloToolkit.Unity.Singleton<FileAndDictionary>
@@ -36,6 +37,13 @@ public class FileAndDictionary : HoloToolkit.Unity.Singleton<FileAndDictionary>
             workspacePath = value;
         }
     }
+    public string FolderPath
+    {
+        get
+        {
+            return Path.Combine(rootPath, "Workspace", workspacePath);
+        }
+    }
 
 #if UNITY_WSA && NETFX_CORE
     public async Task<string[]> ReadFolder()
@@ -57,14 +65,40 @@ public class FileAndDictionary : HoloToolkit.Unity.Singleton<FileAndDictionary>
         base.Awake();
 #if UNITY_EDITOR
         rootPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        //workspacePath = "Demo";
 #else
         rootPath = KnownFolders.DocumentsLibrary.Path;
 #endif
     }
 
-    public void CreateFolder(string folderName)
+    public void CreateFile(string fileName)
     {
-        string absPath;
-        System.IO.Directory.CreateDirectory(folderName);
+        File.Create(Path.Combine(rootPath, "Workspace", workspacePath, fileName));
+    }
+
+    public string OpenFile(string path, string name)
+    {
+        string code = string.Empty;
+        using (Stream stream = new FileStream(Path.Combine(path, name), FileMode.Open))
+        {
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                code = reader.ReadToEnd();
+            }
+        }
+        return code;
+    }
+
+    public string OpenFile(string name)
+    {
+        string code = string.Empty;
+        using (Stream stream = new FileStream(Path.Combine(FolderPath, name), FileMode.Open))
+        {
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                code = reader.ReadToEnd();
+            }
+        }
+        return code;
     }
 }

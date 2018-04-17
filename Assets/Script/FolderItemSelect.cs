@@ -35,11 +35,8 @@ public class FolderItemSelect : ItemSelect
 
     public void OpenFile()
     {
-        var dataPath = Application.dataPath;
-#if UNITY_WSA && NETFX_CORE 
-        dataPath = KnownFolders.DocumentsLibrary.Path;
-#endif
-        GameObject.Find("Editor").GetComponent<EditorManager>().Create(dataPath + "/Workspace/" + GameObject.Find("DictionaryTree").GetComponent<ScanDictionary>().WorkspacePath, GetComponentInChildren<TextMesh>().text);
+        //GameObject.Find("Editor").GetComponent<EditorManager>().Create(FileAndDictionary.Instance.FolderPath, name);
+        GameObject.Find("Editor").GetComponent<EditorManager>().Create(gameObject.name);
     }
 
     public void OpenWorkspace()

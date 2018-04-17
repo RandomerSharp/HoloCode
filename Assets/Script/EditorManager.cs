@@ -67,7 +67,8 @@ public class EditorManager : MonoBehaviour
         dt.GetComponent<MySnapping>().MoveToLeftAndSnap();
     }*/
 
-    public void Create(string path, string fileName)
+    //public void Create(string path, string fileName)
+    public void Create(string fileName)
     {
         var opened = (from i in tabsList
                       where i.GetComponent<CodeTabManager>() != null && i.GetComponent<CodeTabManager>().FileName == fileName
@@ -84,18 +85,18 @@ public class EditorManager : MonoBehaviour
         c.transform.localScale = Vector3.one;
         //c.transform.Find("Title").Find("Text1").GetComponent<TextMesh>().text = fileName;
         c.GetComponent<CodeTabManager>().FileName = fileName;
-        c.GetComponent<CodeTabManager>().Path = path;
+        c.GetComponent<CodeTabManager>().Path = FileAndDictionary.Instance.FolderPath;//path;
 
-        using (Stream stream = new FileStream(path + '\\' + fileName, FileMode.Open))
-        {
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                string code = reader.ReadToEnd();
-                //c.GetComponentInChildren<TMPro.TextMeshPro>().text = code;
-                c.GetComponentInChildren<MyInputField>().SetText(code);
-            }
-        }
-        GameObject.Find("DictionaryTree").GetComponent<SphereBasedTagalong>().enabled = false;
+        //using (Stream stream = new FileStream(path + '\\' + fileName, FileMode.Open))
+        //{
+        //using (StreamReader reader = new StreamReader(stream))
+        //{
+        string code = FileAndDictionary.Instance.OpenFile(fileName);//reader.ReadToEnd();
+        //c.GetComponentInChildren<TMPro.TextMeshPro>().text = code;
+        c.GetComponentInChildren<MyInputField>().SetText(code);
+        //}
+        //}
+        //GameObject.Find("DictionaryTree").GetComponent<SphereBasedTagalong>().enabled = false;
         transform.position = new Vector3(CameraCache.Main.transform.position.x, transform.position.y, CameraCache.Main.transform.position.z);
 
         tabsList.AddLast(c);

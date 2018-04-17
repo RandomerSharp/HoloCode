@@ -7,6 +7,19 @@ public class Keyboard : MonoBehaviour
     [SerializeField]
     private GameObject inputTarget;
 
+    public GameObject InputTarget
+    {
+        get
+        {
+            return inputTarget;
+        }
+
+        set
+        {
+            inputTarget = value;
+        }
+    }
+
     private void Awake()
     {
 
@@ -14,7 +27,7 @@ public class Keyboard : MonoBehaviour
 
     public void ReceiveKey(KeyCode key)
     {
-        Debug.Log(key.ToString());
+        //Debug.Log(key.ToString());
         inputTarget.GetComponent<IVKeyInput>().VKeyInput(key);
     }
 }

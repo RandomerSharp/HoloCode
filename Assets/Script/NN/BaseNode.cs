@@ -6,13 +6,35 @@ using HoloToolkit.Unity.InputModule;
 using HoloToolkit.Unity.Controllers;
 using HoloToolkit.Unity;
 
-public class BaseNode : MonoBehaviour, IInputClickHandler, IHoldHandler
+public abstract class BaseNode : MonoBehaviour, IInputClickHandler, IHoldHandler
 {
     public enum DisplayModeEnum
     {
         InMenu,
         InHand,
         Hidden
+    }
+
+    public enum RandomInitialization
+    {
+        heNormal,
+        heUniform,
+        glorotNormal,
+        glorotUniform,
+        xavier,
+        uniform,
+        gaussian,
+        zero
+    }
+
+    public enum ActivationFunction
+    {
+        Sigmoid,
+        Tanh,
+        ReLU,
+        Softmax,
+        LogSoftmax,
+        Hardmax
     }
 
     private DisplayModeEnum displayMode;
@@ -23,6 +45,8 @@ public class BaseNode : MonoBehaviour, IInputClickHandler, IHoldHandler
     private IInputSource inputSource;
 
     private MenuWheelSelector nodeManager;
+
+    protected string shortName;
 
     public DisplayModeEnum DisplayMode
     {
@@ -40,6 +64,14 @@ public class BaseNode : MonoBehaviour, IInputClickHandler, IHoldHandler
         get
         {
             return last;
+        }
+    }
+
+    public string ShortName
+    {
+        get
+        {
+            return shortName;
         }
     }
 
@@ -93,7 +125,7 @@ public class BaseNode : MonoBehaviour, IInputClickHandler, IHoldHandler
         }
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         next = new List<BaseNode>();
         last = new List<BaseNode>();
@@ -150,4 +182,6 @@ public class BaseNode : MonoBehaviour, IInputClickHandler, IHoldHandler
         inputSource = null;
         isDraging = false;
     }
+
+    public abstract string GetParameters();
 }

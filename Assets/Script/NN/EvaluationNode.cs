@@ -13,4 +13,9 @@ public class EvaluationNode : BaseNode
     #region Param
     public Algorithm readerType = Algorithm.ErrorPrediction;
     #endregion
+
+    public override string GetParameters()
+    {
+        return string.Empty;
+    }
 }

@@ -196,7 +196,7 @@ public class MyInputField : MonoBehaviour, IVKeyInput
                     codeLine.Add(l);
                     posY = l.Length;
                 }
-                else if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKey(KeyCode.Backspace))
+                else if (Input.GetKeyDown(KeyCode.Backspace))
                 {
                     posY--;
                     if (posY < 0)

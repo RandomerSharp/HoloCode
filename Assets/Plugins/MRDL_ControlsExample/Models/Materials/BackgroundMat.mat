@@ -7,12 +7,12 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: BackgroundMat
-  m_Shader: {fileID: 4800000, guid: cf6cd9248320d8f448e1f0f42dffeb8d, type: 3}
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -72,5 +72,5 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.50735295, g: 0.50735295, b: 0.50735295, a: 1}
+    - _Color: {r: 0.060126584, g: 0.060126584, b: 0.060126584, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

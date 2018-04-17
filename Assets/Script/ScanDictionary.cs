@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Folder = System.IO.Directory;
 #if UNITY_WSA && NETFX_CORE 
@@ -42,7 +43,8 @@ public class ScanDictionary : MonoBehaviour
         workspacePath = "Demo";
         folderList = new List<GameObject>();
         fileList = new List<GameObject>();
-        GengerateDictionaryTree(dataPath + "/Workspace/" + workspacePath);
+        FileAndDictionary.Instance.WorkspacePath = workspacePath;
+        GengerateDictionaryTree(System.IO.Path.Combine(dataPath, "Workspace", workspacePath));
     }
 
     private void GengerateDictionaryTree(string path)
@@ -60,6 +62,7 @@ public class ScanDictionary : MonoBehaviour
             o.transform.localRotation = Quaternion.identity;
             o.transform.localScale = Vector3.one;
             o.GetComponentInChildren<TextMesh>().text = l;
+            o.name = l;
 
             folderCount++;
             folderList.Add(o);
@@ -72,6 +75,7 @@ public class ScanDictionary : MonoBehaviour
             if (l.Substring(l.Length - 5) == ".meta") continue;
             //Debug.Log(i);
             var o = Instantiate(fileObj);
+            o.name = l;
             o.transform.parent = transform;
             o.transform.localPosition = Vector3.down * (folderCount + fileCount);
             o.transform.localRotation = Quaternion.identity;
@@ -81,7 +85,39 @@ public class ScanDictionary : MonoBehaviour
             fileCount++;
             fileList.Add(o);
 
-            if ((folderCount + fileCount) % 10 == 0) transform.position = transform.position + Vector3.up * 2;
+            if ((folderCount + fileCount) % 5 == 0) transform.position = transform.position + Vector3.up * 2;
+        }
+    }
+
+    public void UpdateDictionaryTree()
+    {
+        var dataPath = FileAndDictionary.Instance.RootPath;
+        string path = System.IO.Path.Combine(dataPath, "Workspace", workspacePath);
+
+        var files = Folder.GetFiles(path);
+        for (int i = 0; i < files.Length; i++)
+        {
+            var l = files[i].Remove(0, path.Length);
+            l = l.Substring(1);
+            if (l.Substring(l.Length - 5) == ".meta") continue;
+            //Debug.Log(i);
+
+            if ((from item in fileList
+                 where item.name == l
+                 select item).Count() > 0) continue;
+
+            var o = Instantiate(fileObj);
+            o.name = l;
+            o.transform.parent = transform;
+            o.transform.localPosition = Vector3.down * (folderCount + fileCount);
+            o.transform.localRotation = Quaternion.identity;
+            o.transform.localScale = Vector3.one;
+            o.GetComponentInChildren<TextMesh>().text = l;
+
+            fileCount++;
+            fileList.Add(o);
+
+            if ((folderCount + fileCount) % 5 == 0) transform.position = transform.position + Vector3.up * 2;
         }
     }
 

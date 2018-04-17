@@ -12,4 +12,9 @@ public class FeatureNode : BaseNode
     #region Param
     public ReaderType readerType;
     #endregion
+
+    public override string GetParameters()
+    {
+        return string.Empty;
+    }
 }

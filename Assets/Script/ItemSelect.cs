@@ -9,6 +9,8 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
 {
     [SerializeField]
     protected UnityEvent onClick;
+    [SerializeField]
+    private GameObject boundingBox;
 
     private bool isFocused;
 
@@ -20,6 +22,7 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
             //Debug.Log(child.name);
         }
         isFocused = true;
+        boundingBox?.SetActive(true);
         //if (onFocusEnter != null) onFocusEnter.Invoke();
     }
 
@@ -30,6 +33,7 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
         {
             child.gameObject.layer = LayerMask.NameToLayer("Default");
         }
+        boundingBox?.SetActive(false);
         //if (onFocusExit != null) onFocusExit.Invoke();
     }
 
@@ -66,6 +70,21 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
 
     public void CreateFile()
     {
+        Transform root = GameObject.Find("SometimeUse").transform;
+        GameObject keyboard = root.Find("Keyboard").gameObject;
+        keyboard.SetActive(true);
+
+        GameObject singleLine = root.Find("SignleLineInput").gameObject;
+        singleLine.SetActive(true);
+        singleLine.GetComponent<SingleLineInput>().InputComplate += () =>
+        {
+            FileAndDictionary.Instance.CreateFile(singleLine.GetComponent<SingleLineInput>().GetContent());
+            singleLine.SetActive(false);
+            keyboard.SetActive(false);
+
+            GetComponentInParent<ScanDictionary>().UpdateDictionaryTree();
+        };
+        keyboard.GetComponent<Keyboard>().InputTarget = singleLine;
     }
 
     public void CreateFolder()
