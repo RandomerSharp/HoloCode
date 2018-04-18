@@ -85,6 +85,25 @@ public class ItemClick : MonoBehaviour, IInputClickHandler
         }
     }
 
+    public void SaveBrainScript()
+    {
+        FileAndDictionary.Instance.SaveBrainScript(transform.parent.GetComponentInChildren<TMPro.TextMeshPro>().text);
+    }
+
+    public void SaveParam()
+    {
+
+    }
+
+    public void Cancel()
+    {
+        GameObject.Find("ParamInspector").SetActive(false);
+    }
+
+    public void Delete()
+    {
+    }
+
     private void Update()
     {
         if (isFocused && (Input.GetKeyUp(KeyCode.Return) || Input.GetMouseButtonDown(0)))
@@ -92,4 +111,5 @@ public class ItemClick : MonoBehaviour, IInputClickHandler
             onClick.Invoke();
         }
     }
+
 }

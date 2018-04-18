@@ -101,4 +101,20 @@ public class FileAndDictionary : HoloToolkit.Unity.Singleton<FileAndDictionary>
         }
         return code;
     }
+
+    public void SaveFile()
+    {
+    }
+
+    public void SaveBrainScript(string brainScript)
+    {
+        string fileName = string.Format("{0}.bs", System.DateTime.Now.Ticks.ToString());
+        using (Stream stream = new FileStream(Path.Combine(RootPath, "Workspace", "BrainScript", fileName), FileMode.OpenOrCreate, FileAccess.Write))
+        {
+            using (StreamWriter sw = new StreamWriter(stream))
+            {
+                sw.Write(transform.parent.GetComponentInChildren<TMPro.TextMeshPro>().text);
+            }
+        }
+    }
 }

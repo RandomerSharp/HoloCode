@@ -7,7 +7,8 @@
 	{
 		Tags { "RenderType" = "Opaque" }
 		Cull Back
-		ZWrite On
+		//ZWrite On
+		//ZTest Always
 		LOD 100
 
 		Pass

@@ -22709,7 +22709,6 @@ GameObject:
   - component: {fileID: 1717275612}
   - component: {fileID: 1717275615}
   - component: {fileID: 1717275616}
-  - component: {fileID: 1717275617}
   m_Layer: 2
   m_Name: SignleLineInput
   m_TagString: Untagged
@@ -22755,19 +22754,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e02db1ddbfb570f48990f9db390bb2a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1717275617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1717275611}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac8d5b128a1d8204fb76c86f47b75912, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PivotAxis: 0
-  TargetTransform: {fileID: 995198442}
 --- !u!1001 &1730030368
 Prefab:
   m_ObjectHideFlags: 0

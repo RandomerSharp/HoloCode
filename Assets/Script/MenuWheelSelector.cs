@@ -18,6 +18,8 @@ public class MenuWheelSelector : AttachToController
     private int currectSelect;
 
     private bool isPressed;
+    private bool isLongPressed;
+    private float pressDelta;
 
     [SerializeField]
     private GameObject shellDialog;
@@ -57,22 +59,23 @@ public class MenuWheelSelector : AttachToController
         {
             selectorPosition = obj.state.touchpadPosition;
             float angle = Vector2.SignedAngle(selectorPosition, lastSelectorPosition);
-            if (angle > 45f && nodes.Count > 0)
+            if (angle > 30f && nodes.Count > 0)
             {
                 currectSelect = (currectSelect + 1) % nodes.Count;
                 lastSelectorPosition = selectorPosition;
-                transform.Rotate(transform.up, -360f / 7f, Space.World);
+                transform.Rotate(transform.up, -360f / nodes.Count, Space.World);
             }
-            else if (angle < -45f && nodes.Count > 0)
+            else if (angle < -30f && nodes.Count > 0)
             {
                 currectSelect = (currectSelect - 1 + nodes.Count) % nodes.Count;
                 lastSelectorPosition = selectorPosition;
-                transform.Rotate(transform.up, 360f / 7f, Space.World);
+                transform.Rotate(transform.up, 360f / nodes.Count, Space.World);
             }
             shellDialog.GetComponentInChildren<TextMesh>().text = nodes[currectSelect].name;
         }
         IPointingSource ips = null;
         FocusManager.Instance.TryGetSinglePointer(out ips);
+        Debug.Log(obj.state.selectPressedAmount);
         if (obj.state.source.handedness == handedness && obj.state.selectPressed && FocusManager.Instance.GetFocusedObject(ips) == null)
         {
             if (!isPressed)
@@ -127,7 +130,7 @@ public class MenuWheelSelector : AttachToController
     {
         if (generating) return;
         generating = true;
-        StartCoroutine(Generate1());
+        StartCoroutine(Generate2());
     }
 
     private IEnumerator Generate1()

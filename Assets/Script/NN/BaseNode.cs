@@ -5,8 +5,9 @@ using UnityEngine;
 using HoloToolkit.Unity.InputModule;
 using HoloToolkit.Unity.Controllers;
 using HoloToolkit.Unity;
+using HUX.Interaction;
 
-public abstract class BaseNode : MonoBehaviour, IInputClickHandler, IHoldHandler
+public abstract class BaseNode : MonoBehaviour, IInputClickHandler, IDoubleTapped
 {
     public enum DisplayModeEnum
     {
@@ -40,9 +41,6 @@ public abstract class BaseNode : MonoBehaviour, IInputClickHandler, IHoldHandler
     private DisplayModeEnum displayMode;
     private List<BaseNode> next;
     private List<BaseNode> last;
-    private bool isDraging;
-
-    private IInputSource inputSource;
 
     private MenuWheelSelector nodeManager;
 
@@ -140,13 +138,13 @@ public abstract class BaseNode : MonoBehaviour, IInputClickHandler, IHoldHandler
         obj.layer = 0;
     }
 
-    public async void ShowDialog()
+    /*public async void ShowDialog()
     {
         transform.Find("Quad").gameObject.SetActive(true);
         GetComponentInChildren<TextMesh>().text = gameObject.name;
         await Task.Delay(3000);
         transform.Find("Quad").gameObject.SetActive(false);
-    }
+    }*/
 
     public void OnInputClicked(InputClickedEventData eventData)
     {
@@ -154,34 +152,10 @@ public abstract class BaseNode : MonoBehaviour, IInputClickHandler, IHoldHandler
         nodeManager.NodeSelect(gameObject.GetComponent<BaseNode>());
     }
 
-    private void Update()
-    {
-        if (isDraging && inputSource != null)
-        {
-            IPointingSource ips = null;
-            if (!FocusManager.Instance.TryGetSinglePointer(out ips)) return;
-            var detail = FocusManager.Instance.GetFocusDetails(ips);
-            Debug.Log(detail.Point);
-        }
-    }
-
-    public void OnHoldStarted(HoldEventData eventData)
-    {
-        inputSource = eventData.InputSource;
-        isDraging = true;
-    }
-
-    public void OnHoldCompleted(HoldEventData eventData)
-    {
-        inputSource = null;
-        isDraging = false;
-    }
-
-    public void OnHoldCanceled(HoldEventData eventData)
-    {
-        inputSource = null;
-        isDraging = false;
-    }
-
     public abstract string GetParameters();
+
+    public void OnDoubleTapped(InteractionManager.InteractionEventArgs eventArgs)
+    {
+        Debug.Log("Double click");
+    }
 }
