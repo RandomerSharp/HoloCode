@@ -22,4 +22,9 @@ public class LabelNode : InputNode
     {
         return string.Empty;
     }
+
+    public override void SetInspector(GameObject inspector, GameObject signleLineInput, GameObject signleLineSelect)
+    {
+
+    }
 }

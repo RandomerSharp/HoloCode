@@ -34,6 +34,7 @@ public class SingleLineInput : MonoBehaviour, IVKeyInput
         }
         if (key == KeyCode.Backspace)
         {
+            if (tmpro.text.Length == 0) return;
             tmpro.text = tmpro.text.Substring(0, tmpro.text.Length - 1);
             return;
         }
@@ -50,6 +51,7 @@ public class SingleLineInput : MonoBehaviour, IVKeyInput
         }
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
+            if (tmpro.text.Length == 0) return;
             tmpro.text = tmpro.text.Substring(0, tmpro.text.Length - 1);
             return;
         }

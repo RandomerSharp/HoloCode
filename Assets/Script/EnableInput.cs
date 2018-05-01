@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using HoloToolkit.Unity.InputModule;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using MixedRealityToolkit.InputModule.EventData;
+using MixedRealityToolkit.InputModule.Focus;
 
-public class EnableInput : MonoBehaviour, IFocusable
+public class EnableInput : FocusTarget //MonoBehaviour//, IFocusHandler
 {
     [SerializeField]
     private InputField inputField;
@@ -23,9 +24,10 @@ public class EnableInput : MonoBehaviour, IFocusable
     private void Awake()
     {
         background.color = normalColor;
+
     }
 
-    public void OnFocusEnter()
+    public override void OnFocusEnter(FocusEventData e)
     {
         Debug.Log(gameObject.name + ": On focus enter");
         //EventSystem.current.SetSelectedGameObject(inputField.gameObject);
@@ -36,7 +38,7 @@ public class EnableInput : MonoBehaviour, IFocusable
         //StartCoroutine(CodeInput());
     }
 
-    public void OnFocusExit()
+    public override void OnFocusExit(FocusEventData e)
     {
         Debug.Log(gameObject.name + ": On focus exit");
         //EventSystem.current.SetSelectedGameObject(null);

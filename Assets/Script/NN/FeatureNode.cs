@@ -17,4 +17,9 @@ public class FeatureNode : BaseNode
     {
         return string.Empty;
     }
+
+    public override void SetInspector(GameObject inspector, GameObject signleLineInput, GameObject signleLineSelect)
+    {
+
+    }
 }

@@ -1,5 +1,5 @@
-﻿using HoloToolkit.Unity.Controllers;
-using HoloToolkit.Unity.InputModule;
+﻿using MixedRealityToolkit.InputModule.Focus;
+using MixedRealityToolkit.InputModule.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,6 +31,8 @@ public class MenuWheelSelector : AttachToController
 
     [SerializeField]
     private GameObject codeScreen;
+    [SerializeField]
+    private GameObject inspector;
 
     private void Awake()
     {
@@ -55,45 +57,98 @@ public class MenuWheelSelector : AttachToController
 
     private void InteractionSourceUpdated(InteractionSourceUpdatedEventArgs obj)
     {
-        if (obj.state.source.handedness == handedness && obj.state.touchpadTouched)
+        try
         {
-            selectorPosition = obj.state.touchpadPosition;
-            float angle = Vector2.SignedAngle(selectorPosition, lastSelectorPosition);
-            if (angle > 30f && nodes.Count > 0)
+            /*if (obj.state.source.handedness == handedness && obj.state.touchpadTouched)
             {
-                currectSelect = (currectSelect + 1) % nodes.Count;
-                lastSelectorPosition = selectorPosition;
-                transform.Rotate(transform.up, -360f / nodes.Count, Space.World);
+                selectorPosition = obj.state.touchpadPosition;
+                float angle = Vector2.SignedAngle(selectorPosition, lastSelectorPosition);
+                if (angle > 30f && nodes.Count > 0)
+                {
+                    currectSelect = (currectSelect + 1) % nodes.Count;
+                    lastSelectorPosition = selectorPosition;
+                    transform.Rotate(transform.up, -360f / nodes.Count, Space.World);
+                }
+                else if (angle < -30f && nodes.Count > 0)
+                {
+                    currectSelect = (currectSelect - 1 + nodes.Count) % nodes.Count;
+                    lastSelectorPosition = selectorPosition;
+                    transform.Rotate(transform.up, 360f / nodes.Count, Space.World);
+                }
+                shellDialog.GetComponentInChildren<TextMesh>().text = nodes[currectSelect].name;
             }
-            else if (angle < -30f && nodes.Count > 0)
+            IPointingSource ips = null;
+            FocusManager.Instance.TryGetSinglePointer(out ips);
+            //Debug.Log(obj.state.selectPressedAmount);
+            if (obj.state.source.handedness == this.Handedness && obj.state.selectPressed)
             {
-                currectSelect = (currectSelect - 1 + nodes.Count) % nodes.Count;
-                lastSelectorPosition = selectorPosition;
-                transform.Rotate(transform.up, 360f / nodes.Count, Space.World);
+                if (!isPressed)
+                {
+                    isPressed = true;
+                }
+                if (isPressed)
+                {
+                    pressDelta += Time.deltaTime;
+                    if (pressDelta > 1f)
+                    {
+                        isLongPressed = true;
+                    }
+                }
             }
-            shellDialog.GetComponentInChildren<TextMesh>().text = nodes[currectSelect].name;
+            else
+            {
+                if (isPressed && !isLongPressed)
+                {
+                    var selectedObj = FocusManager.Instance.GetFocusedObject(ips);
+                    if (selectedObj == null)
+                    {
+                        if (inspector.activeSelf)
+                        {
+                            inspector.SetActive(false);
+                        }
+                        else
+                        {
+                            nodes[currectSelect].CreateOne();
+                        }
+                    }
+                    else
+                    {
+                        NodeSelect(selectedObj.GetComponent<BaseNode>());
+                    }
+                }
+                if (isLongPressed)
+                {
+                    var selectedObj = FocusManager.Instance.GetFocusedObject(ips);
+                    if (selectedObj?.GetComponent<BaseNode>() != null)
+                    {
+                        OpenInspector(selectedObj.GetComponent<BaseNode>());
+                    }
+                }
+                isPressed = false;
+                isLongPressed = false;
+                pressDelta = 0f;
+            }
+            lastSelectorPosition = selectorPosition;*/
         }
-        IPointingSource ips = null;
-        FocusManager.Instance.TryGetSinglePointer(out ips);
-        Debug.Log(obj.state.selectPressedAmount);
-        if (obj.state.source.handedness == handedness && obj.state.selectPressed && FocusManager.Instance.GetFocusedObject(ips) == null)
+        catch (Exception e)
         {
-            if (!isPressed)
-            {
-                nodes[currectSelect].CreateOne();
-                isPressed = true;
-            }
+            Debug.Log(e.Message);
         }
-        else
-        {
-            isPressed = false;
-        }
-        lastSelectorPosition = selectorPosition;
+    }
+
+    private void OpenInspector(BaseNode node)
+    {
+        inspector.SetActive(true);
+        var inspector1 = inspector.GetComponent<Inspector>();
+        inspector1.TargetObject = node.gameObject;
+        inspector1.TargetName = node.gameObject.name;
+        node.SetInspector(inspector, inspector1.paramInput, inspector1.paramSelect);
     }
 
     public void NodeSelect(BaseNode node)
     {
-        if (node1 == null)
+        if (node == null) return;
+        if (node1 == null || node1.gameObject.activeSelf == false)
         {
             node1 = node;
             return;
@@ -288,11 +343,11 @@ public class MenuWheelSelector : AttachToController
             }
             else if (node is EvaluationNode)
             {
-                errs = "errs = " + Enum.GetName(typeof(EvaluationNode.Algorithm), ((EvaluationNode)node).readerType) + "(labels, z)";
+                //errs = "errs = " + Enum.GetName(typeof(EvaluationNode.Algorithm), ((EvaluationNode)node).readerType) + "(labels, z)";
             }
             else if (node is CriterionNode)
             {
-                ce = "ce = " + Enum.GetName(typeof(CriterionNode.Algorithm), ((CriterionNode)node).readerType) + "(labels, z)";
+                //ce = "ce = " + Enum.GetName(typeof(CriterionNode.Algorithm), ((CriterionNode)node).readerType) + "(labels, z)";
             }
             yield return null;
         }
@@ -351,11 +406,11 @@ public class MenuWheelSelector : AttachToController
             }
             else if (node is EvaluationNode)
             {
-                errs = string.Format("errs = {0} ({1}, {2})", Enum.GetName(typeof(EvaluationNode.Algorithm), ((EvaluationNode)node).readerType), "labels", "z");
+                errs = string.Format("errs = {0} ({1}, {2})", node.GetParameters(), "labels", "z");
             }
             else if (node is CriterionNode)
             {
-                ce = string.Format("ce = {0} ({1}, {2})", Enum.GetName(typeof(CriterionNode.Algorithm), ((CriterionNode)node).readerType), "labels", "z");
+                ce = string.Format("ce = {0} ({1}, {2})", node.GetParameters(), "labels", "z");
             }
             else
             {
@@ -384,12 +439,12 @@ public class MenuWheelSelector : AttachToController
                         }
                     }
                 }
-                model.AppendLine(string.Format("{0} = ConvolutionalLayer {{ {1} }}({2})", node.ShortName, layerParam, convLast.ToString()));
+                model.AppendFormat("{0} = {1}{{ {2} }}({3}){4}", node.ShortName, node.GetType().Name, layerParam, convLast.ToString(), Environment.NewLine);
             }
             yield return null;
         }
         script.AppendLine(model.ToString() + "}.z");
-        script.AppendFormat("\t{0}{1}", reader?.GetFeatures());
+        script.AppendFormat("\t{0}{1}", reader?.GetFeatures(), Environment.NewLine);
         script.AppendFormat("\t{0}{1}", reader?.GetLabels(), Environment.NewLine);
         script.AppendLine("\tz = model (features)");
 

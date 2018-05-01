@@ -1,13 +1,8 @@
-﻿using System.Collections;
+﻿using MixedRealityToolkit.Common;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
-using HoloToolkit.Unity.InputModule;
-using HoloToolkit.Unity.Controllers;
-using HoloToolkit.Unity;
-using HUX.Interaction;
 
-public abstract class BaseNode : MonoBehaviour, IInputClickHandler, IDoubleTapped
+public abstract class BaseNode : MonoBehaviour
 {
     public enum DisplayModeEnum
     {
@@ -36,6 +31,21 @@ public abstract class BaseNode : MonoBehaviour, IInputClickHandler, IDoubleTappe
         Softmax,
         LogSoftmax,
         Hardmax
+    }
+
+    public enum LossFunction
+    {
+        CrossEntropy,
+        CrossEntropyWithSoftmax,
+        Logistic,
+        WeightedLogistic,
+        ClassificationError
+    }
+
+    public enum MyBoolean
+    {
+        Flase,
+        True
     }
 
     private DisplayModeEnum displayMode;
@@ -146,16 +156,12 @@ public abstract class BaseNode : MonoBehaviour, IInputClickHandler, IDoubleTappe
         transform.Find("Quad").gameObject.SetActive(false);
     }*/
 
-    public void OnInputClicked(InputClickedEventData eventData)
+    /*public void OnInputClicked(InputClickedEventData eventData)
     {
         //Debug.Log("Click " + gameObject.name);
         nodeManager.NodeSelect(gameObject.GetComponent<BaseNode>());
-    }
+    }*/
 
     public abstract string GetParameters();
-
-    public void OnDoubleTapped(InteractionManager.InteractionEventArgs eventArgs)
-    {
-        Debug.Log("Double click");
-    }
+    public abstract void SetInspector(GameObject inspector, GameObject signleLineInput, GameObject signleLineSelect);
 }

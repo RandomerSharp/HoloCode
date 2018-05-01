@@ -1,11 +1,13 @@
-﻿using System.Collections;
+﻿using MixedRealityToolkit.InputModule.EventData;
+using MixedRealityToolkit.InputModule.Focus;
+using MixedRealityToolkit.InputModule.InputHandlers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using HoloToolkit.Unity.InputModule;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
+public class ItemSelect : FocusTarget, IPointerHandler//, IInputClickHandler, IFocusable
 {
     [SerializeField]
     protected UnityEvent onClick;
@@ -14,7 +16,7 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
 
     private bool isFocused;
 
-    public virtual void OnFocusEnter()
+    public override void OnFocusEnter(FocusEventData eventData)
     {
         foreach (var child in GetComponentsInChildren<Transform>())
         {
@@ -26,7 +28,7 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
         //if (onFocusEnter != null) onFocusEnter.Invoke();
     }
 
-    public virtual void OnFocusExit()
+    public override void OnFocusExit(FocusEventData eventData)
     {
         isFocused = false;
         foreach (var child in GetComponentsInChildren<Transform>())
@@ -37,10 +39,10 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
         //if (onFocusExit != null) onFocusExit.Invoke();
     }
 
-    public virtual void OnInputClicked(InputClickedEventData eventData)
+    /*public virtual void OnInputClicked(InputClickedEventData eventData)
     {
         onClick.Invoke();
-    }
+    }*/
 
     public void SelectWorkspace()
     {
@@ -98,5 +100,14 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
         {
             onClick.Invoke();
         }
+    }
+
+    public void OnPointerUp(ClickEventData eventData) { }
+
+    public void OnPointerDown(ClickEventData eventData) { }
+
+    public void OnPointerClicked(ClickEventData eventData)
+    {
+        onClick.Invoke();
     }
 }

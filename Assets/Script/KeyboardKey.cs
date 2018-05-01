@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using MixedRealityToolkit.InputModule.EventData;
+using MixedRealityToolkit.InputModule.Focus;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using HoloToolkit.Unity.InputModule;
 
-public class KeyboardKey : MonoBehaviour, IInputClickHandler, IFocusable
+public class KeyboardKey : FocusTarget
 {
     public KeyCode key;
     [SerializeField]
@@ -21,19 +22,19 @@ public class KeyboardKey : MonoBehaviour, IInputClickHandler, IFocusable
         enableClick = false;
     }
 
-    public void OnFocusEnter()
+    public override void OnFocusEnter(FocusEventData e)
     {
         GetComponent<Renderer>().material.color = focusColor;
         enableClick = true;
     }
 
-    public void OnFocusExit()
+    public override void OnFocusExit(FocusEventData e)
     {
         GetComponent<Renderer>().material.color = normalColor;
         enableClick = false;
     }
 
-    public void OnInputClicked(InputClickedEventData eventData)
+    /*public void OnInputClicked(InputClickedEventData eventData)
     {
         GetComponent<Renderer>().material.color = normalColor;
         enableClick = false;
@@ -44,5 +45,5 @@ public class KeyboardKey : MonoBehaviour, IInputClickHandler, IFocusable
         keyBoard.ReceiveKey(key);
         GetComponent<Renderer>().material.color = focusColor;
         enableClick = true;
-    }
+    }*/
 }

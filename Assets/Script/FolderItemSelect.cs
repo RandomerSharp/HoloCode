@@ -1,4 +1,4 @@
-﻿using HoloToolkit.Unity.InputModule;
+﻿using MixedRealityToolkit.InputModule.EventData;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,24 +10,24 @@ using Windows.Storage;
 
 public class FolderItemSelect : ItemSelect
 {
-    public override void OnFocusEnter()
+    public override void OnFocusEnter(FocusEventData eventData)
     {
-        base.OnFocusEnter();
+        base.OnFocusEnter(eventData);
 
         GetComponentInChildren<CubeRotate>().RotateSpeed = 3f;
     }
 
-    public override void OnFocusExit()
+    public override void OnFocusExit(FocusEventData eventData)
     {
-        base.OnFocusExit();
+        base.OnFocusExit(eventData);
 
         GetComponentInChildren<CubeRotate>().RotateSpeed = 0f;
     }
 
-    public override void OnInputClicked(InputClickedEventData eventData)
+    /*public override void OnInputClicked(InputClickedEventData eventData)
     {
         base.OnInputClicked(eventData);
-    }
+    }*/
 
     public void OpenFolder()
     {

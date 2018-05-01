@@ -1,4 +1,4 @@
-﻿using MRDL.Design;
+﻿using MixedRealityToolkit.UX.Lines;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,8 +42,20 @@ public class LineUpdate : MonoBehaviour
 
     void Update()
     {
-        line.Start = start.position;
-        line.End = end.position;
+        if (start == null || end == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        if (start.gameObject.activeSelf && end.gameObject.activeSelf)
+        {
+            line.Start = start.position;
+            line.End = end.position;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public bool TryDestory(Transform a, Transform b)

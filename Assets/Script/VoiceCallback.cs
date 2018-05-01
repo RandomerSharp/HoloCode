@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using HoloToolkit.Unity.InputModule;
-using HoloToolkit.Unity;
 using System;
 using UnityEngine.Windows.Speech;
 using System.Net.Http;

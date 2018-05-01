@@ -9,7 +9,7 @@ using System.IO;
 #if UNITY_WSA && NETFX_CORE
 using Windows.Storage;
 #endif
-public class FileAndDictionary : HoloToolkit.Unity.Singleton<FileAndDictionary>
+public class FileAndDictionary : MixedRealityToolkit.Common.Singleton<FileAndDictionary>
 {
     private string rootPath;
     private string workspacePath;

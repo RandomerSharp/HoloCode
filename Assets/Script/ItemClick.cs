@@ -1,5 +1,4 @@
-﻿using HoloToolkit.Unity.InputModule;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -10,17 +9,18 @@ using UnityEngine.SceneManagement;
 using Windows.Storage;
 #endif
 
-public class ItemClick : MonoBehaviour, IInputClickHandler
+public class ItemClick : MonoBehaviour//, IInputClickHandler
 {
     [SerializeField]
     protected UnityEvent onClick;
 
     private bool isFocused;
 
-    public virtual void OnInputClicked(InputClickedEventData eventData)
+    /*public virtual void OnInputClicked(InputClickedEventData eventData)
     {
         onClick.Invoke();
-    }
+        //MixedRealityToolkit.InputModule.EventData.ClickEventData
+    }*/
 
     public void SelectWorkspace()
     {
@@ -92,7 +92,7 @@ public class ItemClick : MonoBehaviour, IInputClickHandler
 
     public void SaveParam()
     {
-
+        GetComponentInParent<Inspector>().Save();
     }
 
     public void Cancel()
@@ -102,6 +102,7 @@ public class ItemClick : MonoBehaviour, IInputClickHandler
 
     public void Delete()
     {
+        GetComponentInParent<Inspector>().Delete();
     }
 
     private void Update()
@@ -112,4 +113,13 @@ public class ItemClick : MonoBehaviour, IInputClickHandler
         }
     }
 
+    public void NextParam()
+    {
+        GetComponentInParent<ParamSelect>().Next();
+    }
+
+    public void LastParam()
+    {
+        GetComponentInParent<ParamSelect>().Last();
+    }
 }
