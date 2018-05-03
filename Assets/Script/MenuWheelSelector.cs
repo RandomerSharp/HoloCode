@@ -59,7 +59,7 @@ public class MenuWheelSelector : AttachToController
     {
         try
         {
-            /*if (obj.state.source.handedness == handedness && obj.state.touchpadTouched)
+            if ((int)obj.state.source.handedness == (int)Handedness && obj.state.touchpadTouched)
             {
                 selectorPosition = obj.state.touchpadPosition;
                 float angle = Vector2.SignedAngle(selectorPosition, lastSelectorPosition);
@@ -77,7 +77,7 @@ public class MenuWheelSelector : AttachToController
                 }
                 shellDialog.GetComponentInChildren<TextMesh>().text = nodes[currectSelect].name;
             }
-            IPointingSource ips = null;
+            /*IPointingSource ips = null;
             FocusManager.Instance.TryGetSinglePointer(out ips);
             //Debug.Log(obj.state.selectPressedAmount);
             if (obj.state.source.handedness == this.Handedness && obj.state.selectPressed)

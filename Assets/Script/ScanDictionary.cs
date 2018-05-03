@@ -9,7 +9,6 @@ using Windows.Storage;
 
 public class ScanDictionary : MonoBehaviour
 {
-    private string workspacePath;
     [SerializeField] private GameObject folderObj;
     [SerializeField] private GameObject fileObj;
 
@@ -18,13 +17,6 @@ public class ScanDictionary : MonoBehaviour
     private List<GameObject> folderList;
     private List<GameObject> fileList;
 
-    public string WorkspacePath
-    {
-        get
-        {
-            return workspacePath;
-        }
-    }
     public int ItemCount
     {
         get
@@ -37,10 +29,7 @@ public class ScanDictionary : MonoBehaviour
     {
         //workspacePath = GameObject.Find("DataCache").GetComponent<DataCache>().Find("WorkspaceName");
         var dataPath = FileAndDictionary.Instance.RootPath;
-#if UNITY_WSA && NETFX_CORE 
-        dataPath = KnownFolders.DocumentsLibrary.Path;
-#endif
-        workspacePath = "Demo";
+        string workspacePath = "Demo";
         folderList = new List<GameObject>();
         fileList = new List<GameObject>();
         FileAndDictionary.Instance.WorkspacePath = workspacePath;
@@ -91,8 +80,7 @@ public class ScanDictionary : MonoBehaviour
 
     public void UpdateDictionaryTree()
     {
-        var dataPath = FileAndDictionary.Instance.RootPath;
-        string path = System.IO.Path.Combine(dataPath, "Workspace", workspacePath);
+        string path = FileAndDictionary.Instance.WorkspacePath;
 
         var files = Folder.GetFiles(path);
         for (int i = 0; i < files.Length; i++)

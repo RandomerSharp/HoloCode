@@ -8,6 +8,8 @@ public class Inspector : MonoBehaviour
     private List<Transform> list;
     private GameObject targetObject;
     private string targetName; // 正在被设置的节点名称
+    private int page;
+    [SerializeField] private int maxnPerPage = 5;
     public GameObject paramInput;
     public GameObject paramSelect;
     public Action OnSave;
@@ -41,12 +43,14 @@ public class Inspector : MonoBehaviour
     private void Awake()
     {
         list = new List<Transform>();
+        page = 0;
     }
 
     private void OnEnable()
     {
         if (list == null) list = new List<Transform>();
         else list.Clear();
+        page = 0;
     }
 
     public void Add(Transform newTrans)
@@ -79,5 +83,20 @@ public class Inspector : MonoBehaviour
         }
         list.Clear();
         OnSave = null;
+    }
+
+    public void NextPage()
+    {
+        if (list.Count > (page + 1) * maxnPerPage)
+        {
+            for (int i = (page + 1) * maxnPerPage; i < (page + 2) * maxnPerPage; i++)
+            {
+                if (i >= list.Count) break;
+            }
+        }
+        else
+        {
+            page = 0;
+        }
     }
 }

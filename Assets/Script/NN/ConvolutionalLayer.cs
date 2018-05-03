@@ -7,7 +7,7 @@ public class ConvolutionalLayer : BaseNode
 {
     #region Parameters
     public uint numOutputChannels = 32;
-    public uint filterShape = 5;
+    public string filterShape = "5:5";
     public ActivationFunction activation = ActivationFunction.ReLU;
     public RandomInitialization init = RandomInitialization.gaussian;
     public float initValueScale = 1;
@@ -27,7 +27,7 @@ public class ConvolutionalLayer : BaseNode
     public override string GetParameters()
     {
         return string.Format("{0}, {1}, activation = {2}, init = \"{3}\", initValueScale = {4}, stride = {5}, pad = {6}, lowerPad = {7}, upperPad = {8}, bias = {9}",
-            numOutputChannels, string.Format("({0}, {0})", filterShape), activation.ToString(), init.ToString(), initValueScale,
+            numOutputChannels, string.Format("({0})", filterShape), activation.ToString(), init.ToString(), initValueScale,
             stride, pad.ToString().ToLower(), lowerPad, upperPad, bias.ToString().ToLower());
     }
 
@@ -46,6 +46,7 @@ public class ConvolutionalLayer : BaseNode
 
         inspector1.OnSave = () =>
         {
+            Debug.Log(GetHashCode());
             activation = (ActivationFunction)activationObj.GetComponent<ParamSelect>().GetValue();
             init = (RandomInitialization)initObj.GetComponent<ParamSelect>().GetValue();
         };

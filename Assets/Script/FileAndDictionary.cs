@@ -97,13 +97,22 @@ public class FileAndDictionary : MixedRealityToolkit.Common.Singleton<FileAndDic
             using (StreamReader reader = new StreamReader(stream))
             {
                 code = reader.ReadToEnd();
+                //reader.Close();
             }
+            //stream.Close();
         }
         return code;
     }
 
-    public void SaveFile()
+    public void SaveFile(string fileName, string content)
     {
+        using (Stream stream = new FileStream(Path.Combine(FolderPath, fileName), FileMode.OpenOrCreate, FileAccess.Write))
+        {
+            using (StreamWriter sw = new StreamWriter(stream))
+            {
+                sw.Write(content);
+            }
+        }
     }
 
     public void SaveBrainScript(string brainScript)
@@ -113,8 +122,14 @@ public class FileAndDictionary : MixedRealityToolkit.Common.Singleton<FileAndDic
         {
             using (StreamWriter sw = new StreamWriter(stream))
             {
-                sw.Write(transform.parent.GetComponentInChildren<TMPro.TextMeshPro>().text);
+                //sw.Write(transform.parent.GetComponentInChildren<TMPro.TextMeshPro>().text);
+                sw.Write(brainScript);
             }
         }
+    }
+
+    public void ScanFolder(string path)
+    {
+        var folders = System.IO.Directory.GetFiles(path);
     }
 }

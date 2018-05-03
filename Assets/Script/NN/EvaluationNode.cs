@@ -28,6 +28,7 @@ public class EvaluationNode : BaseNode
 
         inspector1.OnSave = () =>
         {
+            Debug.Log(GetHashCode());
             err = (Algorithm)errObj.GetComponent<ParamSelect>().GetValue();
         };
     }

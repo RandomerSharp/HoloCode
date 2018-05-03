@@ -5,7 +5,7 @@ using UnityEngine;
 public class LinearLayer : BaseNode
 {
     #region Param
-    public int outDim = 64;
+    public uint outDim = 64;
     public RandomInitialization init = RandomInitialization.gaussian;
     public float initValueScale = 1;
     public MyBoolean bias = MyBoolean.True;
@@ -46,8 +46,9 @@ public class LinearLayer : BaseNode
 
         inspector1.OnSave = () =>
         {
+            Debug.Log(GetHashCode());
             init = (RandomInitialization)initObj.GetComponent<ParamSelect>().GetValue();
-            outDim = System.Convert.ToInt32(outDimObj.GetComponent<ParamTypein>().GetValue());
+            outDim = System.Convert.ToUInt32(outDimObj.GetComponent<ParamTypein>().GetValue());
             initValueScale = System.Convert.ToSingle(initValueScaleObj.GetComponent<ParamTypein>().GetValue());
             bias = (MyBoolean)biasObj.GetComponent<ParamSelect>().GetValue();
         };
