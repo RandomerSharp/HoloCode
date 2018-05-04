@@ -1,8 +1,10 @@
 ﻿using MixedRealityToolkit.Common;
+using MixedRealityToolkit.InputModule.EventData;
+using MixedRealityToolkit.InputModule.InputHandlers;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseNode : MonoBehaviour
+public abstract class BaseNode : MonoBehaviour, IPointerHandler
 {
     public enum DisplayModeEnum
     {
@@ -148,20 +150,55 @@ public abstract class BaseNode : MonoBehaviour
         obj.layer = 0;
     }
 
-    /*public async void ShowDialog()
-    {
-        transform.Find("Quad").gameObject.SetActive(true);
-        GetComponentInChildren<TextMesh>().text = gameObject.name;
-        await Task.Delay(3000);
-        transform.Find("Quad").gameObject.SetActive(false);
-    }*/
-
-    /*public void OnInputClicked(InputClickedEventData eventData)
-    {
-        //Debug.Log("Click " + gameObject.name);
-        nodeManager.NodeSelect(gameObject.GetComponent<BaseNode>());
-    }*/
-
     public abstract string GetParameters();
     public abstract void SetInspector(GameObject inspector, GameObject signleLineInput, GameObject signleLineSelect);
+
+
+
+
+    private bool isPressed;
+    private bool isLongPressed;
+    private float pressDelta;
+
+    public void OnPointerUp(ClickEventData eventData)
+    {
+        if (isLongPressed)
+        {
+            var inspector = transform.Find("HUD/ParamInspector").gameObject;
+            inspector.SetActive(true);
+            var inspector1 = inspector.GetComponent<Inspector>();
+            inspector1.TargetObject = gameObject;
+            inspector1.TargetName = gameObject.name;
+            SetInspector(inspector, inspector1.paramInput, inspector1.paramSelect);
+        }
+        isPressed = false;
+        isLongPressed = false;
+        pressDelta = 0f;
+    }
+
+    public void OnPointerDown(ClickEventData eventData)
+    {
+        if (!isPressed)
+        {
+            isPressed = true;
+        }
+    }
+
+    public void OnPointerClicked(ClickEventData eventData)
+    {
+        var inventory = GameObject.Find("HUX/Inventory").GetComponent<InventoryManager>();
+        inventory.NodeSelect(this);
+    }
+
+    private void Update()
+    {
+        if (isPressed)
+        {
+            pressDelta += Time.deltaTime;
+            if (pressDelta > 1f)
+            {
+                isLongPressed = true;
+            }
+        }
+    }
 }

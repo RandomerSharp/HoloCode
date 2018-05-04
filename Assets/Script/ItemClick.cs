@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using MixedRealityToolkit.InputModule.EventData;
+using MixedRealityToolkit.InputModule.InputHandlers;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -9,7 +11,7 @@ using UnityEngine.SceneManagement;
 using Windows.Storage;
 #endif
 
-public class ItemClick : MonoBehaviour//, IInputClickHandler
+public class ItemClick : MonoBehaviour, IPointerHandler
 {
     [SerializeField]
     protected UnityEvent onClick;
@@ -121,5 +123,17 @@ public class ItemClick : MonoBehaviour//, IInputClickHandler
     public void LastParam()
     {
         GetComponentInParent<ParamSelect>().Last();
+    }
+
+    public void OnPointerUp(ClickEventData eventData) { }
+
+    public void OnPointerDown(ClickEventData eventData) { }
+
+    public void OnPointerClicked(ClickEventData eventData)
+    {
+        if (eventData.PressType == UnityEngine.XR.WSA.Input.InteractionSourcePressType.Select)
+        {
+            onClick.Invoke();
+        }
     }
 }
