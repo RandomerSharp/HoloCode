@@ -49,7 +49,7 @@ public class InventorySelect : FocusTarget, IPointerHandler
 
     public void OnPointerClicked(ClickEventData eventData)
     {
-        Create();
+        transform.parent.GetComponent<InventoryManager>().MoveToSelectObject(gameObject);
     }
 
     public void OnPointerDown(ClickEventData eventData) { }

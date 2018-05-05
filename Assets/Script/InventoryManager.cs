@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using MixedRealityToolkit.Common;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,6 +8,8 @@ public class InventoryManager : MonoBehaviour
 {
     private List<GameObject> inventories;
     private int curSelected;
+    [SerializeField]
+    private GameObject selectedBoundingBox;
 
     [SerializeField]
     private GameObject line;
@@ -60,5 +63,39 @@ public class InventoryManager : MonoBehaviour
 
         node1 = null;
         node2 = null;
+    }
+
+    public void MoveToSelectObject(GameObject obj)
+    {
+        selectedBoundingBox.transform.parent = obj.transform;
+        selectedBoundingBox.transform.localPosition = new Vector3(0, 0, -0.01f);
+        selectedBoundingBox.transform.localRotation = Quaternion.identity;
+        selectedBoundingBox.transform.localScale = new Vector3(3.6f, 3.6f, 1f);
+        for (int i = 0; i < inventories.Count; i++)
+        {
+            if (inventories[i] == obj)
+            {
+                curSelected = i;
+            }
+        }
+    }
+
+    public void CreateNode()
+    {
+        var inventoryName = inventories[curSelected].name;
+        var newNode = Resources.Load(System.IO.Path.Combine("Prefab", "NN", inventoryName)) as GameObject;
+        newNode.name = inventoryName;
+        Vector3 forward = (GameObject.Find("DefaultCursor").transform.position - CameraCache.Main.transform.position).normalized;
+        newNode.transform.position = forward;
+        newNode.transform.rotation = Quaternion.identity;
+        newNode.transform.localScale = Vector3.one;
+    }
+
+    private void Update()
+    {
+        if (Input.mouseScrollDelta.y > 0.1f)
+        {
+            MoveToSelectObject(inventories[(curSelected + 1) % inventories.Count]);
+        }
     }
 }
