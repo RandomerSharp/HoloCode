@@ -14,6 +14,9 @@ public class FileAndDictionary : MixedRealityToolkit.Common.Singleton<FileAndDic
     private string rootPath;
     private string workspacePath;
 
+    /// <summary>
+    /// Workspace的路径
+    /// </summary>
     public string RootPath
     {
         get
@@ -21,6 +24,9 @@ public class FileAndDictionary : MixedRealityToolkit.Common.Singleton<FileAndDic
             return rootPath;
         }
     }
+    /// <summary>
+    /// 当前工作目录路径
+    /// </summary>
     public string WorkspacePath
     {
         get
@@ -44,21 +50,6 @@ public class FileAndDictionary : MixedRealityToolkit.Common.Singleton<FileAndDic
             return Path.Combine(rootPath, "Workspace", workspacePath);
         }
     }
-
-#if UNITY_WSA && NETFX_CORE
-    public async Task<string[]> ReadFolder()
-    {
-        StorageFolder document = await KnownFolders.DocumentsLibrary.GetFolderAsync("Workspace");
-        var l = (await document.GetFoldersAsync()).ToList();
-        return (from i in l
-                select i.Name).ToArray();
-    }
-#else
-    public void ReadFolder()
-    {
-
-    }
-#endif
 
     protected override void Awake()
     {
@@ -128,8 +119,18 @@ public class FileAndDictionary : MixedRealityToolkit.Common.Singleton<FileAndDic
         }
     }
 
-    public void ScanFolder(string path)
+    public string[] GetFilesInFolder(string path)
     {
-        var folders = System.IO.Directory.GetFiles(path);
+        return Directory.GetFiles(path);
+    }
+
+    public string[] GetFoldersInFolder(string path)
+    {
+        return Directory.GetDirectories(path);
+    }
+
+    public string FullFilePath(string fileName)
+    {
+        return Path.Combine(FolderPath, fileName);
     }
 }

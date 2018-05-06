@@ -58,15 +58,7 @@ public class EditorManager : MonoBehaviour
         {
         }
     }
-    /*
-    private void MoveAll()
-    {
-        var dt = GameObject.Find("DictionaryTree");
-        dt.GetComponent<SphereBasedTagalong>().enabled = false;
-        dt.GetComponent<MySnapping>().MoveToLeftAndSnap();
-    }*/
 
-    //public void Create(string path, string fileName)
     public void Create(string fileName)
     {
         var opened = (from i in tabsList
@@ -105,6 +97,7 @@ public class EditorManager : MonoBehaviour
 
     public void Remove(GameObject obj)
     {
+        obj.transform.parent = null;
         tabsList.Remove(obj);
         Destroy(obj);
         GetComponent<ObjectCollection>().UpdateCollection();
@@ -120,93 +113,4 @@ public class EditorManager : MonoBehaviour
         tabsList.Clear();
         //DestroyImmediate(gameObject);
     }
-    /*
-    private void SelectAndInsert(GameObject newTab)
-    {
-        float minAngle = 180f;
-        Vector3 cameraForward = CameraCache.Main.transform.forward;
-        Vector3 planeNormal = Vector3.up;
-        Vector3 camera2D = Vector3.ProjectOnPlane(cameraForward, planeNormal);
-        Debug.DrawRay(transform.position, camera2D);
-        GameObject nearest = null;
-        if (GazeManager.Instance.HitObject != null)
-        {
-
-            foreach (var item in tabsList)
-            {
-                Vector3 ray = item.transform.position - center;
-                Vector3 ray2D = Vector3.ProjectOnPlane(ray, planeNormal);
-                float angle = Vector3.Angle(camera2D, ray2D);
-                if (angle < minAngle)
-                {
-                    nearest = item;
-                    minAngle = angle;
-                }
-            }
-            Vector3 ray1 = nearest.transform.position - center;
-            Vector3 ray2D1 = Vector3.ProjectOnPlane(ray1, planeNormal);
-            Debug.Log(newTab.GetComponent<CodeTabManager>().Width);
-            float transAngle = Mathf.Atan(newTab.GetComponent<CodeTabManager>().Width / (2f * radius));
-            float deltaAngle = Vector3.Angle(ray2D1, camera2D);
-            Debug.Log(deltaAngle);
-            if (Vector3.SignedAngle(camera2D, ray2D1, planeNormal) <= 0)
-            {
-                float f = -1f;
-                foreach (var item in tabsList)
-                {
-                    item.transform.RotateAround(center, planeNormal, f * (transAngle + f * deltaAngle) * Mathf.Rad2Deg);
-                    if (item == nearest) f = 1f;
-                }
-            }
-            else
-            {
-                float f = -1f;
-                foreach (var item in tabsList)
-                {
-                    if (item == nearest) f = 1f;
-                    item.transform.RotateAround(center, planeNormal, f * (transAngle - f * deltaAngle) * Mathf.Rad2Deg);
-                }
-            }
-            tabsList.AddAfter(tabsList.Find(nearest), newTab);
-        }
-        else
-        {
-        }
-    }
-
-    private void AutoSort()
-    {
-    }
-
-    public void CloseTab(GameObject tab)
-    {
-        tabsList.Remove(tab);
-
-        float minAngle = 180f;
-        Vector3 cameraForward = CameraCache.Main.transform.forward;
-        Vector3 planeNormal = Vector3.up;
-        Vector3 camera2D = cameraForward - Vector3.Dot(cameraForward, planeNormal) * planeNormal;
-        Debug.DrawRay(transform.position, camera2D);
-        GameObject nearest = null;
-
-        foreach (var item in tabsList)
-        {
-            Vector3 ray = item.transform.position - center;
-            Vector3 ray2D = ray - Vector3.Dot(ray, planeNormal) * planeNormal;
-            float angle = Vector3.Angle(camera2D, ray2D);
-            if (Mathf.Abs(angle) < minAngle)
-            {
-                nearest = item;
-                minAngle = Mathf.Abs(angle);
-            }
-        }
-        Vector3 ray1 = nearest.transform.position - center;
-        Vector3 ray2D1 = ray1 - Vector3.Dot(ray1, planeNormal) * planeNormal;
-        float transAngle = Mathf.Atan(tab.GetComponent<CodeTabManager>().Width / (2 * radius));
-    }
-    */
-    /*public void ResetCenter(Vector3 newCenter)
-    {
-        center = newCenter;
-    }*/
 }

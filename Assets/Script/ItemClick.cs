@@ -60,16 +60,13 @@ public class ItemClick : MonoBehaviour, IPointerHandler
 
     public void Close()
     {
-        Save();
+        SaveFile();
         GameObject.Find("Editor").GetComponent<EditorManager>().Remove(gameObject.transform.parent.gameObject);
     }
 
-    public void Save(string ty = "BS")
+    /*public void Save(string ty = "BS")
     {
         var dataPath = Application.dataPath;
-#if UNITY_WSA && NETFX_CORE 
-        dataPath = KnownFolders.DocumentsLibrary.Path;
-#endif
 
         var ctm = transform.parent.gameObject.GetComponent<CodeTabManager>();
         Debug.Log(ctm == null);
@@ -85,6 +82,11 @@ public class ItemClick : MonoBehaviour, IPointerHandler
                 sw.Write(transform.parent.GetComponentInChildren<TMPro.TextMeshPro>().text);
             }
         }
+    }*/
+
+    public void SaveFile()
+    {
+        transform.parent.GetComponentInChildren<TypeIn>().SaveFile();
     }
 
     public void SaveBrainScript()
@@ -131,9 +133,6 @@ public class ItemClick : MonoBehaviour, IPointerHandler
 
     public void OnPointerClicked(ClickEventData eventData)
     {
-        if (eventData.PressType == UnityEngine.XR.WSA.Input.InteractionSourcePressType.Select)
-        {
-            onClick.Invoke();
-        }
+        onClick.Invoke();
     }
 }

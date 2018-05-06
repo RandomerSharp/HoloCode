@@ -81,7 +81,13 @@ public class TypeIn : FocusTarget, IPointerHandler//IFocusable
     {
         if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && Input.GetKeyDown(KeyCode.S))
         {
+            SaveFile();
         }
+    }
+
+    public void SaveFile()
+    {
+        FileAndDictionary.Instance.SaveFile(FileAndDictionary.Instance.FullFilePath(gameObject.name), GetComponentInChildren<MyInputField>().GetText());
     }
 
     public void OnPointerUp(ClickEventData eventData) { }

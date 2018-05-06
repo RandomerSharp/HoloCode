@@ -1,11 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SingleLineInput : MonoBehaviour, IVKeyInput
 {
-    public delegate void InputComplateHandler();
-    public event InputComplateHandler InputComplate;
+    public Action InputComplate;
 
     private TMPro.TextMeshPro tmpro;
 

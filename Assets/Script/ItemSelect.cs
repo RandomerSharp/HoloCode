@@ -72,19 +72,19 @@ public class ItemSelect : FocusTarget, IPointerHandler//, IInputClickHandler, IF
 
     public void CreateFile()
     {
-        Transform root = GameObject.Find("SometimeUse").transform;
+        Transform root = GameObject.Find("HUD").transform;
         GameObject keyboard = root.Find("Keyboard").gameObject;
         keyboard.SetActive(true);
 
         GameObject singleLine = root.Find("SignleLineInput").gameObject;
         singleLine.SetActive(true);
-        singleLine.GetComponent<SingleLineInput>().InputComplate += () =>
+        singleLine.GetComponent<SingleLineInput>().InputComplate = () =>
         {
             FileAndDictionary.Instance.CreateFile(singleLine.GetComponent<SingleLineInput>().GetContent());
             singleLine.SetActive(false);
             keyboard.SetActive(false);
 
-            GetComponentInParent<ScanDictionary>().UpdateDictionaryTree();
+            GetComponentInParent<ScanDictionary>().CreateFile();
         };
         keyboard.GetComponent<Keyboard>().InputTarget = singleLine;
     }

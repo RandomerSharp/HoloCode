@@ -4,19 +4,30 @@ using UnityEngine;
 
 public class SceneSkyboxRotate : MonoBehaviour
 {
+    enum Mode
+    {
+        Auto,
+        Maumal
+    }
+    [SerializeField] Mode mode;
+
     [SerializeField]
     [Range(0f, 10f)]
     private float skyboxRotateSpeed;
-    private float skyboxAngular;
+    [SerializeField]
+    private float skyboxAngular = 0f;
 
     private void Start()
     {
-        skyboxAngular = 0f;
+        GameObject.Find("FloorQuad(Clone)").layer = 11;
     }
 
     void Update()
     {
-        skyboxAngular += Time.deltaTime * skyboxRotateSpeed;
+        if (mode == Mode.Auto)
+        {
+            skyboxAngular += Time.deltaTime * skyboxRotateSpeed;
+        }
         RenderSettings.skybox.SetFloat("_Rotation", skyboxAngular);
     }
 }

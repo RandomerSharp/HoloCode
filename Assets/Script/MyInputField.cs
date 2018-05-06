@@ -137,6 +137,9 @@ public class MyInputField : MonoBehaviour, IVKeyInput
     private int posX, posY;
     private bool codeUpdate;
     private List<string> codeLine;
+    private List<bool> revised;
+    private int page;
+    private int maxLine;
 
     private float lineHeight = 4.22f;
     private int spaceCount = 0;
@@ -148,7 +151,12 @@ public class MyInputField : MonoBehaviour, IVKeyInput
         posY = 0;
         if (codeLine != null) codeLine.Clear();
         else codeLine = new List<string>();
+        if (revised != null) revised.Clear();
+        else revised = new List<bool>();
         codeLine.Add(string.Empty);
+        revised.Add(false);
+        page = 0;
+        maxLine = 47;
     }
 
     private void OnEnable()
@@ -174,10 +182,11 @@ public class MyInputField : MonoBehaviour, IVKeyInput
             {
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
-                    posX++;
+                    if (posX >= maxLine) page++;
+                    else posX++;
                     posY = 0;
                     spaceCount = 0;
-                    foreach (var item in codeLine[posX - 1])
+                    foreach (var item in codeLine[posX + page - 1])
                     {
                         if (item == '\t') spaceCount += 4;
                         else if (item == ' ') spaceCount += 1;
@@ -204,14 +213,16 @@ public class MyInputField : MonoBehaviour, IVKeyInput
                         posX--;
                         if (posX > 0)
                         {
-                            codeLine.RemoveAt(posX + 1);
-                            posY = codeLine[posX].Length;
+                            codeLine.RemoveAt(posX + page + 1);
+                            revised.RemoveAt(posX + page + 1);
+                            posY = codeLine[posX + page].Length;
                         }
                         else posX++;
                     }
                     else
                     {
-                        codeLine[posX] = codeLine[posX].Remove(posY);
+                        codeLine[posX + page] = codeLine[posX].Remove(posY);
+                        revised[posX + page] = true;
                     }
                 }
                 else if (Input.inputString.Length > 0)
@@ -220,15 +231,18 @@ public class MyInputField : MonoBehaviour, IVKeyInput
 
                     if (posY == 0)
                     {
-                        codeLine[posX] = Input.inputString + codeLine[posX];
+                        codeLine[posX + page] = Input.inputString + codeLine[posX + page];
+                        revised[posX + page] = true;
                     }
-                    else if (posY == codeLine[posX].Length)
+                    else if (posY == codeLine[posX + page].Length)
                     {
-                        codeLine[posX] += Input.inputString;
+                        codeLine[posX + page] += Input.inputString;
+                        revised[posX + page] = true;
                     }
                     else
                     {
-                        codeLine[posX] = codeLine[posX].Insert(posY, Input.inputString);
+                        codeLine[posX + page] = codeLine[posX + page].Insert(posY, Input.inputString);
+                        revised[posX + page] = true;
                     }
                     posY += Input.inputString.Length;
                 }
@@ -241,9 +255,10 @@ public class MyInputField : MonoBehaviour, IVKeyInput
     private void UpdateCode()
     {
         System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-        for (int i = 1; i < codeLine.Count; i++)
+        for (int i = 0; i < maxLine; i++)
         {
-            string dis = codeLine[i].Replace("#include", "<#990f0fff>#include</color>");
+            if (i + page >= codeLine.Count) break;
+            string dis = codeLine[i + page].Replace("#include", "<#990f0fff>#include</color>");
             dis = dis.Replace("int", "<#0707a0ff>int</color>");
             dis = dis.Replace("using", "<#0707a0ff>using</color>");
             dis = dis.Replace("namespace", "<#0707a0ff>namespace</color>");
@@ -273,6 +288,16 @@ public class MyInputField : MonoBehaviour, IVKeyInput
         posY = codeLine.LastOrDefault().Length;
 
         UpdateCode();
+    }
+
+    public string GetText()
+    {
+        System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+        foreach (var l in codeLine)
+        {
+            stringBuilder.AppendLine(l);
+        }
+        return stringBuilder.ToString();
     }
 
     public void VKeyInput(KeyCode key)
