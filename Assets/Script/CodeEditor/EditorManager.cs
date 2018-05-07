@@ -1,4 +1,6 @@
 ﻿using MixedRealityToolkit.Common;
+using MixedRealityToolkit.InputModule.EventData;
+using MixedRealityToolkit.InputModule.InputHandlers;
 using MixedRealityToolkit.UX.Collections;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +8,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-public class EditorManager : MonoBehaviour
+public class EditorManager : MonoBehaviour, IPointerHandler
 {
     private GameObject workspacePanel;
     private bool workspacePanelActive;
@@ -59,6 +61,10 @@ public class EditorManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="fileName">相对项目目录的路径</param>
     public void Create(string fileName)
     {
         var opened = (from i in tabsList
@@ -74,25 +80,17 @@ public class EditorManager : MonoBehaviour
         c.transform.localPosition = Vector3.down;
         c.transform.localRotation = Quaternion.identity;
         c.transform.localScale = Vector3.one;
-        //c.transform.Find("Title").Find("Text1").GetComponent<TextMesh>().text = fileName;
-        c.GetComponent<CodeTabManager>().FileName = fileName;
-        c.GetComponent<CodeTabManager>().Path = FileAndDictionary.Instance.FolderPath;//path;
 
-        //using (Stream stream = new FileStream(path + '\\' + fileName, FileMode.Open))
-        //{
-        //using (StreamReader reader = new StreamReader(stream))
-        //{
-        string code = FileAndDictionary.Instance.OpenFile(fileName);//reader.ReadToEnd();
-        //c.GetComponentInChildren<TMPro.TextMeshPro>().text = code;
+        c.GetComponent<CodeTabManager>().FileName = fileName;
+        c.GetComponent<CodeTabManager>().Path = FileAndDictionary.Instance.FolderPath;
+
+        string code = FileAndDictionary.Instance.OpenFile(fileName);
         c.GetComponentInChildren<MyInputField>().SetText(code);
-        //}
-        //}
-        //GameObject.Find("DictionaryTree").GetComponent<SphereBasedTagalong>().enabled = false;
+
         transform.position = new Vector3(CameraCache.Main.transform.position.x, transform.position.y, CameraCache.Main.transform.position.z);
 
         tabsList.AddLast(c);
         GetComponent<ObjectCollection>().UpdateCollection();
-        //SelectAndInsert(c);
     }
 
     public void Remove(GameObject obj)
@@ -112,5 +110,20 @@ public class EditorManager : MonoBehaviour
         }
         tabsList.Clear();
         //DestroyImmediate(gameObject);
+    }
+
+    public void OnPointerUp(ClickEventData eventData)
+    {
+
+    }
+
+    public void OnPointerDown(ClickEventData eventData)
+    {
+
+    }
+
+    public void OnPointerClicked(ClickEventData eventData)
+    {
+
     }
 }

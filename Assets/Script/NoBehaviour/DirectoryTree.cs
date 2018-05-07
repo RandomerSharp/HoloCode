@@ -79,7 +79,7 @@ public class DirectoryTree
             o.GetComponentInChildren<TextMesh>().text = l;
             o.SetActive(false);
 
-            DirectoryTree ch = new DirectoryTree(System.IO.Path.Combine(curAbsPath, l), parentTrans);
+            DirectoryTree ch = new DirectoryTree(System.IO.Path.Combine(curAbsPath, l), o.transform);
             ch.ScanFolder(folderPrefab, filePrefab);
             //ScanFolder(System.IO.Path.Combine(path, folders[i]), folderPrefab, filePrefab);
             children.Add(ch);
@@ -114,9 +114,9 @@ public class DirectoryTree
         if (extended == false)
         {
             Vector3 par = parentTrans.localPosition;
-            par.y = 0;
+            par.y = parentTrans.name == "DictionaryTree" ? 0 : -1;
             par.z = 0;
-            par.x += 0.5f;
+            par.x += 0.25f;
 
             for (int i = 0; i < folderList.Count; i++)
             {
@@ -138,10 +138,17 @@ public class DirectoryTree
             }
             extended = true;
 
-            for (int i = 0; i < parentTrans.childCount; i++)
+            Transform ppp = parentTrans;
+            do
             {
-
+                for (int i = ppp.parent.childCount - 1; i >= 0; i--)
+                {
+                    if (ppp.parent.GetChild(i) == ppp) break;
+                    ppp.parent.GetChild(i).localPosition += Vector3.down * ItemCount;
+                }
+                ppp = ppp.parent;
             }
+            while (ppp.name != "DictionaryTree");
         }
         else
         {
@@ -151,10 +158,6 @@ public class DirectoryTree
 
     private void Collapse()
     {
-        foreach (var item in children)
-        {
-            item.Collapse();
-        }
         foreach (var item in folderList)
         {
             item.SetActive(false);
@@ -164,6 +167,16 @@ public class DirectoryTree
             item.SetActive(false);
         }
         extended = false;
+
+        Vector3 par = parentTrans.localPosition;
+        par.y = 0;
+        par.z = 0;
+        par.x += 0.5f;
+        for (int i = parentTrans.parent.childCount - 1; i >= 2; i--)
+        {
+            if (parentTrans.parent.GetChild(i) == parentTrans) break;
+            parentTrans.parent.GetChild(i).localPosition = Vector3.down * (i - 2);
+        }
     }
 
     public DirectoryTree Find(string name)

@@ -39,7 +39,7 @@ public class FolderItemSelect : ItemSelect
 
     public void OpenFolder()
     {
-        transform.parent.GetComponent<ScanDictionary>().OpenFolder(gameObject);
+        GetComponentInParent<ScanDictionary>().OpenFolder(gameObject);
     }
 
     public void OpenFile()
@@ -50,8 +50,20 @@ public class FolderItemSelect : ItemSelect
         while (t.parent.name != "DictionaryTree")
         {
             t = t.parent;
+            Debug.Log(t.name);
             fileName = System.IO.Path.Combine(t.name, fileName);
         }
-        GameObject.Find("Editor").GetComponent<EditorManager>().Create(gameObject.name);
+        GameObject.Find("Editor").GetComponent<EditorManager>().Create(fileName);
+    }
+
+    public void CreateProject()
+    {
+    }
+
+    public void OpenProject()
+    {
+        string proj = name;
+        FileAndDictionary.Instance.WorkspacePath = proj;
+        SceneManager.LoadScene("Editor", LoadSceneMode.Single);
     }
 }

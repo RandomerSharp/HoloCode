@@ -962,7 +962,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8d5b128a1d8204fb76c86f47b75912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PivotAxis: 6
+  PivotAxis: 0
   TargetTransform: {fileID: 738019560}
 --- !u!1 &1171449806
 GameObject:

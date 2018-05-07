@@ -174,7 +174,6 @@ public class ScanDictionary : MonoBehaviour
         DirectoryTree dtt = dt;
         for (int i = path.Count - 1; i >= 0; i--)
         {
-            Debug.Log(path[i]);
             dtt = dtt.Find(path[i]);
         }
         dtt.Extend();

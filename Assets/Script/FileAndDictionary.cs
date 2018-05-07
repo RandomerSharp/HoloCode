@@ -31,11 +31,11 @@ public class FileAndDictionary : MixedRealityToolkit.Common.Singleton<FileAndDic
     {
         get
         {
-#if UNITY_EDITOR
-            return "Demo";
-#else
+            //#if UNITY_EDITOR
+            //          return "Demo";
+            //#else
             return workspacePath;
-#endif
+            //#endif
         }
 
         set
@@ -47,24 +47,26 @@ public class FileAndDictionary : MixedRealityToolkit.Common.Singleton<FileAndDic
     {
         get
         {
-            return Path.Combine(rootPath, "Workspace", workspacePath);
+            //return Path.Combine(rootPath, "Workspace", workspacePath);
+            return Path.Combine(rootPath, workspacePath);
         }
     }
 
     protected override void Awake()
     {
         base.Awake();
-#if UNITY_EDITOR
-        rootPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        //#if UNITY_EDITOR
+        rootPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Workspace");
         //workspacePath = "Demo";
-#else
-        rootPath = KnownFolders.DocumentsLibrary.Path;
-#endif
+        //#else
+        //rootPath = KnownFolders.DocumentsLibrary.Path;
+        //#endif
     }
 
     public void CreateFile(string fileName)
     {
-        File.Create(Path.Combine(rootPath, "Workspace", workspacePath, fileName));
+        //File.Create(Path.Combine(rootPath, "Workspace", workspacePath, fileName));
+        File.Create(Path.Combine(rootPath, workspacePath, fileName));
     }
 
     public string OpenFile(string path, string name)
@@ -109,7 +111,8 @@ public class FileAndDictionary : MixedRealityToolkit.Common.Singleton<FileAndDic
     public void SaveBrainScript(string brainScript)
     {
         string fileName = string.Format("{0}.bs", System.DateTime.Now.Ticks.ToString());
-        using (Stream stream = new FileStream(Path.Combine(RootPath, "Workspace", "BrainScript", fileName), FileMode.OpenOrCreate, FileAccess.Write))
+        //using (Stream stream = new FileStream(Path.Combine(RootPath, "Workspace", "BrainScript", fileName), FileMode.OpenOrCreate, FileAccess.Write))
+        using (Stream stream = new FileStream(Path.Combine(RootPath, "BrainScript", fileName), FileMode.OpenOrCreate, FileAccess.Write))
         {
             using (StreamWriter sw = new StreamWriter(stream))
             {
