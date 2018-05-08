@@ -56,14 +56,15 @@ public class FolderItemSelect : ItemSelect
         GameObject.Find("Editor").GetComponent<EditorManager>().Create(fileName);
     }
 
-    public void CreateProject()
-    {
-    }
-
     public void OpenProject()
     {
-        string proj = name;
-        FileAndDictionary.Instance.WorkspacePath = proj;
-        SceneManager.LoadScene("Editor", LoadSceneMode.Single);
+        string proj = gameObject.name;
+        FileAndDictionary.Instance.ProjectName = proj;
+        var trans = GameObject.Find("HUD").transform.Find("RotatingOrbs");
+        trans.gameObject.SetActive(true);
+        StartCoroutine(Await(SceneManager.LoadSceneAsync("Editor", LoadSceneMode.Single), () =>
+        {
+            GameObject.Find("HUD").transform.Find("RotatingOrbs")?.gameObject.gameObject.SetActive(false);
+        }));
     }
 }

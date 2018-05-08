@@ -43,7 +43,8 @@ public class ParamTypein : MonoBehaviour, IVKeyInput, IPointerHandler
         if (!enableInput) return;
         if (key == KeyCode.Return)
         {
-            transform.parent.parent.parent.GetComponentInChildren<Keyboard>().InputTarget = gameObject;
+            //transform.parent.parent.parent.GetComponentInChildren<Keyboard>().InputTarget = gameObject;
+            GameObject.Find("HUD").GetComponentInChildren<Keyboard>().InputTarget = gameObject;
             enableInput = false;
             return;
         }
@@ -94,7 +95,8 @@ public class ParamTypein : MonoBehaviour, IVKeyInput, IPointerHandler
         {
             item.enableInput = false;
         }
-        transform.parent.parent.parent.GetComponentInChildren<Keyboard>().InputTarget = gameObject;
+        //transform.parent.parent.parent.GetComponentInChildren<Keyboard>().InputTarget = gameObject;
+        GameObject.Find("HUD").GetComponentInChildren<Keyboard>().InputTarget = gameObject;
         enableInput = true;
     }
 }

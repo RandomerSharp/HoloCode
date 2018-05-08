@@ -5,17 +5,25 @@ using UnityEngine;
 
 public class ParamSelect : MonoBehaviour
 {
+    [SerializeField]
     private List<string> allSelection;
     private string paramName;
     private int currentSelect;
 
     private void Awake()
     {
-        allSelection = new List<string>();
+        if (allSelection != null && allSelection.Count > 0)
+        {
+            currentSelect = 0;
+            transform.Find("InputField/Text").GetComponent<TextMesh>().text = allSelection[currentSelect];
+        }
     }
 
     public void SetType(Type type, string variable, int cur)
     {
+        if (allSelection == null) allSelection = new List<string>();
+        else allSelection.Clear();
+
         paramName = variable;
         transform.Find("Param").GetComponent<TextMesh>().text = paramName;
         currentSelect = cur;

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SingleLineInput : MonoBehaviour, IVKeyInput
 {
-    public Action InputComplate;
+    public Action<string> InputComplate;
 
     private TMPro.TextMeshPro tmpro;
 
@@ -28,7 +28,7 @@ public class SingleLineInput : MonoBehaviour, IVKeyInput
     {
         if (key == KeyCode.Return)
         {
-            InputComplate.Invoke();
+            InputComplate.Invoke(tmpro.text);
             gameObject.SetActive(false);
             return;
         }
@@ -45,7 +45,7 @@ public class SingleLineInput : MonoBehaviour, IVKeyInput
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            InputComplate.Invoke();
+            InputComplate.Invoke(tmpro.text);
             gameObject.SetActive(false);
             return;
         }

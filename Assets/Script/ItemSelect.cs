@@ -70,6 +70,16 @@ public class ItemSelect : FocusTarget, IPointerHandler//, IInputClickHandler, IF
         SceneManager.LoadScene(fromScene, LoadSceneMode.Single);
     }
 
+    public void CreateProject()
+    {
+        var quad = GameObject.Find("HUD").transform.Find("Quad");
+        var keyboard = GameObject.Find("HUD").transform.Find("Keyboard");
+
+        quad.gameObject.SetActive(true);
+        keyboard.gameObject.SetActive(true);
+        keyboard.GetComponent<Keyboard>().InputTarget = quad.GetComponentInChildren<ParamTypein>().gameObject;
+    }
+
     public void CreateFile()
     {
         Transform root = GameObject.Find("HUD").transform;
@@ -78,9 +88,10 @@ public class ItemSelect : FocusTarget, IPointerHandler//, IInputClickHandler, IF
 
         GameObject singleLine = root.Find("SignleLineInput").gameObject;
         singleLine.SetActive(true);
-        singleLine.GetComponent<SingleLineInput>().InputComplate = () =>
+        singleLine.GetComponent<SingleLineInput>().InputComplate = (inputContent) =>
         {
-            FileAndDictionary.Instance.CreateFile(singleLine.GetComponent<SingleLineInput>().GetContent());
+            //FileAndDictionary.Instance.CreateFile(singleLine.GetComponent<SingleLineInput>().GetContent());
+            FileAndDictionary.Instance.CreateFile(inputContent);
             singleLine.SetActive(false);
             keyboard.SetActive(false);
 
@@ -92,6 +103,25 @@ public class ItemSelect : FocusTarget, IPointerHandler//, IInputClickHandler, IF
     public void CreateFolder()
     {
 
+    }
+
+    public void CreateProjectReality()
+    {
+        string projName = GameObject.Find("HUD/Quad/SingleInput").GetComponentInChildren<TextMesh>().text;
+        string type = GameObject.Find("HUD/Quad/SingleSelect").GetComponentInChildren<TextMesh>().text;
+
+        if (!FileAndDictionary.Instance.CreateProject(projName))
+        {
+            return;
+        }
+        FileAndDictionary.Instance.ProjectName = projName;
+        FileAndDictionary.Instance.SaveFile(".taurus", string.Format("{{ \"{0}\" = {1}}}", "type", type));
+    }
+
+    public void CancelCreate()
+    {
+        transform.parent.parent.Find("Keyboard").gameObject.SetActive(false);
+        transform.parent.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -109,5 +139,14 @@ public class ItemSelect : FocusTarget, IPointerHandler//, IInputClickHandler, IF
     public void OnPointerClicked(ClickEventData eventData)
     {
         onClick.Invoke();
+    }
+
+    protected virtual IEnumerator Await(AsyncOperation aop, System.Action complated)
+    {
+        while (!aop.isDone)
+        {
+            yield return null;
+        }
+        complated?.Invoke();
     }
 }
