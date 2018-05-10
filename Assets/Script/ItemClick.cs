@@ -91,7 +91,7 @@ public class ItemClick : MonoBehaviour, IPointerHandler
 
     public void SaveBrainScript()
     {
-        FileAndDictionary.Instance.SaveBrainScript(transform.parent.GetComponentInChildren<TMPro.TextMeshPro>().text);
+        FileAndDirectory.Instance.SaveBrainScript(transform.parent.GetComponentInChildren<TMPro.TextMeshPro>().text);
     }
 
     public void SaveParam()
@@ -107,6 +107,16 @@ public class ItemClick : MonoBehaviour, IPointerHandler
     public void Delete()
     {
         GetComponentInParent<Inspector>().Delete();
+    }
+
+    public void PageUpClick()
+    {
+        transform.parent.GetComponentInChildren<MyInputField>().PageUp();
+    }
+
+    public void PageDownClick()
+    {
+        transform.parent.GetComponentInChildren<MyInputField>().PageDown();
     }
 
     private void Update()

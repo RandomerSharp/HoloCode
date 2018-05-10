@@ -363,4 +363,15 @@ public class MyInputField : MonoBehaviour, IVKeyInput
             posY++;
         }
     }
+
+    public void PageUp()
+    {
+        page--;
+        if (page < 0) page = 0;
+    }
+
+    public void PageDown()
+    {
+        page++;
+    }
 }

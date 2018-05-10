@@ -2,7 +2,6 @@
 using MixedRealityToolkit.InputModule.Focus;
 using MixedRealityToolkit.InputModule.InputHandlers;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -18,11 +17,12 @@ public class ItemSelect : FocusTarget, IPointerHandler//, IInputClickHandler, IF
 
     public override void OnFocusEnter(FocusEventData eventData)
     {
-        foreach (var child in GetComponentsInChildren<Transform>())
+        base.OnFocusEnter(eventData);
+        /*foreach (var child in GetComponentsInChildren<Transform>())
         {
             child.gameObject.layer = LayerMask.NameToLayer("Highlight");
             //Debug.Log(child.name);
-        }
+        }*/
         isFocused = true;
         boundingBox?.SetActive(true);
         //if (onFocusEnter != null) onFocusEnter.Invoke();
@@ -30,11 +30,12 @@ public class ItemSelect : FocusTarget, IPointerHandler//, IInputClickHandler, IF
 
     public override void OnFocusExit(FocusEventData eventData)
     {
+        base.OnFocusExit(eventData);
         isFocused = false;
-        foreach (var child in GetComponentsInChildren<Transform>())
+        /*foreach (var child in GetComponentsInChildren<Transform>())
         {
             child.gameObject.layer = LayerMask.NameToLayer("Default");
-        }
+        }*/
         boundingBox?.SetActive(false);
         //if (onFocusExit != null) onFocusExit.Invoke();
     }
@@ -78,6 +79,7 @@ public class ItemSelect : FocusTarget, IPointerHandler//, IInputClickHandler, IF
         quad.gameObject.SetActive(true);
         keyboard.gameObject.SetActive(true);
         keyboard.GetComponent<Keyboard>().InputTarget = quad.GetComponentInChildren<ParamTypein>().gameObject;
+        quad.GetComponentInChildren<ParamTypein>().EnableInput = true;
     }
 
     public void CreateFile()
@@ -91,7 +93,7 @@ public class ItemSelect : FocusTarget, IPointerHandler//, IInputClickHandler, IF
         singleLine.GetComponent<SingleLineInput>().InputComplate = (inputContent) =>
         {
             //FileAndDictionary.Instance.CreateFile(singleLine.GetComponent<SingleLineInput>().GetContent());
-            FileAndDictionary.Instance.CreateFile(inputContent);
+            FileAndDirectory.Instance.CreateFile(inputContent);
             singleLine.SetActive(false);
             keyboard.SetActive(false);
 
@@ -107,15 +109,17 @@ public class ItemSelect : FocusTarget, IPointerHandler//, IInputClickHandler, IF
 
     public void CreateProjectReality()
     {
-        string projName = GameObject.Find("HUD/Quad/SingleInput").GetComponentInChildren<TextMesh>().text;
-        string type = GameObject.Find("HUD/Quad/SingleSelect").GetComponentInChildren<TextMesh>().text;
+        string projName = GameObject.Find("HUD/Quad/SingleLineInput").GetComponentInChildren<ParamTypein>().GetValue();
+        string type = GameObject.Find("HUD/Quad/SingleLineSelect").GetComponentInChildren<ParamSelect>().GetValueName();
 
-        if (!FileAndDictionary.Instance.CreateProject(projName))
+        if (!FileAndDirectory.Instance.CreateProject(projName))
         {
             return;
         }
-        FileAndDictionary.Instance.ProjectName = projName;
-        FileAndDictionary.Instance.SaveFile(".taurus", string.Format("{{ \"{0}\" = {1}}}", "type", type));
+        FileAndDirectory.Instance.ProjectName = projName;
+        FileAndDirectory.Instance.SaveFile("config.taurus", string.Format("{{ \"{0}\" = \"{1}\"}}", "type", type));
+
+        CancelCreate();
     }
 
     public void CancelCreate()

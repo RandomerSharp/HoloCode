@@ -7783,7 +7783,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1380677223139516}
-  m_Text: M
+  m_Text: B
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -8840,6 +8840,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 54
   shiftKey: 94
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -8857,6 +8858,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 102
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -8874,6 +8876,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 56
   shiftKey: 42
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -8891,6 +8894,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 13
   shiftKey: 0
+  hasShift: 0
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -8908,6 +8912,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 99
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -8925,6 +8930,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 32
   shiftKey: 0
+  hasShift: 0
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -8942,6 +8948,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 8
   shiftKey: 0
+  hasShift: 0
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -8959,6 +8966,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 113
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -8976,6 +8984,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 45
   shiftKey: 95
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -8993,6 +9002,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 46
   shiftKey: 62
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9010,6 +9020,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 111
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9027,6 +9038,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 106
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9044,6 +9056,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 120
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9061,6 +9074,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 122
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9078,6 +9092,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 107
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9095,6 +9110,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 53
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9112,6 +9128,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 275
   shiftKey: 0
+  hasShift: 0
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9129,6 +9146,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 44
   shiftKey: 60
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9146,6 +9164,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 57
   shiftKey: 40
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9163,6 +9182,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 115
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9180,6 +9200,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 92
   shiftKey: 0
+  hasShift: 0
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9197,6 +9218,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 52
   shiftKey: 36
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9214,6 +9236,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 48
   shiftKey: 41
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9231,6 +9254,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 112
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9248,6 +9272,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 304
   shiftKey: 0
+  hasShift: 0
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9265,6 +9290,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 108
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9282,6 +9308,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 51
   shiftKey: 35
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9299,6 +9326,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 276
   shiftKey: 0
+  hasShift: 0
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9316,6 +9344,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 101
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9333,6 +9362,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 98
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9350,6 +9380,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 114
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9366,7 +9397,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   focusEnabled: 1
   key: 59
-  shiftKey: 0
+  shiftKey: 58
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9384,6 +9416,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 0
   shiftKey: 0
+  hasShift: 0
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9401,6 +9434,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 117
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9418,6 +9452,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 109
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9435,6 +9470,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 121
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9452,6 +9488,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 49
   shiftKey: 33
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9469,6 +9506,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 104
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9486,6 +9524,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 119
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9503,6 +9542,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 103
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9532,6 +9572,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 100
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9549,6 +9590,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 118
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9566,6 +9608,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 97
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9583,6 +9626,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 61
   shiftKey: 43
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9600,6 +9644,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 110
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9617,6 +9662,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 47
   shiftKey: 63
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9634,6 +9680,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 105
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9651,6 +9698,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 50
   shiftKey: 64
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9668,6 +9716,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 55
   shiftKey: 38
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}
@@ -9685,6 +9734,7 @@ MonoBehaviour:
   focusEnabled: 1
   key: 116
   shiftKey: 0
+  hasShift: 1
   keyBoard: {fileID: 114778076945286848}
   normalColor: {r: 0.14117648, g: 0.18039216, b: 0.25882354, a: 1}
   focusColor: {r: 0.30980393, g: 0.36078432, b: 0.47058824, a: 1}

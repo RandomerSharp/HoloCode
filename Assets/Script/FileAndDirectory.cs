@@ -9,7 +9,7 @@ using System.IO;
 #if UNITY_WSA && NETFX_CORE
 using Windows.Storage;
 #endif
-public class FileAndDictionary : MixedRealityToolkit.Common.Singleton<FileAndDictionary>
+public class FileAndDirectory : MixedRealityToolkit.Common.Singleton<FileAndDirectory>
 {
     private string workspacePath;
     private string projectName;

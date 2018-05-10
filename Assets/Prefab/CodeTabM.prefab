@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 23638012738497546}
   - component: {fileID: 33819554943808758}
   - component: {fileID: 65038246130412748}
+  - component: {fileID: 114584596902770568}
   m_Layer: 0
   m_Name: PageUp
   m_TagString: Untagged
@@ -164,6 +165,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4148992274629332}
   - component: {fileID: 114611040596405802}
+  - component: {fileID: 114010326468268690}
+  - component: {fileID: 65548726014952134}
   m_Layer: 0
   m_Name: CodeTabM
   m_TagString: Untagged
@@ -180,7 +183,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4982621726464152}
   - component: {fileID: 33276761465319812}
-  - component: {fileID: 65041311636498354}
   - component: {fileID: 23081081094111022}
   m_Layer: 0
   m_Name: Title
@@ -255,7 +257,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4799223883035268}
   - component: {fileID: 33200584728883584}
-  - component: {fileID: 65345430757678648}
   - component: {fileID: 23405703623976390}
   m_Layer: 0
   m_Name: Func
@@ -294,6 +295,7 @@ GameObject:
   - component: {fileID: 23216502336790466}
   - component: {fileID: 33741536727600560}
   - component: {fileID: 65647904734769820}
+  - component: {fileID: 114809285871614036}
   m_Layer: 0
   m_Name: PageDown
   m_TagString: Untagged
@@ -326,7 +328,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1005969129888446}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.05}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 4825850309593442}
@@ -401,7 +403,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1241048593479050}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.05}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 4753054240058040}
@@ -429,7 +431,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1097643538299642}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.48, y: 0, z: -0.01}
+  m_LocalPosition: {x: -0.48, y: 0, z: -0.05}
   m_LocalScale: {x: 0.01, y: 0.1, z: 1}
   m_Children: []
   m_Father: {fileID: 4982621726464152}
@@ -497,7 +499,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1280730570004660}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.05}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 4817988944704326}
@@ -510,7 +512,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1717329070529490}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.05}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 4331111850442078}
@@ -537,7 +539,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1283122001457400}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.05}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 4048074206330350}
@@ -1279,18 +1281,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65041311636498354
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1347607623772400}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 0.01}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65309820451050164
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1301,20 +1291,20 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 0.03}
+  m_Size: {x: 1, y: 1, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65345430757678648
+--- !u!65 &65548726014952134
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1552337454429230}
+  m_GameObject: {fileID: 1321896200705236}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 0.01}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 11, y: 1, z: 0.1}
+  m_Center: {x: -0.5, y: 5.5, z: 0}
 --- !u!65 &65647904734769820
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1393,6 +1383,18 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
+--- !u!114 &114010326468268690
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1321896200705236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ae6e8177904b814096fbd8c06845fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HostTransform: {fileID: 0}
 --- !u!114 &114146981732012948
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1572,7 +1574,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171ec1631cfd6174b8101ba40855e27a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  focusEnabled: 1
   normalColor: {r: 0.49264705, g: 0.49264705, b: 0.49264705, a: 1}
   highLightColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &114415490547233380
@@ -1586,6 +1587,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e5558f060ab1bf4699fd755ddab010b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114584596902770568
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1209924616074672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f10d890e4be8ca5439deb3013251856c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114584596902770568}
+        m_MethodName: PageUpClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114611040596405802
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1608,6 +1636,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e5558f060ab1bf4699fd755ddab010b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114809285871614036
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1689819986259900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f10d890e4be8ca5439deb3013251856c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114809285871614036}
+        m_MethodName: PageDownClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!222 &222115286729393282
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -1621,7 +1676,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1537328082735288}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.01}
+  m_LocalPosition: {x: 0, y: 0, z: -0.05}
   m_LocalScale: {x: 0.01, y: 0.005, z: 1}
   m_Children: []
   m_Father: {fileID: 4565546459068684}

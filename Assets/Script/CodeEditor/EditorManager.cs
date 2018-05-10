@@ -82,9 +82,9 @@ public class EditorManager : MonoBehaviour, IPointerHandler
         c.transform.localScale = Vector3.one;
 
         c.GetComponent<CodeTabManager>().FileName = fileName;
-        c.GetComponent<CodeTabManager>().Path = FileAndDictionary.Instance.FolderPath;
+        c.GetComponent<CodeTabManager>().Path = FileAndDirectory.Instance.FolderPath;
 
-        string code = FileAndDictionary.Instance.OpenFile(fileName);
+        string code = FileAndDirectory.Instance.OpenFile(fileName);
         c.GetComponentInChildren<MyInputField>().SetText(code);
 
         transform.position = new Vector3(CameraCache.Main.transform.position.x, transform.position.y, CameraCache.Main.transform.position.z);

@@ -62,8 +62,8 @@ public class DirectoryTree
     {
         extended = false;
 
-        var folders = FileAndDictionary.Instance.GetFoldersInFolder(curAbsPath);
-        var files = FileAndDictionary.Instance.GetFilesInFolder(curAbsPath);
+        var folders = FileAndDirectory.Instance.GetFoldersInFolder(curAbsPath);
+        var files = FileAndDirectory.Instance.GetFilesInFolder(curAbsPath);
         for (int i = 0; i < folders.Length; i++)
         {
             var l = folders[i].Remove(0, curAbsPath.Length).Substring(1);

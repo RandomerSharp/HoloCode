@@ -261,6 +261,10 @@ Prefab:
       propertyPath: m_Text
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1479667460063952, guid: 7bcc14d4f07dfcf47b788bbafe1d19df, type: 2}
+      propertyPath: m_Name
+      value: SingleLineInput
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7bcc14d4f07dfcf47b788bbafe1d19df, type: 2}
   m_IsPrefabParent: 0
@@ -1103,6 +1107,10 @@ Prefab:
       propertyPath: allSelection.Array.data[1]
       value: JavaScript
       objectReference: {fileID: 0}
+    - target: {fileID: 1939780290120728, guid: 38a960f10391d564093e4d7fa44efa1b, type: 2}
+      propertyPath: m_Name
+      value: SingleLineSelect
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 38a960f10391d564093e4d7fa44efa1b, type: 2}
   m_IsPrefabParent: 0
@@ -1172,6 +1180,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   boundingBox: {fileID: 36554053}
+  dialogPrefab: {fileID: 0}
 --- !u!65 &1381936284
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1320,6 +1329,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   boundingBox: {fileID: 333088665}
+  dialogPrefab: {fileID: 0}
 --- !u!65 &1441280386
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1380,7 +1390,19 @@ Prefab:
       propertyPath: m_Text
       value: Quit
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114454658282682996, guid: a2cd04c2dbd306042ad5aa26985ea3cb,
+        type: 2}
+      propertyPath: boundingBox
+      value: 
+      objectReference: {fileID: 1592236511}
+    - target: {fileID: 114454658282682996, guid: a2cd04c2dbd306042ad5aa26985ea3cb,
+        type: 2}
+      propertyPath: dialogPrefab
+      value: 
+      objectReference: {fileID: 1302394645271036, guid: 675f0fa1333683640974b1e6c078079e,
+        type: 2}
+    m_RemovedComponents:
+    - {fileID: 114454658282682996, guid: a2cd04c2dbd306042ad5aa26985ea3cb, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: a2cd04c2dbd306042ad5aa26985ea3cb, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &1592236510 stripped
@@ -1388,6 +1410,47 @@ Transform:
   m_PrefabParentObject: {fileID: 4878255906630102, guid: a2cd04c2dbd306042ad5aa26985ea3cb,
     type: 2}
   m_PrefabInternal: {fileID: 1592236509}
+--- !u!1 &1592236511 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1668233735840296, guid: a2cd04c2dbd306042ad5aa26985ea3cb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1592236509}
+--- !u!1 &1623316050 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1735894595162028, guid: a2cd04c2dbd306042ad5aa26985ea3cb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1592236509}
+--- !u!114 &1623316051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1623316050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a93a8b649c7aa5644a835daa65514ae7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  focusEnabled: 1
+  onClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1623316051}
+        m_MethodName: Quit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  boundingBox: {fileID: 1592236511}
+  dialogPrefab: {fileID: 1302394645271036, guid: 675f0fa1333683640974b1e6c078079e,
+    type: 2}
 --- !u!1 &1630093288
 GameObject:
   m_ObjectHideFlags: 0
@@ -1449,6 +1512,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   boundingBox: {fileID: 1707379591}
+  dialogPrefab: {fileID: 0}
 --- !u!65 &1630093291
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2218,6 +2282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0db18d33b8b52f48922d4146927ee75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontDestroyParentRootOnLoad: 1
   mode: 0
   skyboxRotateSpeed: 0
   skyboxAngular: 0

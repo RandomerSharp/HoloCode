@@ -59,7 +59,7 @@ public class FolderItemSelect : ItemSelect
     public void OpenProject()
     {
         string proj = gameObject.name;
-        FileAndDictionary.Instance.ProjectName = proj;
+        FileAndDirectory.Instance.ProjectName = proj;
         var trans = GameObject.Find("HUD").transform.Find("RotatingOrbs");
         trans.gameObject.SetActive(true);
         StartCoroutine(Await(SceneManager.LoadSceneAsync("Editor", LoadSceneMode.Single), () =>

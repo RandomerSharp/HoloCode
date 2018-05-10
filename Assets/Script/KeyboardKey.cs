@@ -10,6 +10,8 @@ public class KeyboardKey : FocusTarget, IPointerHandler
     public KeyCode key;
     public KeyCode shiftKey;
     [SerializeField]
+    private bool hasShift;
+    [SerializeField]
     private Keyboard keyBoard;
     [SerializeField]
     private Color normalColor;
@@ -22,13 +24,20 @@ public class KeyboardKey : FocusTarget, IPointerHandler
     public void Shift()
     {
         shift = !shift;
-        if (shift && shiftKey != KeyCode.None)
+        if (shift && hasShift)
         {
+            if (shiftKey == KeyCode.None && key <= KeyCode.Z && key >= KeyCode.A)
+            {
+                shiftKey = key - (int)KeyCode.A + 'A';
+            }
             GetComponentInChildren<TextMesh>().text = ((char)shiftKey).ToString();
         }
         else
         {
-            GetComponentInChildren<TextMesh>().text = ((char)key).ToString();
+            if (hasShift)
+            {
+                GetComponentInChildren<TextMesh>().text = ((char)key).ToString();
+            }
         }
     }
 
@@ -59,13 +68,13 @@ public class KeyboardKey : FocusTarget, IPointerHandler
     {
         GetComponent<Renderer>().material.color = normalColor;
         enableClick = false;
-        if (shift)
+        if (shift && hasShift)
         {
             if (shiftKey == KeyCode.None)
             {
                 if (key <= KeyCode.Z && key >= KeyCode.A)
                 {
-                    shiftKey = (KeyCode)(key - (int)KeyCode.A + 'A');
+                    shiftKey = key - (int)KeyCode.A + 'A';
                 }
                 else
                 {

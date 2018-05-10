@@ -1,10 +1,7 @@
-﻿using MixedRealityToolkit.InputModule.EventData;
-using MixedRealityToolkit.InputModule.InputHandlers;
-using System.Collections;
-using System.Collections.Generic;
+﻿using MixedRealityToolkit.Common;
 using UnityEngine;
 
-public class SceneSkyboxRotate : MonoBehaviour
+public class SceneSkyboxRotate : Singleton<SceneSkyboxRotate>
 {
     [System.Serializable]
     public struct SkyboxAndLight

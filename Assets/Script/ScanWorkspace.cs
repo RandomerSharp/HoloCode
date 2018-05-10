@@ -10,10 +10,10 @@ public class ScanWorkspace : MonoBehaviour
 
     private void Awake()
     {
-        var folders = FileAndDictionary.Instance.GetFoldersInFolder(FileAndDictionary.Instance.WorkspacePath);
+        var folders = FileAndDirectory.Instance.GetFoldersInFolder(FileAndDirectory.Instance.WorkspacePath);
         for (int i = 0; i < folders.Length; i++)
         {
-            string l = folders[i].Substring(FileAndDictionary.Instance.WorkspacePath.Length + 1);
+            string l = folders[i].Substring(FileAndDirectory.Instance.WorkspacePath.Length + 1);
             var o = Instantiate(folderObj);
             o.transform.parent = transform;
             o.transform.localPosition = Vector3.down * i;

@@ -1,107 +1,52 @@
-﻿using MixedRealityToolkit.InputModule.Utilities;
+﻿using MixedRealityToolkit.InputModule.EventData;
+using MixedRealityToolkit.InputModule.Focus;
+using MixedRealityToolkit.InputModule.InputHandlers;
+using MixedRealityToolkit.InputModule.InputSources;
+using MixedRealityToolkit.InputModule.Pointers;
+using MixedRealityToolkit.InputModule.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.WSA.Input;
 
-public class EditorRotate : MonoBehaviour
+public class EditorRotate : MonoBehaviour, IHoldHandler
 {
-    public InteractionSourceHandedness Handedness { get { return handedness; } }
+    private IInputSource inputSource;
+    private uint sourceId;
 
-    [SerializeField]
-    protected InteractionSourceHandedness handedness = InteractionSourceHandedness.Left;
-
-    public bool IsAttached { get; private set; }
-
-    protected MotionControllerInfo controller;
-
-    private void OnEnable()
+    private void Awake()
     {
-        if (MotionControllerVisualizer.Instance.TryGetControllerModel(handedness, out controller))
-        {
-            AttachElementToController(controller);
-        }
-
-        MotionControllerVisualizer.Instance.OnControllerModelLoaded += AttachElementToController;
-        MotionControllerVisualizer.Instance.OnControllerModelUnloaded += DetachElementFromController;
+        sourceId = uint.MaxValue;
     }
 
-    private void OnDisable()
+    public void OnHoldCanceled(InputEventData eventData)
     {
-        if (MotionControllerVisualizer.IsInitialized)
+        if (eventData.SourceId == sourceId)
         {
-            MotionControllerVisualizer.Instance.OnControllerModelLoaded -= AttachElementToController;
-            MotionControllerVisualizer.Instance.OnControllerModelUnloaded -= DetachElementFromController;
+            eventData.Use();
         }
     }
 
-    private void OnDestroy()
+    public void OnHoldCompleted(InputEventData eventData)
     {
-        if (MotionControllerVisualizer.IsInitialized)
+        if (eventData.SourceId == sourceId)
         {
-            MotionControllerVisualizer.Instance.OnControllerModelLoaded -= AttachElementToController;
-            MotionControllerVisualizer.Instance.OnControllerModelUnloaded -= DetachElementFromController;
+            eventData.Use();
         }
     }
 
-    private void AttachElementToController(MotionControllerInfo newController)
+    public void OnHoldStarted(InputEventData eventData)
     {
-        if (!IsAttached && newController.Handedness == handedness)
+        Debug.Log("Hold handler");
+        if (eventData.selectedObject == null || eventData.selectedObject.layer == 11)
         {
-            controller = newController;
-            OnAttachToController();
+            Debug.Log(eventData.Handedness);
+            inputSource = eventData.InputSource;
+            sourceId = eventData.SourceId;
 
-            IsAttached = true;
-        }
-    }
-
-    private void DetachElementFromController(MotionControllerInfo oldController)
-    {
-        if (IsAttached && oldController.Handedness == handedness)
-        {
-            OnDetachFromController();
-
-            controller = null;
-            transform.parent = null;
-
-            IsAttached = false;
-        }
-    }
-
-
-    private void OnAttachToController()
-    {
-        InteractionManager.InteractionSourceUpdated += InteractionSourceUpdated;
-    }
-
-    private void OnDetachFromController()
-    {
-        InteractionManager.InteractionSourceUpdated -= InteractionSourceUpdated;
-    }
-
-    private void InteractionSourceUpdated(InteractionSourceUpdatedEventArgs obj)
-    {
-        if (obj.state.source.handedness == handedness && obj.state.touchpadPressed)
-        {
-            Vector2 pos = Vector2.zero;
-            try
-            {
-                pos = obj.state.touchpadPosition;
-            }
-            catch (Exception e)
-            {
-                Debug.Log(e.Message);
-                return;
-            }
-            if (pos.x > 0.3f)
-            {
-                transform.Rotate(transform.up, 1f);
-            }
-            else if (pos.x < -0.3f)
-            {
-                transform.Rotate(transform.up, -1f);
-            }
+            eventData.Use();
         }
     }
 }

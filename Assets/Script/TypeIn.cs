@@ -9,7 +9,7 @@ using UnityEngine;
 /// <summary>
 /// 控制输入状态和输入事件（例如快捷键）
 /// </summary>
-public class TypeIn : FocusTarget, IPointerHandler//IFocusable
+public class TypeIn : MonoBehaviour, IPointerHandler//IFocusable
 {
     [SerializeField]
     private Color normalColor;
@@ -69,13 +69,13 @@ public class TypeIn : FocusTarget, IPointerHandler//IFocusable
         text.GetComponent<MyInputField>().enabled = true;
     }*/
 
-    public override void OnFocusExit(FocusEventData eventData)
+    /*public override void OnFocusExit(FocusEventData eventData)
     {
         //Debug.Log(gameObject.name + ": On focus exit");
         background.material.color = normalColor;
         text.GetComponent<MyInputField>().enabled = false;
         isFocus = false;
-    }
+    }*/
 
     private void Update()
     {
@@ -87,7 +87,7 @@ public class TypeIn : FocusTarget, IPointerHandler//IFocusable
 
     public void SaveFile()
     {
-        FileAndDictionary.Instance.SaveFile(FileAndDictionary.Instance.FullFilePath(gameObject.name), GetComponentInChildren<MyInputField>().GetText());
+        FileAndDirectory.Instance.SaveFile(FileAndDirectory.Instance.FullFilePath(gameObject.name), GetComponentInChildren<MyInputField>().GetText());
     }
 
     public void OnPointerUp(ClickEventData eventData) { }
@@ -103,7 +103,10 @@ public class TypeIn : FocusTarget, IPointerHandler//IFocusable
                        select ((TypeIn)i)).ToArray();
         foreach (var item in typeins)
         {
-            item.OnFocusExit(null);
+            //item.OnFocusExit(null);
+            background.material.color = normalColor;
+            text.GetComponent<MyInputField>().enabled = false;
+            isFocus = false;
         }
 
         text.GetComponent<MyInputField>().enabled = true;

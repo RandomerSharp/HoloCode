@@ -28,13 +28,13 @@ public class ScanDictionary : MonoBehaviour
     private void Awake()
     {
         //workspacePath = GameObject.Find("DataCache").GetComponent<DataCache>().Find("WorkspaceName");
-        var dataPath = FileAndDictionary.Instance.WorkspacePath;
+        var dataPath = FileAndDirectory.Instance.WorkspacePath;
         string workspacePath = "Demo";
         //folderList = new List<GameObject>();
         //fileList = new List<GameObject>();
-        FileAndDictionary.Instance.ProjectName = workspacePath;
+        FileAndDirectory.Instance.ProjectName = workspacePath;
         //UpdateDictionaryTree(FileAndDictionary.Instance.FolderPath, transform);
-        dt = new DirectoryTree(FileAndDictionary.Instance.FolderPath, transform);
+        dt = new DirectoryTree(FileAndDirectory.Instance.FolderPath, transform);
         dt.ScanFolder(folderObj, fileObj);
         dt.Extend();
     }

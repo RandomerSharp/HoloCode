@@ -54,4 +54,9 @@ public class ParamSelect : MonoBehaviour
     {
         return currentSelect;
     }
+
+    public string GetValueName()
+    {
+        return allSelection[currentSelect];
+    }
 }
