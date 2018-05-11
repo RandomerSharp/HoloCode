@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using UnityEngine;
-using System;
+﻿using System;
 using System.Linq;
 using System.IO;
 
@@ -124,9 +120,9 @@ public class FileAndDirectory : MixedRealityToolkit.Common.Singleton<FileAndDire
         return code;
     }
 
-    public void SaveFile(string fileName, string content)
+    public void SaveFile(string filePath, string content)
     {
-        using (Stream stream = new FileStream(Path.Combine(FolderPath, fileName), FileMode.OpenOrCreate, FileAccess.Write))
+        using (Stream stream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write))
         {
             using (StreamWriter sw = new StreamWriter(stream))
             {

@@ -1,22 +1,18 @@
 ﻿using MixedRealityToolkit.Common;
-using MixedRealityToolkit.Common.Extensions;
 using MixedRealityToolkit.InputModule;
 using MixedRealityToolkit.InputModule.EventData;
-using MixedRealityToolkit.InputModule.Focus;
 using MixedRealityToolkit.InputModule.InputHandlers;
 using MixedRealityToolkit.InputModule.InputSources;
-using MixedRealityToolkit.InputModule.Utilities;
 using MixedRealityToolkit.InputModule.Utilities.Interactions;
 using MixedRealityToolkit.UX.Collections;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.XR.WSA.Input;
 
-public class MoveAndPlace : MonoBehaviour, IInputHandler, ISourceStateHandler
+public class MoveAndPlace : MonoBehaviour, IInputHandler//, ISourceStateHandler
 {
     // Event that gets raised when user begins manipulating the object
     public event Action StartedManipulating;
@@ -46,7 +42,7 @@ public class MoveAndPlace : MonoBehaviour, IInputHandler, ISourceStateHandler
     private readonly Dictionary<uint, Vector3> m_handsPressedLocationsMap = new Dictionary<uint, Vector3>();
     // Maps input id -> input source. Then obtain position of input source using currentInputSource.TryGetGripPosition(currentInputSourceId, out inputPosition);
     private readonly Dictionary<uint, IInputSource> m_handsPressedInputSourceMap = new Dictionary<uint, IInputSource>();
-
+    private uint inputSourceId = 0;
 
     private void Awake()
     {
@@ -87,12 +83,22 @@ public class MoveAndPlace : MonoBehaviour, IInputHandler, ISourceStateHandler
         return result;
     }
 
+
     public void OnInputDown(InputEventData eventData)
     {
+        if (eventData.used) return;
         // Add to hand map
         m_handsPressedLocationsMap[eventData.SourceId] = GetInputPosition(eventData);
         m_handsPressedInputSourceMap[eventData.SourceId] = eventData.InputSource;
         UpdateStateMachine();
+
+        InteractionSourceKind sourceKind;
+        InteractionInputSources.Instance.TryGetSourceKind(eventData.SourceId, out sourceKind);
+        if (sourceKind == InteractionSourceKind.Controller || sourceKind == InteractionSourceKind.Hand)
+        {
+            inputSourceId = eventData.SourceId;
+        }
+
         eventData.Use();
     }
 
@@ -107,9 +113,9 @@ public class MoveAndPlace : MonoBehaviour, IInputHandler, ISourceStateHandler
         eventData.Use();
     }
 
-    public void OnSourceDetected(SourceStateEventData eventData)
+    /*public void OnSourceDetected(SourceStateEventData eventData)
     {
-    }
+    }*/
 
     private void RemoveSourceIdFromHandMap(uint sourceId)
     {
@@ -124,7 +130,7 @@ public class MoveAndPlace : MonoBehaviour, IInputHandler, ISourceStateHandler
         }
     }
 
-    public void OnSourceLost(SourceStateEventData eventData)
+    /*public void OnSourceLost(SourceStateEventData eventData)
     {
         RemoveSourceIdFromHandMap(eventData.SourceId);
         UpdateStateMachine();
@@ -133,7 +139,7 @@ public class MoveAndPlace : MonoBehaviour, IInputHandler, ISourceStateHandler
 
     public void OnSourcePositionChanged(SourcePositionEventData eventData) { }
 
-    public void OnSourceRotationChanged(SourceRotationEventData eventData) { }
+    public void OnSourceRotationChanged(SourceRotationEventData eventData) { }*/
 
     private void UpdateStateMachine()
     {
@@ -265,7 +271,9 @@ public class MoveAndPlace : MonoBehaviour, IInputHandler, ISourceStateHandler
         Assert.IsTrue(m_handsPressedLocationsMap.Count == 1);
 
         transform.parent = null;
-        GameObject.Find("Editor").GetComponent<ObjectCollection>().UpdateCollection();
+        Debug.Log(GameObject.Find("Editor").transform.childCount);
+        //GameObject.Find("Editor").GetComponent<ObjectCollection>().UpdateCollection();
+        gameObject.AddComponent<MixedRealityToolkit.Utilities.Billboard>();
 
         m_moveLogic.Setup(m_handsPressedLocationsMap.Values.First(), HostTransform);
     }
@@ -282,8 +290,21 @@ public class MoveAndPlace : MonoBehaviour, IInputHandler, ISourceStateHandler
         InputManager.PopModalInputHandler();
 
         transform.parent = GameObject.Find("Editor")?.transform;
-        //Physics.RaycastAll();
-        transform.SetSiblingIndex(0);
+        Destroy(GetComponent<MixedRealityToolkit.Utilities.Billboard>());
+        Ray ray;
+        InteractionInputSources.Instance.TryGetPointingRay(inputSourceId, out ray);
+        var dir = (ray.direction + (ray.origin - CameraCache.Main.transform.position)).normalized;
+        float minn = float.MaxValue;
+        int index = 0;
+        foreach (var t in GameObject.Find("Editor").GetComponentsInChildren<Transform>())
+        {
+            if (minn > Vector3.Angle(dir, t.position - CameraCache.Main.transform.position))
+            {
+                minn = Vector3.Angle(dir, t.position - CameraCache.Main.transform.position);
+                index = t.GetSiblingIndex();
+            }
+        }
+        transform.SetSiblingIndex(index);
         GetComponentInParent<ObjectCollection>().UpdateCollection();
     }
 }

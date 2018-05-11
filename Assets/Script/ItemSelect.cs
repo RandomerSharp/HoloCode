@@ -128,6 +128,28 @@ public class ItemSelect : FocusTarget, IPointerHandler//, IInputClickHandler, IF
         transform.parent.gameObject.SetActive(false);
     }
 
+
+    public void Close()
+    {
+        SaveFile();
+        GameObject.Find("Editor").GetComponent<EditorManager>().Remove(gameObject.transform.parent.gameObject);
+    }
+
+    public void SaveFile()
+    {
+        transform.parent.GetComponentInChildren<TypeIn>().SaveFile();
+    }
+
+    public void PageUpClick()
+    {
+        transform.parent.GetComponentInChildren<MyInputField>().PageUp();
+    }
+
+    public void PageDownClick()
+    {
+        transform.parent.GetComponentInChildren<MyInputField>().PageDown();
+    }
+
     private void Update()
     {
         if (isFocused && (Input.GetKeyUp(KeyCode.Return) || Input.GetMouseButtonDown(0)))
@@ -142,7 +164,9 @@ public class ItemSelect : FocusTarget, IPointerHandler//, IInputClickHandler, IF
 
     public void OnPointerClicked(ClickEventData eventData)
     {
+        Debug.Log("Clicked");
         onClick.Invoke();
+        eventData.Use();
     }
 
     protected virtual IEnumerator Await(AsyncOperation aop, System.Action complated)

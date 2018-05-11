@@ -731,7 +731,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 953190859}
-  - component: {fileID: 953190860}
   - component: {fileID: 953190858}
   m_Layer: 0
   m_Name: Managers
@@ -786,18 +785,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &953190860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 953190857}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d38cf7e7ebf2a3344a6e59576325eb25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dontDestroyParentRootOnLoad: 1
 --- !u!1 &1011299332
 GameObject:
   m_ObjectHideFlags: 0
@@ -1180,7 +1167,6 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   boundingBox: {fileID: 36554053}
-  dialogPrefab: {fileID: 0}
 --- !u!65 &1381936284
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1329,7 +1315,6 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   boundingBox: {fileID: 333088665}
-  dialogPrefab: {fileID: 0}
 --- !u!65 &1441280386
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1449,8 +1434,6 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   boundingBox: {fileID: 1592236511}
-  dialogPrefab: {fileID: 1302394645271036, guid: 675f0fa1333683640974b1e6c078079e,
-    type: 2}
 --- !u!1 &1630093288
 GameObject:
   m_ObjectHideFlags: 0
@@ -1512,7 +1495,6 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   boundingBox: {fileID: 1707379591}
-  dialogPrefab: {fileID: 0}
 --- !u!65 &1630093291
 BoxCollider:
   m_ObjectHideFlags: 0

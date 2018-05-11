@@ -1,8 +1,5 @@
 ﻿using MixedRealityToolkit.InputModule.EventData;
-using MixedRealityToolkit.InputModule.Focus;
 using MixedRealityToolkit.InputModule.InputHandlers;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -83,6 +80,14 @@ public class TypeIn : MonoBehaviour, IPointerHandler//IFocusable
         {
             SaveFile();
         }
+        if (Input.GetKeyDown(KeyCode.PageUp))
+        {
+            text.GetComponent<MyInputField>().PageUp();
+        }
+        if (Input.GetKeyDown(KeyCode.PageDown))
+        {
+            text.GetComponent<MyInputField>().PageDown();
+        }
     }
 
     public void SaveFile()
@@ -106,10 +111,12 @@ public class TypeIn : MonoBehaviour, IPointerHandler//IFocusable
             //item.OnFocusExit(null);
             background.material.color = normalColor;
             text.GetComponent<MyInputField>().enabled = false;
-            isFocus = false;
+            item.isFocus = false;
         }
 
         text.GetComponent<MyInputField>().enabled = true;
         isFocus = true;
+
+        eventData?.Use();
     }
 }

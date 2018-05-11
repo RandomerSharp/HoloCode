@@ -1,15 +1,8 @@
 ﻿using MixedRealityToolkit.InputModule.EventData;
 using MixedRealityToolkit.InputModule.InputHandlers;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-#if UNITY_WSA && NETFX_CORE 
-using Windows.Storage;
-#endif
 
 public class ItemClick : MonoBehaviour, IPointerHandler
 {
@@ -144,5 +137,6 @@ public class ItemClick : MonoBehaviour, IPointerHandler
     public void OnPointerClicked(ClickEventData eventData)
     {
         onClick.Invoke();
+        eventData.Use();
     }
 }

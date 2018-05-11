@@ -203,6 +203,7 @@ public class MyInputField : MonoBehaviour, IVKeyInput
                         l += ' ';
                     }
                     codeLine.Add(l);
+                    revised.Add(true);
                     posY = l.Length;
                 }
                 else if (Input.GetKeyDown(KeyCode.Backspace))
@@ -217,7 +218,14 @@ public class MyInputField : MonoBehaviour, IVKeyInput
                             revised.RemoveAt(posX + page + 1);
                             posY = codeLine[posX + page].Length;
                         }
-                        else posX++;
+                        else
+                        {
+                            posX++;
+                            if (page > 0)
+                            {
+                                page--;
+                            }
+                        }
                     }
                     else
                     {
@@ -283,6 +291,7 @@ public class MyInputField : MonoBehaviour, IVKeyInput
         foreach (var s in codeText.Split(new string[] { Environment.NewLine, "\n" }, StringSplitOptions.None))
         {
             codeLine.Add(s);
+            revised.Add(false);
             posX++;
         }
         posY = codeLine.LastOrDefault().Length;
@@ -313,7 +322,7 @@ public class MyInputField : MonoBehaviour, IVKeyInput
                 else if (item == ' ') spaceCount += 1;
                 else break;
             }
-            Debug.Log(spaceCount);
+            //Debug.Log(spaceCount);
             string l = string.Empty;
             for (int i = 0; i < spaceCount; i += 4)
             {
@@ -346,7 +355,7 @@ public class MyInputField : MonoBehaviour, IVKeyInput
         }
         else if ((key <= KeyCode.Z && key >= KeyCode.A) || (key <= KeyCode.Alpha9 && key >= KeyCode.Alpha0))
         {
-            Debug.Log(key);
+            //Debug.Log(key);
 
             if (posY == 0)
             {
@@ -367,7 +376,7 @@ public class MyInputField : MonoBehaviour, IVKeyInput
     public void PageUp()
     {
         page--;
-        if (page < 0) page = 0;
+        if (page <= 0) page = 1;
     }
 
     public void PageDown()
