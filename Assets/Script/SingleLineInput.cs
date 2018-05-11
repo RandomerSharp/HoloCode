@@ -1,11 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SingleLineInput : MonoBehaviour, IVKeyInput
 {
-    public delegate void InputComplateHandler();
-    public event InputComplateHandler InputComplate;
+    public Action<string> InputComplate;
 
     private TMPro.TextMeshPro tmpro;
 
@@ -28,12 +28,13 @@ public class SingleLineInput : MonoBehaviour, IVKeyInput
     {
         if (key == KeyCode.Return)
         {
-            InputComplate.Invoke();
+            InputComplate.Invoke(tmpro.text);
             gameObject.SetActive(false);
             return;
         }
         if (key == KeyCode.Backspace)
         {
+            if (tmpro.text.Length == 0) return;
             tmpro.text = tmpro.text.Substring(0, tmpro.text.Length - 1);
             return;
         }
@@ -44,12 +45,13 @@ public class SingleLineInput : MonoBehaviour, IVKeyInput
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            InputComplate.Invoke();
+            InputComplate.Invoke(tmpro.text);
             gameObject.SetActive(false);
             return;
         }
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
+            if (tmpro.text.Length == 0) return;
             tmpro.text = tmpro.text.Substring(0, tmpro.text.Length - 1);
             return;
         }

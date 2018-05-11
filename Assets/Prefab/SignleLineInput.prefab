@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4272831282207968}
   - component: {fileID: 65498284207069240}
+  - component: {fileID: 114996485053160146}
   m_Layer: 0
   m_Name: SignleLineInput
   m_TagString: Untagged
@@ -86,7 +87,7 @@ Transform:
   m_GameObject: {fileID: 1561593970605412}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.5, y: 0, z: -0.01}
-  m_LocalScale: {x: 0.02, y: 0.2, z: 1}
+  m_LocalScale: {x: 0.012, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 4272831282207968}
   m_RootOrder: 0
@@ -98,7 +99,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1479667460063952}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.325, z: 0}
   m_LocalScale: {x: 0.90000004, y: 0.1, z: 1}
   m_Children:
   - {fileID: 4113052586230424}
@@ -128,7 +129,7 @@ Transform:
   m_GameObject: {fileID: 1866085842157328}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.01}
-  m_LocalScale: {x: 0.02, y: 0.3, z: 1}
+  m_LocalScale: {x: 0.016, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 4312397135779098}
   m_RootOrder: 0
@@ -147,7 +148,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 399efbab922391445805cef2ccf84ce5, type: 2}
+  - {fileID: 2100000, guid: e1e0fe60ea7670f4cbc2804edf524d78, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -181,7 +182,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 399efbab922391445805cef2ccf84ce5, type: 2}
+  - {fileID: 2100000, guid: e1e0fe60ea7670f4cbc2804edf524d78, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -215,7 +216,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 221f1e25a82a3a54b8d0ff7d29762eee, type: 2}
+  - {fileID: 2100000, guid: 1c3186b774a68f7488a8e68cae2eddaf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -296,3 +297,14 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4278190080
+--- !u!114 &114996485053160146
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1479667460063952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 091916ab5283705449c65b07aa0a61ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

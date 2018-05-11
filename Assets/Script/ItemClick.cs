@@ -1,4 +1,5 @@
-﻿using HoloToolkit.Unity.InputModule;
+﻿using MixedRealityToolkit.InputModule.EventData;
+using MixedRealityToolkit.InputModule.InputHandlers;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -10,17 +11,18 @@ using UnityEngine.SceneManagement;
 using Windows.Storage;
 #endif
 
-public class ItemClick : MonoBehaviour, IInputClickHandler
+public class ItemClick : MonoBehaviour, IPointerHandler
 {
     [SerializeField]
     protected UnityEvent onClick;
 
     private bool isFocused;
 
-    public virtual void OnInputClicked(InputClickedEventData eventData)
+    /*public virtual void OnInputClicked(InputClickedEventData eventData)
     {
         onClick.Invoke();
-    }
+        //MixedRealityToolkit.InputModule.EventData.ClickEventData
+    }*/
 
     public void SelectWorkspace()
     {
@@ -58,16 +60,13 @@ public class ItemClick : MonoBehaviour, IInputClickHandler
 
     public void Close()
     {
-        Save();
+        SaveFile();
         GameObject.Find("Editor").GetComponent<EditorManager>().Remove(gameObject.transform.parent.gameObject);
     }
 
-    public void Save(string ty = "BS")
+    /*public void Save(string ty = "BS")
     {
         var dataPath = Application.dataPath;
-#if UNITY_WSA && NETFX_CORE 
-        dataPath = KnownFolders.DocumentsLibrary.Path;
-#endif
 
         var ctm = transform.parent.gameObject.GetComponent<CodeTabManager>();
         Debug.Log(ctm == null);
@@ -83,16 +82,21 @@ public class ItemClick : MonoBehaviour, IInputClickHandler
                 sw.Write(transform.parent.GetComponentInChildren<TMPro.TextMeshPro>().text);
             }
         }
+    }*/
+
+    public void SaveFile()
+    {
+        transform.parent.GetComponentInChildren<TypeIn>().SaveFile();
     }
 
     public void SaveBrainScript()
     {
-        FileAndDictionary.Instance.SaveBrainScript(transform.parent.GetComponentInChildren<TMPro.TextMeshPro>().text);
+        FileAndDirectory.Instance.SaveBrainScript(transform.parent.GetComponentInChildren<TMPro.TextMeshPro>().text);
     }
 
     public void SaveParam()
     {
-
+        GetComponentInParent<Inspector>().Save();
     }
 
     public void Cancel()
@@ -102,6 +106,17 @@ public class ItemClick : MonoBehaviour, IInputClickHandler
 
     public void Delete()
     {
+        GetComponentInParent<Inspector>().Delete();
+    }
+
+    public void PageUpClick()
+    {
+        transform.parent.GetComponentInChildren<MyInputField>().PageUp();
+    }
+
+    public void PageDownClick()
+    {
+        transform.parent.GetComponentInChildren<MyInputField>().PageDown();
     }
 
     private void Update()
@@ -112,4 +127,22 @@ public class ItemClick : MonoBehaviour, IInputClickHandler
         }
     }
 
+    public void NextParam()
+    {
+        GetComponentInParent<ParamSelect>().Next();
+    }
+
+    public void LastParam()
+    {
+        GetComponentInParent<ParamSelect>().Last();
+    }
+
+    public void OnPointerUp(ClickEventData eventData) { }
+
+    public void OnPointerDown(ClickEventData eventData) { }
+
+    public void OnPointerClicked(ClickEventData eventData)
+    {
+        onClick.Invoke();
+    }
 }

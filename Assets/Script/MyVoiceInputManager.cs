@@ -1,23 +1,28 @@
-﻿using System.Collections;
+﻿using MixedRealityToolkit.Common;
+using MixedRealityToolkit.InputModule.InputSources;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Windows.Speech;
-using HoloToolkit.Unity.InputModule;
 
-[System.Serializable]
-public class UnityEventString : UnityEvent<string>
+public class MyVoiceInputManager : Singleton<MyVoiceInputManager>
 {
-}
+    [System.Serializable]
+    private struct StringAndUnityEvent
+    {
+        public string keyword;
+        public UnityEvent action;
+    }
 
-public class MyVoiceInputManager : MonoBehaviour
-{
-    public HoloToolkit.Unity.InputModule.SpeechInputSource.RecognizerStartBehavior recognizerStart;
+    public SpeechInputSource.RecognizerStartBehavior recognizerStart;
     //public UnityEventString onDictationResult;
 
     private DictationRecognizer dictationRecognizer;
+    [SerializeField]
+    private StringAndUnityEvent[] keywords;
 
     private void Start()
     {
@@ -36,6 +41,15 @@ public class MyVoiceInputManager : MonoBehaviour
     private void DictationRecognizer_DictationResult(string text, ConfidenceLevel confidence)
     {
         //Debug.Log("Result: " + text);
+        foreach (var item in keywords)
+        {
+            if (text == item.keyword)
+            {
+                item.action.Invoke();
+                return;
+            }
+        }
+
         var dictationHandlers = (from i in FindObjectsOfType(typeof(MonoBehaviour))
                                  where i is IMyDictationHandler
                                  select ((IMyDictationHandler)i)).ToArray();

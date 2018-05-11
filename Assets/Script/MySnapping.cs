@@ -1,5 +1,4 @@
-﻿using HoloToolkit.Unity;
-using HoloToolkit.Unity.InputModule;
+﻿using MixedRealityToolkit.Common;
 using System;
 using System.Collections;
 using System.Collections.Generic;

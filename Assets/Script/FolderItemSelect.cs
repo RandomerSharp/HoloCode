@@ -1,4 +1,4 @@
-﻿using HoloToolkit.Unity.InputModule;
+﻿using MixedRealityToolkit.InputModule.EventData;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,39 +10,61 @@ using Windows.Storage;
 
 public class FolderItemSelect : ItemSelect
 {
-    public override void OnFocusEnter()
+    public int ChildCount
     {
-        base.OnFocusEnter();
+        get
+        {
+            int r = transform.childCount;
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                r += transform.GetChild(i).GetComponent<FolderItemSelect>().ChildCount;
+            }
+            return r;
+        }
+    }
+
+    public override void OnFocusEnter(FocusEventData eventData)
+    {
+        base.OnFocusEnter(eventData);
 
         GetComponentInChildren<CubeRotate>().RotateSpeed = 3f;
     }
 
-    public override void OnFocusExit()
+    public override void OnFocusExit(FocusEventData eventData)
     {
-        base.OnFocusExit();
+        base.OnFocusExit(eventData);
 
         GetComponentInChildren<CubeRotate>().RotateSpeed = 0f;
     }
 
-    public override void OnInputClicked(InputClickedEventData eventData)
-    {
-        base.OnInputClicked(eventData);
-    }
-
     public void OpenFolder()
     {
+        GetComponentInParent<ScanDictionary>().OpenFolder(gameObject);
     }
 
     public void OpenFile()
     {
         //GameObject.Find("Editor").GetComponent<EditorManager>().Create(FileAndDictionary.Instance.FolderPath, name);
-        GameObject.Find("Editor").GetComponent<EditorManager>().Create(gameObject.name);
+        string fileName = gameObject.name;
+        Transform t = transform;
+        while (t.parent.name != "DictionaryTree")
+        {
+            t = t.parent;
+            Debug.Log(t.name);
+            fileName = System.IO.Path.Combine(t.name, fileName);
+        }
+        GameObject.Find("Editor").GetComponent<EditorManager>().Create(fileName);
     }
 
-    public void OpenWorkspace()
+    public void OpenProject()
     {
-        string workspaceName = GetComponentInChildren<TextMesh>().text;
-        GameObject.Find("DataCache").GetComponent<DataCache>().Add("WorkspaceName", workspaceName);
-        SceneManager.LoadScene("Editor");
+        string proj = gameObject.name;
+        FileAndDirectory.Instance.ProjectName = proj;
+        var trans = GameObject.Find("HUD").transform.Find("RotatingOrbs");
+        trans.gameObject.SetActive(true);
+        StartCoroutine(Await(SceneManager.LoadSceneAsync("Editor", LoadSceneMode.Single), () =>
+        {
+            GameObject.Find("HUD").transform.Find("RotatingOrbs")?.gameObject.gameObject.SetActive(false);
+        }));
     }
 }

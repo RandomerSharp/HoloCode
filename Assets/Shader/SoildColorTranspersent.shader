@@ -12,7 +12,7 @@ Shader "Custom/SoildColorTransparent"
 		ZWrite On
 		ZTest Always
 		Blend SrcAlpha One//MinusSrcAlpha
-		Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
+		Tags { "RenderType" = "Transparent" "Queue" = "Transparent-100" }
 
 		Pass
 		{

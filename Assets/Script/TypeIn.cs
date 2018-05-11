@@ -1,4 +1,6 @@
-﻿using HoloToolkit.Unity.InputModule;
+﻿using MixedRealityToolkit.InputModule.EventData;
+using MixedRealityToolkit.InputModule.Focus;
+using MixedRealityToolkit.InputModule.InputHandlers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +9,7 @@ using UnityEngine;
 /// <summary>
 /// 控制输入状态和输入事件（例如快捷键）
 /// </summary>
-public class TypeIn : MonoBehaviour, IInputClickHandler //IFocusable
+public class TypeIn : MonoBehaviour, IPointerHandler//IFocusable
 {
     [SerializeField]
     private Color normalColor;
@@ -31,7 +33,7 @@ public class TypeIn : MonoBehaviour, IInputClickHandler //IFocusable
         }
     }
 
-    public void OnInputClicked(InputClickedEventData eventData)
+    /*public void OnInputClicked(InputClickedEventData eventData)
     {
         background.material.color = highLightColor;
 
@@ -45,7 +47,7 @@ public class TypeIn : MonoBehaviour, IInputClickHandler //IFocusable
 
         text.GetComponent<MyInputField>().enabled = true;
         isFocus = true;
-    }
+    }*/
 
     private void Awake()
     {
@@ -56,7 +58,8 @@ public class TypeIn : MonoBehaviour, IInputClickHandler //IFocusable
         text.GetComponent<MyInputField>().enabled = false;
         //Debug.Log("sadasdsa" + text.name);
 
-        OnInputClicked(null);
+        //OnInputClicked(null);
+        OnPointerClicked(null);
     }
 
     /*public void OnFocusEnter()
@@ -66,18 +69,47 @@ public class TypeIn : MonoBehaviour, IInputClickHandler //IFocusable
         text.GetComponent<MyInputField>().enabled = true;
     }*/
 
-    public void OnFocusExit()
+    /*public override void OnFocusExit(FocusEventData eventData)
     {
         //Debug.Log(gameObject.name + ": On focus exit");
         background.material.color = normalColor;
         text.GetComponent<MyInputField>().enabled = false;
         isFocus = false;
-    }
+    }*/
 
     private void Update()
     {
         if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && Input.GetKeyDown(KeyCode.S))
         {
+            SaveFile();
         }
+    }
+
+    public void SaveFile()
+    {
+        FileAndDirectory.Instance.SaveFile(FileAndDirectory.Instance.FullFilePath(gameObject.name), GetComponentInChildren<MyInputField>().GetText());
+    }
+
+    public void OnPointerUp(ClickEventData eventData) { }
+
+    public void OnPointerDown(ClickEventData eventData) { }
+
+    public void OnPointerClicked(ClickEventData eventData)
+    {
+        background.material.color = highLightColor;
+
+        var typeins = (from i in FindObjectsOfType(typeof(TypeIn))
+                       where i is TypeIn && ((TypeIn)i).IsFocus == true
+                       select ((TypeIn)i)).ToArray();
+        foreach (var item in typeins)
+        {
+            //item.OnFocusExit(null);
+            background.material.color = normalColor;
+            text.GetComponent<MyInputField>().enabled = false;
+            isFocus = false;
+        }
+
+        text.GetComponent<MyInputField>().enabled = true;
+        isFocus = true;
     }
 }

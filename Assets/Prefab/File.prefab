@@ -37,7 +37,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4512993614772626}
   - component: {fileID: 33488295898040172}
-  - component: {fileID: 135237128842148154}
   - component: {fileID: 23583605514638984}
   - component: {fileID: 114059260311282146}
   m_Layer: 0
@@ -100,8 +99,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1692623690762006}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4875723582190166}
@@ -150,7 +149,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 625dfb10c4fb5bd48a98b437e94d2ee1, type: 2}
+  - {fileID: 2100000, guid: de4f20456c97b7a409837101b34bd1a1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -262,8 +261,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 7, y: 0.7, z: 0.5}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 8, y: 0.7, z: 0.5}
+  m_Center: {x: 0.8, y: 0, z: 0}
 --- !u!102 &102041559775905532
 TextMesh:
   serializedVersion: 3
@@ -308,6 +307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f0893c7af8498c47b97db236681915a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  focusEnabled: 1
   onClick:
     m_PersistentCalls:
       m_Calls:
@@ -325,15 +325,3 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   boundingBox: {fileID: 1027870336317190}
---- !u!135 &135237128842148154
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1276884252113608}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}

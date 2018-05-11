@@ -81,4 +81,11 @@ public class ImageReader : InputNode
     {
         return string.Format("labels = [labelDim = {0}]", labelDim);
     }
+
+    public override void SetInspector(GameObject inspector, GameObject signleLineInput, GameObject signleLineSelect)
+    {
+
+        Inspector inspector1 = inspector.GetComponent<Inspector>();
+        inspector.transform.Find("Quad/NodeName").GetComponent<TextMesh>().text = "Imagine Reader";
+    }
 }

@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using MixedRealityToolkit.InputModule.EventData;
+using MixedRealityToolkit.InputModule.Focus;
+using MixedRealityToolkit.InputModule.InputHandlers;
+using System.Collections;
 using UnityEngine;
-using HoloToolkit.Unity.InputModule;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
+public class ItemSelect : FocusTarget, IPointerHandler//, IInputClickHandler, IFocusable
 {
     [SerializeField]
     protected UnityEvent onClick;
@@ -14,33 +15,35 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
 
     private bool isFocused;
 
-    public virtual void OnFocusEnter()
+    public override void OnFocusEnter(FocusEventData eventData)
     {
-        foreach (var child in GetComponentsInChildren<Transform>())
+        base.OnFocusEnter(eventData);
+        /*foreach (var child in GetComponentsInChildren<Transform>())
         {
             child.gameObject.layer = LayerMask.NameToLayer("Highlight");
             //Debug.Log(child.name);
-        }
+        }*/
         isFocused = true;
         boundingBox?.SetActive(true);
         //if (onFocusEnter != null) onFocusEnter.Invoke();
     }
 
-    public virtual void OnFocusExit()
+    public override void OnFocusExit(FocusEventData eventData)
     {
+        base.OnFocusExit(eventData);
         isFocused = false;
-        foreach (var child in GetComponentsInChildren<Transform>())
+        /*foreach (var child in GetComponentsInChildren<Transform>())
         {
             child.gameObject.layer = LayerMask.NameToLayer("Default");
-        }
+        }*/
         boundingBox?.SetActive(false);
         //if (onFocusExit != null) onFocusExit.Invoke();
     }
 
-    public virtual void OnInputClicked(InputClickedEventData eventData)
+    /*public virtual void OnInputClicked(InputClickedEventData eventData)
     {
         onClick.Invoke();
-    }
+    }*/
 
     public void SelectWorkspace()
     {
@@ -68,21 +71,33 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
         SceneManager.LoadScene(fromScene, LoadSceneMode.Single);
     }
 
+    public void CreateProject()
+    {
+        var quad = GameObject.Find("HUD").transform.Find("Quad");
+        var keyboard = GameObject.Find("HUD").transform.Find("Keyboard");
+
+        quad.gameObject.SetActive(true);
+        keyboard.gameObject.SetActive(true);
+        keyboard.GetComponent<Keyboard>().InputTarget = quad.GetComponentInChildren<ParamTypein>().gameObject;
+        quad.GetComponentInChildren<ParamTypein>().EnableInput = true;
+    }
+
     public void CreateFile()
     {
-        Transform root = GameObject.Find("SometimeUse").transform;
+        Transform root = GameObject.Find("HUD").transform;
         GameObject keyboard = root.Find("Keyboard").gameObject;
         keyboard.SetActive(true);
 
         GameObject singleLine = root.Find("SignleLineInput").gameObject;
         singleLine.SetActive(true);
-        singleLine.GetComponent<SingleLineInput>().InputComplate += () =>
+        singleLine.GetComponent<SingleLineInput>().InputComplate = (inputContent) =>
         {
-            FileAndDictionary.Instance.CreateFile(singleLine.GetComponent<SingleLineInput>().GetContent());
+            //FileAndDictionary.Instance.CreateFile(singleLine.GetComponent<SingleLineInput>().GetContent());
+            FileAndDirectory.Instance.CreateFile(inputContent);
             singleLine.SetActive(false);
             keyboard.SetActive(false);
 
-            GetComponentInParent<ScanDictionary>().UpdateDictionaryTree();
+            GetComponentInParent<ScanDictionary>().CreateFile();
         };
         keyboard.GetComponent<Keyboard>().InputTarget = singleLine;
     }
@@ -92,11 +107,50 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable
 
     }
 
+    public void CreateProjectReality()
+    {
+        string projName = GameObject.Find("HUD/Quad/SingleLineInput").GetComponentInChildren<ParamTypein>().GetValue();
+        string type = GameObject.Find("HUD/Quad/SingleLineSelect").GetComponentInChildren<ParamSelect>().GetValueName();
+
+        if (!FileAndDirectory.Instance.CreateProject(projName))
+        {
+            return;
+        }
+        FileAndDirectory.Instance.ProjectName = projName;
+        FileAndDirectory.Instance.SaveFile("config.taurus", string.Format("{{ \"{0}\" = \"{1}\"}}", "type", type));
+
+        CancelCreate();
+    }
+
+    public void CancelCreate()
+    {
+        transform.parent.parent.Find("Keyboard").gameObject.SetActive(false);
+        transform.parent.gameObject.SetActive(false);
+    }
+
     private void Update()
     {
         if (isFocused && (Input.GetKeyUp(KeyCode.Return) || Input.GetMouseButtonDown(0)))
         {
             onClick.Invoke();
         }
+    }
+
+    public void OnPointerUp(ClickEventData eventData) { }
+
+    public void OnPointerDown(ClickEventData eventData) { }
+
+    public void OnPointerClicked(ClickEventData eventData)
+    {
+        onClick.Invoke();
+    }
+
+    protected virtual IEnumerator Await(AsyncOperation aop, System.Action complated)
+    {
+        while (!aop.isDone)
+        {
+            yield return null;
+        }
+        complated?.Invoke();
     }
 }

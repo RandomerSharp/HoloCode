@@ -1,13 +1,10 @@
-﻿using System.Collections;
+﻿using MixedRealityToolkit.Common;
+using MixedRealityToolkit.InputModule.EventData;
+using MixedRealityToolkit.InputModule.InputHandlers;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
-using HoloToolkit.Unity.InputModule;
-using HoloToolkit.Unity.Controllers;
-using HoloToolkit.Unity;
-using HUX.Interaction;
 
-public abstract class BaseNode : MonoBehaviour, IInputClickHandler, IDoubleTapped
+public abstract class BaseNode : MonoBehaviour, IPointerHandler
 {
     public enum DisplayModeEnum
     {
@@ -36,6 +33,21 @@ public abstract class BaseNode : MonoBehaviour, IInputClickHandler, IDoubleTappe
         Softmax,
         LogSoftmax,
         Hardmax
+    }
+
+    public enum LossFunction
+    {
+        CrossEntropy,
+        CrossEntropyWithSoftmax,
+        Logistic,
+        WeightedLogistic,
+        ClassificationError
+    }
+
+    public enum MyBoolean
+    {
+        Flase,
+        True
     }
 
     private DisplayModeEnum displayMode;
@@ -138,24 +150,55 @@ public abstract class BaseNode : MonoBehaviour, IInputClickHandler, IDoubleTappe
         obj.layer = 0;
     }
 
-    /*public async void ShowDialog()
-    {
-        transform.Find("Quad").gameObject.SetActive(true);
-        GetComponentInChildren<TextMesh>().text = gameObject.name;
-        await Task.Delay(3000);
-        transform.Find("Quad").gameObject.SetActive(false);
-    }*/
+    public abstract string GetParameters();
+    public abstract void SetInspector(GameObject inspector, GameObject signleLineInput, GameObject signleLineSelect);
 
-    public void OnInputClicked(InputClickedEventData eventData)
+
+
+
+    private bool isPressed;
+    private bool isLongPressed;
+    private float pressDelta;
+
+    public void OnPointerUp(ClickEventData eventData)
     {
-        //Debug.Log("Click " + gameObject.name);
-        nodeManager.NodeSelect(gameObject.GetComponent<BaseNode>());
+        if (isLongPressed)
+        {
+            var inspector = transform.Find("HUD/ParamInspector").gameObject;
+            inspector.SetActive(true);
+            var inspector1 = inspector.GetComponent<Inspector>();
+            inspector1.TargetObject = gameObject;
+            inspector1.TargetName = gameObject.name;
+            SetInspector(inspector, inspector1.paramInput, inspector1.paramSelect);
+        }
+        isPressed = false;
+        isLongPressed = false;
+        pressDelta = 0f;
     }
 
-    public abstract string GetParameters();
-
-    public void OnDoubleTapped(InteractionManager.InteractionEventArgs eventArgs)
+    public void OnPointerDown(ClickEventData eventData)
     {
-        Debug.Log("Double click");
+        if (!isPressed)
+        {
+            isPressed = true;
+        }
+    }
+
+    public void OnPointerClicked(ClickEventData eventData)
+    {
+        var inventory = GameObject.Find("HUX/Inventory").GetComponent<InventoryManager>();
+        inventory.NodeSelect(this);
+    }
+
+    private void Update()
+    {
+        if (isPressed)
+        {
+            pressDelta += Time.deltaTime;
+            if (pressDelta > 1f)
+            {
+                isLongPressed = true;
+            }
+        }
     }
 }

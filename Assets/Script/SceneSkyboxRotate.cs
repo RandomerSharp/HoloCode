@@ -1,22 +1,51 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using MixedRealityToolkit.Common;
 using UnityEngine;
 
-public class SceneSkyboxRotate : MonoBehaviour
+public class SceneSkyboxRotate : Singleton<SceneSkyboxRotate>
 {
+    [System.Serializable]
+    public struct SkyboxAndLight
+    {
+        public Material skybox;
+        public float lightIntensity;
+    }
+    private enum Mode
+    {
+        Auto,
+        Maumal
+    }
+    [SerializeField] Mode mode;
+
     [SerializeField]
     [Range(0f, 10f)]
     private float skyboxRotateSpeed;
-    private float skyboxAngular;
+    [SerializeField]
+    private float skyboxAngular = 0f;
+
+    [SerializeField]
+    private SkyboxAndLight[] skyboxes;
+    [SerializeField]
+    private GameObject directionLight;
 
     private void Start()
     {
-        skyboxAngular = 0f;
+        GameObject.Find("FloorQuad(Clone)").layer = 11;
     }
 
     void Update()
     {
-        skyboxAngular += Time.deltaTime * skyboxRotateSpeed;
+        if (mode == Mode.Auto)
+        {
+            skyboxAngular += Time.deltaTime * skyboxRotateSpeed;
+        }
         RenderSettings.skybox.SetFloat("_Rotation", skyboxAngular);
+    }
+
+    [ContextMenu("Change Skybox")]
+    public void ChangeSky()
+    {
+        int i = Random.Range(0, skyboxes.Length);
+        RenderSettings.skybox = skyboxes[i].skybox;
+        directionLight.GetComponent<Light>().intensity = skyboxes[i].lightIntensity;
     }
 }
