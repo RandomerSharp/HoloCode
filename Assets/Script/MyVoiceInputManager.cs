@@ -112,7 +112,7 @@ public class MyVoiceInputManager : Singleton<MyVoiceInputManager>
         Debug.Log(dictationRecognizer.Status);
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
         dictationRecognizer.DictationComplete -= DictationRecognizer_DictationComplete;
         dictationRecognizer.DictationError -= DictationRecognizer_DictationError;
@@ -120,5 +120,7 @@ public class MyVoiceInputManager : Singleton<MyVoiceInputManager>
         dictationRecognizer.DictationResult -= DictationRecognizer_DictationResult;
 
         dictationRecognizer.Dispose();
+
+        base.OnDestroy();
     }
 }

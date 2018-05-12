@@ -1,8 +1,10 @@
-﻿using MixedRealityToolkit.InputModule.EventData;
+﻿using MixedRealityToolkit.Common;
+using MixedRealityToolkit.InputModule.EventData;
+using MixedRealityToolkit.InputModule.Gaze;
 using MixedRealityToolkit.InputModule.InputHandlers;
-using System.Collections;
-using System.Collections.Generic;
+using MixedRealityToolkit.InputModule.InputSources;
 using UnityEngine;
+using UnityEngine.XR.WSA.Input;
 
 public class CreateNode : MonoBehaviour, IPointerHandler
 {
@@ -10,20 +12,30 @@ public class CreateNode : MonoBehaviour, IPointerHandler
     {
         if (eventData.selectedObject == null || eventData.selectedObject.layer == LayerMask.GetMask("Environment"))
         {
-            Debug.Log("Create New Node");
             var inventory = GameObject.Find("HUD/Inventory");
-            inventory.GetComponent<InventoryManager>().CreateNode();
+            InteractionSourceKind sourceKind;
+            InteractionInputSources.Instance.TryGetSourceKind(eventData.SourceId, out sourceKind);
+            Vector3 v;
+            if (sourceKind == InteractionSourceKind.Controller)
+            {
+                Ray r;
+                if (InteractionInputSources.Instance.TryGetPointingRay(eventData.SourceId, out r))
+                {
+                    InteractionInputSources.Instance.TryGetGripPosition(eventData.SourceId, out v);
+                    //Debug.Log(v);
+                    inventory.GetComponent<InventoryManager>().CreateNode((r.origin - v).normalized * 12f);
+                }
+            }
+            else
+            {
+                inventory.GetComponent<InventoryManager>().CreateNode((GazeManager.GazeOrigin + GazeManager.GazeDirection).normalized * 12f);
+            }
+            eventData.Use();
             return;
         }
-        Debug.Log("Clicked");
-        //eventData.Use();
     }
 
-    public void OnPointerDown(ClickEventData eventData)
-    {
-    }
+    public void OnPointerDown(ClickEventData eventData) { }
 
-    public void OnPointerUp(ClickEventData eventData)
-    {
-    }
+    public void OnPointerUp(ClickEventData eventData) { }
 }

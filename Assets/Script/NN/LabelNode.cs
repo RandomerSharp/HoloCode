@@ -8,12 +8,22 @@ public class LabelNode : InputNode
     public int labelDim = 10;
     #endregion
 
+    public override string GetFeatureName()
+    {
+        return string.Empty;
+    }
+
     public override string GetFeatures()
     {
         return string.Empty;
     }
 
     public override string GetLabels()
+    {
+        return string.Empty;
+    }
+
+    public override string GetLabelsName()
     {
         return string.Empty;
     }

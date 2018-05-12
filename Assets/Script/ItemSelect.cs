@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class ItemSelect : FocusTarget, IPointerHandler//, IInputClickHandler, IFocusable
+public class ItemSelect : FocusTarget, IInputHandler//IPointerHandler//, IInputClickHandler, IFocusable
 {
     [SerializeField]
     protected UnityEvent onClick;
@@ -15,47 +15,38 @@ public class ItemSelect : FocusTarget, IPointerHandler//, IInputClickHandler, IF
 
     private bool isFocused;
 
+    private float downDelta = 0f;
+    private bool down = false;
+
+    private void Awake()
+    {
+        if (boundingBox == null)
+        {
+            boundingBox = transform.Find("BoundingBox").gameObject;
+        }
+    }
+
     public override void OnFocusEnter(FocusEventData eventData)
     {
         base.OnFocusEnter(eventData);
-        /*foreach (var child in GetComponentsInChildren<Transform>())
-        {
-            child.gameObject.layer = LayerMask.NameToLayer("Highlight");
-            //Debug.Log(child.name);
-        }*/
         isFocused = true;
         boundingBox?.SetActive(true);
-        //if (onFocusEnter != null) onFocusEnter.Invoke();
     }
 
     public override void OnFocusExit(FocusEventData eventData)
     {
         base.OnFocusExit(eventData);
         isFocused = false;
-        /*foreach (var child in GetComponentsInChildren<Transform>())
-        {
-            child.gameObject.layer = LayerMask.NameToLayer("Default");
-        }*/
         boundingBox?.SetActive(false);
-        //if (onFocusExit != null) onFocusExit.Invoke();
     }
-
-    /*public virtual void OnInputClicked(InputClickedEventData eventData)
-    {
-        onClick.Invoke();
-    }*/
 
     public void SelectWorkspace()
     {
-        //var as1 = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-        //while (!as1.isDone) ;
         SceneManager.LoadScene("SelectWorkspace", LoadSceneMode.Single);
     }
 
     public void GotoSettings()
     {
-        //var as1 = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-        //while (!as1.isDone) ;
         SceneManager.LoadScene("Settings", LoadSceneMode.Single);
     }
 
@@ -66,8 +57,6 @@ public class ItemSelect : FocusTarget, IPointerHandler//, IInputClickHandler, IF
 
     public void Return(string fromScene)
     {
-        //var as1 = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-        //while (!as1.isDone) ;
         SceneManager.LoadScene(fromScene, LoadSceneMode.Single);
     }
 
@@ -150,23 +139,47 @@ public class ItemSelect : FocusTarget, IPointerHandler//, IInputClickHandler, IF
         transform.parent.GetComponentInChildren<MyInputField>().PageDown();
     }
 
+    public void SaveParam()
+    {
+        GetComponentInParent<Inspector>().Save();
+    }
+
+    public void SaveBrainScript()
+    {
+        FileAndDirectory.Instance.SaveBrainScript(transform.parent.GetComponentInChildren<TMPro.TextMeshPro>().text);
+    }
+
+    public void Cancel()
+    {
+        GameObject.Find("ParamInspector").SetActive(false);
+    }
+
+    public void Delete()
+    {
+        GetComponentInParent<Inspector>().Delete();
+    }
+
     private void Update()
     {
         if (isFocused && (Input.GetKeyUp(KeyCode.Return) || Input.GetMouseButtonDown(0)))
         {
             onClick.Invoke();
         }
+        if (down)
+        {
+            downDelta += Time.deltaTime;
+            if (downDelta > 5f)
+            {
+                down = false;
+                downDelta = 0f;
+            }
+        }
     }
 
-    public void OnPointerUp(ClickEventData eventData) { }
-
-    public void OnPointerDown(ClickEventData eventData) { }
-
-    public void OnPointerClicked(ClickEventData eventData)
+    public void OnPointerClicked()
     {
         Debug.Log("Clicked");
         onClick.Invoke();
-        eventData.Use();
     }
 
     protected virtual IEnumerator Await(AsyncOperation aop, System.Action complated)
@@ -177,4 +190,24 @@ public class ItemSelect : FocusTarget, IPointerHandler//, IInputClickHandler, IF
         }
         complated?.Invoke();
     }
+
+    public void OnInputUp(InputEventData eventData)
+    {
+        if (downDelta < 0.75f)
+        {
+            OnPointerClicked();
+        }
+        down = false;
+        downDelta = 0f;
+        eventData.Use();
+    }
+
+    public void OnInputDown(InputEventData eventData)
+    {
+        down = true;
+        eventData.Use();
+    }
+
+    public void OnInputPressed(InputPressedEventData eventData) { }
+    public void OnInputPositionChanged(InputPositionEventData eventData) { }
 }

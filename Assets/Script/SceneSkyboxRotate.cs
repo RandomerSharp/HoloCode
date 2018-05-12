@@ -29,7 +29,8 @@ public class SceneSkyboxRotate : Singleton<SceneSkyboxRotate>
 
     private void Start()
     {
-        GameObject.Find("FloorQuad(Clone)").layer = 11;
+        var floor = GameObject.Find("FloorQuad(Clone)");
+        if (floor != null) floor.layer = 11;
     }
 
     void Update()

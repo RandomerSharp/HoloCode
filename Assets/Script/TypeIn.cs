@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// 控制输入状态和输入事件（例如快捷键）
 /// </summary>
-public class TypeIn : MonoBehaviour, IPointerHandler//IFocusable
+public class TypeIn : MonoBehaviour, IInputHandler// IPointerHandler//IFocusable
 {
     [SerializeField]
     private Color normalColor;
@@ -16,6 +16,9 @@ public class TypeIn : MonoBehaviour, IPointerHandler//IFocusable
     private GameObject text;
 
     private bool isFocus;
+
+    private float downDelta = 0f;
+    private bool down = false;
 
     public bool IsFocus
     {
@@ -30,22 +33,6 @@ public class TypeIn : MonoBehaviour, IPointerHandler//IFocusable
         }
     }
 
-    /*public void OnInputClicked(InputClickedEventData eventData)
-    {
-        background.material.color = highLightColor;
-
-        var typeins = (from i in FindObjectsOfType(typeof(TypeIn))
-                       where i is TypeIn && ((TypeIn)i).IsFocus == true
-                       select ((TypeIn)i)).ToArray();
-        foreach (var item in typeins)
-        {
-            item.OnFocusExit();
-        }
-
-        text.GetComponent<MyInputField>().enabled = true;
-        isFocus = true;
-    }*/
-
     private void Awake()
     {
         background = transform.parent.Find("Title").GetComponent<MeshRenderer>();
@@ -56,23 +43,8 @@ public class TypeIn : MonoBehaviour, IPointerHandler//IFocusable
         //Debug.Log("sadasdsa" + text.name);
 
         //OnInputClicked(null);
-        OnPointerClicked(null);
+        OnPointerClicked();
     }
-
-    /*public void OnFocusEnter()
-    {
-        //Debug.Log(gameObject.name + ": On focus enter");
-        background.material.color = highLightColor;
-        text.GetComponent<MyInputField>().enabled = true;
-    }*/
-
-    /*public override void OnFocusExit(FocusEventData eventData)
-    {
-        //Debug.Log(gameObject.name + ": On focus exit");
-        background.material.color = normalColor;
-        text.GetComponent<MyInputField>().enabled = false;
-        isFocus = false;
-    }*/
 
     private void Update()
     {
@@ -88,6 +60,15 @@ public class TypeIn : MonoBehaviour, IPointerHandler//IFocusable
         {
             text.GetComponent<MyInputField>().PageDown();
         }
+        if (down)
+        {
+            downDelta += Time.deltaTime;
+            if (downDelta > 5f)
+            {
+                down = false;
+                downDelta = 0f;
+            }
+        }
     }
 
     public void SaveFile()
@@ -95,13 +76,9 @@ public class TypeIn : MonoBehaviour, IPointerHandler//IFocusable
         FileAndDirectory.Instance.SaveFile(FileAndDirectory.Instance.FullFilePath(gameObject.name), GetComponentInChildren<MyInputField>().GetText());
     }
 
-    public void OnPointerUp(ClickEventData eventData) { }
-
-    public void OnPointerDown(ClickEventData eventData) { }
-
-    public void OnPointerClicked(ClickEventData eventData)
+    public void OnPointerClicked()
     {
-        background.material.color = highLightColor;
+        Debug.Log("My pointer clicked");
 
         var typeins = (from i in FindObjectsOfType(typeof(TypeIn))
                        where i is TypeIn && ((TypeIn)i).IsFocus == true
@@ -114,9 +91,29 @@ public class TypeIn : MonoBehaviour, IPointerHandler//IFocusable
             item.isFocus = false;
         }
 
+        background.material.color = highLightColor;
         text.GetComponent<MyInputField>().enabled = true;
         isFocus = true;
-
-        eventData?.Use();
     }
+
+    public void OnInputUp(InputEventData eventData)
+    {
+        if (downDelta < 0.75f)
+        {
+            OnPointerClicked();
+        }
+        down = false;
+        downDelta = 0f;
+        eventData.Use();
+    }
+
+    public void OnInputDown(InputEventData eventData)
+    {
+        down = true;
+        eventData.Use();
+    }
+
+    public void OnInputPressed(InputPressedEventData eventData) { }
+
+    public void OnInputPositionChanged(InputPositionEventData eventData) { }
 }

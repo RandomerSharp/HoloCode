@@ -44,6 +44,12 @@ public class ImageReader : InputNode
     public uint labelDim = 10;
     #endregion
 
+    protected override void Awake()
+    {
+        base.Awake();
+        shortName = string.Format("reader{0}", Mathf.Abs(GetHashCode()));
+    }
+
     public override string GetParameters()
     {
         StringBuilder sb = new StringBuilder();
@@ -74,18 +80,62 @@ public class ImageReader : InputNode
 
     public override string GetFeatures()
     {
-        return string.Format("features = Input({0}, {1}, {2})", width, height, channel);
+        return string.Format("features{0} = Input({1}:{2}:{3})", Mathf.Abs(GetHashCode()), width, height, channel);
+    }
+
+    public override string GetFeatureName()
+    {
+        return string.Format("features{0}", Mathf.Abs(GetHashCode()));
     }
 
     public override string GetLabels()
     {
-        return string.Format("labels = [labelDim = {0}]", labelDim);
+        return string.Format("labels{0} = [labelDim = {1}]", Mathf.Abs(GetHashCode()), labelDim);
     }
 
-    public override void SetInspector(GameObject inspector, GameObject signleLineInput, GameObject signleLineSelect)
+    public override string GetLabelsName()
     {
+        return string.Format("labels{0}", Mathf.Abs(GetHashCode()));
+    }
 
+    public override void SetInspector(GameObject inspector, GameObject singleLineInput, GameObject singleLineSelect)
+    {
         Inspector inspector1 = inspector.GetComponent<Inspector>();
         inspector.transform.Find("Quad/NodeName").GetComponent<TextMesh>().text = "Imagine Reader";
+
+        var whc = Instantiate(singleLineInput);
+        inspector1.Add(whc.transform);
+        whc.GetComponent<ParamTypein>().SetValue("w:hei:ch", string.Format("{0}:{1}:{2}", width, height, channel));
+
+        var cropTypeObj = Instantiate(singleLineSelect);
+        inspector1.Add(cropTypeObj.transform);
+        cropTypeObj.GetComponent<ParamSelect>().SetType(typeof(CropType), "Crop Type", (int)cropType);
+
+        var jitterTypeObj = Instantiate(singleLineSelect);
+        inspector1.Add(jitterTypeObj.transform);
+        jitterTypeObj.GetComponent<ParamSelect>().SetType(typeof(JitterType), "Jitter Type", (int)jitterType);
+
+        var intensityFileObj = Instantiate(singleLineInput);
+        inspector1.Add(intensityFileObj.transform);
+        intensityFileObj.GetComponent<ParamTypein>().SetValue("Intensity File", intensityFile);
+
+        var meanFileObj = Instantiate(singleLineInput);
+        inspector1.Add(meanFileObj.transform);
+        meanFileObj.GetComponent<ParamTypein>().SetValue("Mean File", meanFile);
+
+        inspector1.OnSave = () =>
+        {
+            Debug.Log(GetHashCode());
+            var vs = whc.GetComponent<ParamTypein>().GetValue().Split(':');
+            if (vs.Length != 3) return;
+            width = System.Convert.ToUInt32(vs[0]);
+            height = System.Convert.ToUInt32(vs[1]);
+            channel = System.Convert.ToUInt32(vs[2]);
+
+            cropType = (CropType)cropTypeObj.GetComponent<ParamSelect>().GetValue();
+            jitterType = (JitterType)jitterTypeObj.GetComponent<ParamSelect>().GetValue();
+            intensityFile = intensityFileObj.GetComponent<ParamTypein>().GetValue();
+            meanFile = meanFileObj.GetComponent<ParamTypein>().GetValue();
+        };
     }
 }

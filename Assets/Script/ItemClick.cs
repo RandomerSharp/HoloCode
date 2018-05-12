@@ -9,7 +9,7 @@ public class ItemClick : MonoBehaviour, IPointerHandler
     [SerializeField]
     protected UnityEvent onClick;
 
-    private bool isFocused;
+    private bool isFocused = false;
 
     /*public virtual void OnInputClicked(InputClickedEventData eventData)
     {

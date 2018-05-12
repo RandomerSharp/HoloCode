@@ -38,7 +38,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4926170910016878}
   - component: {fileID: 65053858615599942}
-  - component: {fileID: 114469746480876826}
   - component: {fileID: 114425017496004806}
   - component: {fileID: 114640501929565452}
   m_Layer: 2
@@ -158,24 +157,6 @@ MonoBehaviour:
   intensityStdDev: 0.1
   meanFile: $rootDir$/ImageNet1K_mean.xml
   labelDim: 10
---- !u!114 &114469746480876826
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1958956984738116}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d5a0a60fbe897549ad0bfe2039f12b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  focusEnabled: 1
-  HostTransform: {fileID: 0}
-  DistanceScale: 2
-  RotationMode: 1
-  PositionLerpSpeed: 1
-  RotationLerpSpeed: 1
-  IsDraggingEnabled: 1
 --- !u!114 &114640501929565452
 MonoBehaviour:
   m_ObjectHideFlags: 1

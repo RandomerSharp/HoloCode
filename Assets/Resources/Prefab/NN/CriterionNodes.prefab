@@ -34,10 +34,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4503268516907220}
-  - component: {fileID: 114717869117611572}
   - component: {fileID: 65596842286715774}
-  - component: {fileID: 114768085355148474}
   - component: {fileID: 114265890421805582}
+  - component: {fileID: 114933392656093508}
   m_Layer: 2
   m_Name: CriterionNodes
   m_TagString: Untagged
@@ -197,7 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lossFunction: 1
---- !u!114 &114717869117611572
+--- !u!114 &114933392656093508
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -205,25 +204,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1859796977530488}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 433e287639a65454eb8e744364c2d64f, type: 3}
+  m_Script: {fileID: 11500000, guid: 767ea91a006240b49a7dbe9454ed26ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lossFunction: 1
---- !u!114 &114768085355148474
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1859796977530488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d5a0a60fbe897549ad0bfe2039f12b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  focusEnabled: 1
   HostTransform: {fileID: 0}
-  DistanceScale: 2
-  RotationMode: 1
-  PositionLerpSpeed: 1
-  RotationLerpSpeed: 1
-  IsDraggingEnabled: 1
+  boundingBoxPrefab: {fileID: 0}
+  ManipulationMode: 4
+  ConstraintOnRotation: 0
+  OneHandMovement: 1

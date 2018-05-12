@@ -38,7 +38,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4773842478994048}
   - component: {fileID: 65155907856835494}
-  - component: {fileID: 114898139480884354}
   - component: {fileID: 114697178966175900}
   - component: {fileID: 114308510943452340}
   m_Layer: 2
@@ -141,7 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HostTransform: {fileID: 0}
   boundingBoxPrefab: {fileID: 0}
-  ManipulationMode: 0
+  ManipulationMode: 4
   ConstraintOnRotation: 0
   OneHandMovement: 1
 --- !u!114 &114697178966175900
@@ -159,24 +158,6 @@ MonoBehaviour:
   init: 0
   initValueScale: 12
   bias: 1
---- !u!114 &114898139480884354
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1502606207385004}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d5a0a60fbe897549ad0bfe2039f12b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  focusEnabled: 1
-  HostTransform: {fileID: 0}
-  DistanceScale: 2
-  RotationMode: 1
-  PositionLerpSpeed: 1
-  RotationLerpSpeed: 1
-  IsDraggingEnabled: 1
 --- !u!114 &114952284566490026
 MonoBehaviour:
   m_ObjectHideFlags: 1

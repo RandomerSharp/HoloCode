@@ -13,12 +13,12 @@ public class VoiceCallback : MonoBehaviour, IMyDictationHandler
     [SerializeField]
     private GameObject speakor;
 
-    private bool isResording;
+    //private bool isResording;
 
     public void StartRecord()
     {
         Debug.Log("Recording");
-        isResording = true;
+        //isResording = true;
     }
 
     public void Test(string r = "")

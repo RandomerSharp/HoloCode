@@ -8,8 +8,7 @@ public class CodeTabManager : MonoBehaviour
     //private RenderTexture rt;
     private string path;
     private string fileName;
-    private float width;
-    private float angle;
+    //private float width;
 
     public string FileName
     {
@@ -35,23 +34,11 @@ public class CodeTabManager : MonoBehaviour
             path = value;
         }
     }
-    public float Width
+    /*public float Width
     {
         get
         {
             return width;
-        }
-    }
-    /*public float Angle
-    {
-        get
-        {
-            return angle;
-        }
-        set
-        {
-            angle = value;
-            UpdatePosition();
         }
     }*/
 
@@ -65,13 +52,4 @@ public class CodeTabManager : MonoBehaviour
         yield return null;
         transform.Find("Title/Text1").GetComponent<TextMesh>().text = fileName;
     }
-
-    /*private void UpdatePosition()
-    {
-        //float r = transform.parent.GetComponent<EditorManager>().radius;
-        float x = r * Mathf.Cos(angle);
-        float z = r * Mathf.Sin(angle);
-        float y = 0f;
-        transform.localPosition = new Vector3(x, y, z);
-    }*/
 }

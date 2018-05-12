@@ -188,9 +188,6 @@ public class MoveAndPlace : MonoBehaviour, IInputHandler//, ISourceStateHandler
             case State.Start:
                 OnManipulationEnded();
                 break;
-            case State.MovingScaling:
-                OnTwoHandManipulationStarted(newState);
-                break;
             default:
                 break;
             }
@@ -198,9 +195,6 @@ public class MoveAndPlace : MonoBehaviour, IInputHandler//, ISourceStateHandler
             {
             case State.Start:
                 OnManipulationStarted();
-                break;
-            case State.MovingScaling:
-                OnTwoHandManipulationEnded();
                 break;
             default:
                 break;
@@ -213,16 +207,13 @@ public class MoveAndPlace : MonoBehaviour, IInputHandler//, ISourceStateHandler
             case State.Moving:
                 OnOneHandMoveUpdated();
                 break;
-            case State.MovingScaling:
-                OnTwoHandManipulationUpdated();
-                break;
             default:
                 break;
             }
         }
     }
 
-    private void OnTwoHandManipulationUpdated()
+    /*private void OnTwoHandManipulationUpdated()
     {
         var targetRotation = HostTransform.rotation;
         var targetPosition = HostTransform.position;
@@ -236,8 +227,7 @@ public class MoveAndPlace : MonoBehaviour, IInputHandler//, ISourceStateHandler
         HostTransform.position = targetPosition;
         HostTransform.rotation = targetRotation;
         HostTransform.localScale = targetScale;
-    }
-
+    }*/
     private void OnOneHandMoveUpdated()
     {
         var targetPosition = m_moveLogic.Update(m_handsPressedLocationsMap.Values.First(), HostTransform.position);
@@ -245,12 +235,12 @@ public class MoveAndPlace : MonoBehaviour, IInputHandler//, ISourceStateHandler
         HostTransform.position = targetPosition;
     }
 
-    private void OnTwoHandManipulationEnded()
+    /*private void OnTwoHandManipulationEnded()
     {
         Debug.Log("Ended");
         transform.parent = GameObject.Find("Editor")?.transform;
         GetComponentInParent<ObjectCollection>().UpdateCollection();
-    }
+    }*/
 
     private Vector3 GetHandsCentroid()
     {
@@ -258,13 +248,13 @@ public class MoveAndPlace : MonoBehaviour, IInputHandler//, ISourceStateHandler
         return result / m_handsPressedLocationsMap.Count;
     }
 
-    private void OnTwoHandManipulationStarted(State newState)
+    /*private void OnTwoHandManipulationStarted(State newState)
     {
         if ((newState & State.Moving) > 0)
         {
             m_moveLogic.Setup(GetHandsCentroid(), HostTransform);
         }
-    }
+    }*/
 
     private void OnOneHandMoveStarted()
     {

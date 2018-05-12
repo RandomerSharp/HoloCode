@@ -1,6 +1,8 @@
 ﻿using MixedRealityToolkit.Common;
 using MixedRealityToolkit.InputModule.EventData;
 using MixedRealityToolkit.InputModule.InputHandlers;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,18 +52,18 @@ public abstract class BaseNode : MonoBehaviour, IPointerHandler
         True
     }
 
-    private DisplayModeEnum displayMode;
+    //private DisplayModeEnum displayMode;
     private List<BaseNode> next;
     private List<BaseNode> last;
 
-    private MenuWheelSelector nodeManager;
+    //private MenuWheelSelector nodeManager;
 
     protected string shortName;
 
-    public DisplayModeEnum DisplayMode
+    /*public DisplayModeEnum DisplayMode
     {
         set { displayMode = value; }
-    }
+    }*/
     public List<BaseNode> Next
     {
         get
@@ -140,7 +142,7 @@ public abstract class BaseNode : MonoBehaviour, IPointerHandler
         next = new List<BaseNode>();
         last = new List<BaseNode>();
 
-        nodeManager = FindObjectsOfType<MenuWheelSelector>()[0];
+        //nodeManager = FindObjectsOfType<MenuWheelSelector>()[0];
     }
 
     public void CreateOne()
@@ -157,37 +159,51 @@ public abstract class BaseNode : MonoBehaviour, IPointerHandler
 
 
     private bool isPressed;
-    private bool isLongPressed;
+    private bool pressB;
     private float pressDelta;
 
-    public void OnPointerUp(ClickEventData eventData)
-    {
-        if (isLongPressed)
-        {
-            var inspector = transform.Find("HUD/ParamInspector").gameObject;
-            inspector.SetActive(true);
-            var inspector1 = inspector.GetComponent<Inspector>();
-            inspector1.TargetObject = gameObject;
-            inspector1.TargetName = gameObject.name;
-            SetInspector(inspector, inspector1.paramInput, inspector1.paramSelect);
-        }
-        isPressed = false;
-        isLongPressed = false;
-        pressDelta = 0f;
-    }
+    public void OnPointerUp(ClickEventData eventData) { }
 
-    public void OnPointerDown(ClickEventData eventData)
-    {
-        if (!isPressed)
-        {
-            isPressed = true;
-        }
-    }
+    public void OnPointerDown(ClickEventData eventData) { }
 
     public void OnPointerClicked(ClickEventData eventData)
     {
-        var inventory = GameObject.Find("HUX/Inventory").GetComponent<InventoryManager>();
+        if (eventData.ClickCount > 1)
+        {
+            OnPointerDoubleClicked();
+            return;
+        }
+        if (isPressed)
+        {
+            if (pressDelta < 0.5f)
+            {
+                OnPointerDoubleClicked();
+                isPressed = false;
+                pressDelta = 0;
+            }
+            return;
+        }
+        //OnPointerClicked();
+        isPressed = true;
+        pressDelta = 0;
+    }
+
+    private void OnPointerClicked()
+    {
+        if (!pressB) return;
+        var inventory = GameObject.Find("HUD/Inventory").GetComponent<InventoryManager>();
         inventory.NodeSelect(this);
+    }
+
+    private void OnPointerDoubleClicked()
+    {
+        Debug.Log("Double click");
+        var inspector = GameObject.Find("HUD").transform.Find("ParamInspector").gameObject;
+        inspector.SetActive(true);
+        var inspector1 = inspector.GetComponent<Inspector>();
+        inspector1.TargetObject = gameObject;
+        inspector1.TargetName = gameObject.name;
+        SetInspector(inspector, inspector1.paramInput, inspector1.paramSelect);
     }
 
     private void Update()
@@ -195,10 +211,21 @@ public abstract class BaseNode : MonoBehaviour, IPointerHandler
         if (isPressed)
         {
             pressDelta += Time.deltaTime;
-            if (pressDelta > 1f)
+            if (pressDelta > 0.5f)
             {
-                isLongPressed = true;
+                pressB = true;
+                OnPointerClicked();
+                StartCoroutine(WaitForNextClick());
+                isPressed = false;
+                pressDelta = 0f;
             }
         }
+    }
+
+    private IEnumerator WaitForNextClick()
+    {
+        if (pressB == false) yield break;
+        yield return new WaitForSeconds(1.5f);
+        pressB = false;
     }
 }

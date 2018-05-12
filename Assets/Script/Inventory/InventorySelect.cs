@@ -12,7 +12,20 @@ public class InventorySelect : FocusTarget, IPointerHandler
     private string inventoryName;
     [SerializeField]
     private GameObject boundingBox;
-    private bool isFocused;
+    //private bool isFocused;
+
+    public string InventoryName
+    {
+        get
+        {
+            return inventoryName;
+        }
+
+        set
+        {
+            inventoryName = value;
+        }
+    }
 
     private void Awake()
     {
@@ -21,17 +34,17 @@ public class InventorySelect : FocusTarget, IPointerHandler
 
     public override void OnFocusEnter(FocusEventData eventData)
     {
-        isFocused = true;
+        //isFocused = true;
         boundingBox?.SetActive(true);
     }
 
     public override void OnFocusExit(FocusEventData eventData)
     {
-        isFocused = false;
+        //isFocused = false;
         boundingBox?.SetActive(false);
     }
 
-    private void Create()
+    /*private void Create()
     {
         var newNode = Resources.Load(System.IO.Path.Combine("Prefab", "NN", inventoryName)) as GameObject;
         newNode.name = inventoryName;
@@ -39,7 +52,7 @@ public class InventorySelect : FocusTarget, IPointerHandler
         newNode.transform.position = forward;
         newNode.transform.rotation = Quaternion.identity;
         newNode.transform.localScale = Vector3.one;
-    }
+    }*/
 
     public void Exchange(string newInventory)
     {

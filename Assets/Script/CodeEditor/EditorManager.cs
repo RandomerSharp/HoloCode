@@ -10,8 +10,8 @@ using UnityEngine;
 
 public class EditorManager : MonoBehaviour, IPointerHandler
 {
-    private GameObject workspacePanel;
-    private bool workspacePanelActive;
+    //private GameObject workspacePanel;
+    //private bool workspacePanelActive;
     [SerializeField]
     private GameObject codeTab;
     private Vector3 center;
@@ -48,8 +48,8 @@ public class EditorManager : MonoBehaviour, IPointerHandler
 
     private void Awake()
     {
-        workspacePanel = GameObject.Find("DictionaryTree");
-        workspacePanelActive = true;
+        //workspacePanel = GameObject.Find("DictionaryTree");
+        //workspacePanelActive = true;
         tabsList = new LinkedList<GameObject>();
         tabsList.AddFirst(GameObject.Find("DictionaryTree"));
     }

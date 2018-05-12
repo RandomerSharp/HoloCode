@@ -28,7 +28,7 @@ public class MaxPoolingLayer : BaseNode
     public override void SetInspector(GameObject inspector, GameObject singleInput, GameObject singleSelect)
     {
         Inspector inspector1 = inspector.GetComponent<Inspector>();
-        inspector.transform.Find("Quad/NodeName").GetComponent<TextMesh>().text = "Max Pooling Layer";
+        inspector.transform.Find("Quad/NodeName").GetComponent<TextMesh>().text = "Max Pooling";
 
         var poolShapeObj = Instantiate(singleInput);
         inspector1.Add(poolShapeObj.transform);
@@ -48,7 +48,7 @@ public class MaxPoolingLayer : BaseNode
 
         var upperPadObj = Instantiate(singleInput);
         inspector1.Add(upperPadObj.transform);
-        upperPadObj.GetComponent<ParamTypein>().SetValue("Upper Pad", upperPadObj.ToString());
+        upperPadObj.GetComponent<ParamTypein>().SetValue("Upper Pad", upperPad.ToString());
 
         inspector1.OnSave = () =>
         {

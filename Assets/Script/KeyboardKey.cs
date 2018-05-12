@@ -18,7 +18,7 @@ public class KeyboardKey : FocusTarget, IPointerHandler
     [SerializeField]
     private Color focusColor;
 
-    private bool enableClick;
+    //private bool enableClick;
     private bool shift;
 
     public void Shift()
@@ -44,20 +44,20 @@ public class KeyboardKey : FocusTarget, IPointerHandler
     private void Awake()
     {
         GetComponent<Renderer>().material.color = normalColor;
-        enableClick = false;
+        //enableClick = false;
         shift = false;
     }
 
     public override void OnFocusEnter(FocusEventData e)
     {
         GetComponent<Renderer>().material.color = focusColor;
-        enableClick = true;
+        //enableClick = true;
     }
 
     public override void OnFocusExit(FocusEventData e)
     {
         GetComponent<Renderer>().material.color = normalColor;
-        enableClick = false;
+        //enableClick = false;
     }
 
     public void OnPointerUp(ClickEventData eventData) { }
@@ -67,7 +67,7 @@ public class KeyboardKey : FocusTarget, IPointerHandler
     public void OnPointerClicked(ClickEventData eventData)
     {
         GetComponent<Renderer>().material.color = normalColor;
-        enableClick = false;
+        //enableClick = false;
         if (shift && hasShift)
         {
             if (shiftKey == KeyCode.None)
@@ -92,6 +92,6 @@ public class KeyboardKey : FocusTarget, IPointerHandler
             keyBoard.ReceiveKey(key);
         }
         GetComponent<Renderer>().material.color = focusColor;
-        enableClick = true;
+        //enableClick = true;
     }
 }

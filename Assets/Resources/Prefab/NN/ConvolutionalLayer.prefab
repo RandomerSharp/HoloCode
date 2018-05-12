@@ -54,8 +54,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4256324203681418}
   - component: {fileID: 65754824702559582}
-  - component: {fileID: 114580945035502064}
   - component: {fileID: 114100534509417094}
+  - component: {fileID: 114264099742812476}
   m_Layer: 2
   m_Name: ConvolutionalLayer
   m_TagString: Untagged
@@ -279,6 +279,22 @@ MonoBehaviour:
   lowerPad: 0
   upperPad: 0
   bias: 1
+--- !u!114 &114264099742812476
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1428449329750946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 767ea91a006240b49a7dbe9454ed26ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HostTransform: {fileID: 0}
+  boundingBoxPrefab: {fileID: 0}
+  ManipulationMode: 4
+  ConstraintOnRotation: 0
+  OneHandMovement: 1
 --- !u!114 &114374808194481032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -297,24 +313,6 @@ MonoBehaviour:
   MoveY: 0
   MoveZ: 0
   World: 1
---- !u!114 &114580945035502064
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1428449329750946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d5a0a60fbe897549ad0bfe2039f12b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  focusEnabled: 1
-  HostTransform: {fileID: 0}
-  DistanceScale: 2
-  RotationMode: 1
-  PositionLerpSpeed: 1
-  RotationLerpSpeed: 1
-  IsDraggingEnabled: 1
 --- !u!114 &114652111189280718
 MonoBehaviour:
   m_ObjectHideFlags: 1

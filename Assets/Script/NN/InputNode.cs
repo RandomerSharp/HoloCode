@@ -15,5 +15,7 @@ public abstract class InputNode : BaseNode
     }
 
     public abstract string GetFeatures();
+    public abstract string GetFeatureName();
     public abstract string GetLabels();
+    public abstract string GetLabelsName();
 }

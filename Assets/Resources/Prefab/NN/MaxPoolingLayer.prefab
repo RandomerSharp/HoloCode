@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4392790432081910}
   - component: {fileID: 65293929059157858}
-  - component: {fileID: 114855735069913230}
   - component: {fileID: 114451405338473420}
+  - component: {fileID: 114536179230222548}
   m_Layer: 2
   m_Name: MaxPoolingLayer
   m_TagString: Untagged
@@ -165,7 +165,7 @@ MonoBehaviour:
   pad: 0
   lowerPad: 0
   upperPad: 0
---- !u!114 &114855735069913230
+--- !u!114 &114536179230222548
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -173,13 +173,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1092788667067710}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d5a0a60fbe897549ad0bfe2039f12b6, type: 3}
+  m_Script: {fileID: 11500000, guid: 767ea91a006240b49a7dbe9454ed26ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  focusEnabled: 1
   HostTransform: {fileID: 0}
-  DistanceScale: 2
-  RotationMode: 1
-  PositionLerpSpeed: 1
-  RotationLerpSpeed: 1
-  IsDraggingEnabled: 1
+  boundingBoxPrefab: {fileID: 0}
+  ManipulationMode: 4
+  ConstraintOnRotation: 0
+  OneHandMovement: 1

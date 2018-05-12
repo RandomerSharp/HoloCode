@@ -13,7 +13,7 @@ using UnityEngine.XR.WSA.Input;
 
 public class EditorRotate : MonoBehaviour, IInputHandler
 {
-    private IInputSource inputSource;
+    //private IInputSource inputSource;
     private uint sourceId;
     private bool isDraging;
 
@@ -55,7 +55,6 @@ public class EditorRotate : MonoBehaviour, IInputHandler
     {
         if (eventData.SourceId == sourceId && isDraging)
         {
-            Debug.Log("Hold handler completed");
             isDraging = false;
             eventData.Use();
         }
@@ -63,10 +62,9 @@ public class EditorRotate : MonoBehaviour, IInputHandler
 
     public void OnInputDown(InputEventData eventData)
     {
-        Debug.Log("Hold handler");
         if (eventData.selectedObject == null || eventData.selectedObject.layer == 11)
         {
-            inputSource = eventData.InputSource;
+            //inputSource = eventData.InputSource;
             sourceId = eventData.SourceId;
             isDraging = true;
 
