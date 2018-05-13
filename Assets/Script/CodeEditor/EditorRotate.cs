@@ -1,9 +1,4 @@
-﻿using MixedRealityToolkit.InputModule.EventData;
-using MixedRealityToolkit.InputModule.Focus;
-using MixedRealityToolkit.InputModule.InputHandlers;
-using MixedRealityToolkit.InputModule.InputSources;
-using MixedRealityToolkit.InputModule.Pointers;
-using MixedRealityToolkit.InputModule.Utilities;
+﻿using HoloToolkit.Unity.InputModule;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,46 +9,49 @@ using UnityEngine.XR.WSA.Input;
 public class EditorRotate : MonoBehaviour, IInputHandler
 {
     //private IInputSource inputSource;
-    private uint sourceId;
+    private uint m_sourceId;
     private bool isDraging;
 
-    private Vector3 lastPos = Vector3.zero;
+    private IInputSource m_inputSource;
+
+    private Vector3 m_lastPos = Vector3.zero;
 
     private void Awake()
     {
-        sourceId = uint.MaxValue;
+        m_sourceId = uint.MaxValue;
     }
 
     private void Update()
     {
         if (isDraging)
         {
-            InteractionSourceKind source;
-            InteractionInputSources.Instance.TryGetSourceKind(sourceId, out source);
+            InteractionSourceInfo source;
+            //InteractionInputSources.Instance.TryGetSourceKind(m_sourceId, out source);
+            m_inputSource.TryGetSourceKind(m_sourceId, out source);
             Vector3 pos = Vector3.zero;
-            if (source == InteractionSourceKind.Controller)
+            if (source == InteractionSourceInfo.Controller)
             {
-                if (!InteractionInputSources.Instance.TryGetPointerPosition(sourceId, out pos))
+                if (!m_inputSource.TryGetPointerPosition(m_sourceId, out pos))
                 {
                     return;
                 }
             }
-            else if (source == InteractionSourceKind.Other)
+            else if (source == InteractionSourceInfo.Other)
             {
-                if (InteractionInputSources.Instance.TryGetPointerPosition(sourceId, out pos))
+                if (!m_inputSource.TryGetPointerPosition(m_sourceId, out pos))
                 {
                     return;
                 }
             }
 
-            transform.Rotate(Vector3.up, Vector3.SignedAngle(lastPos, pos, Vector3.up));
-            lastPos = pos;
+            transform.Rotate(Vector3.up, Vector3.SignedAngle(m_lastPos, pos, Vector3.up));
+            m_lastPos = pos;
         }
     }
 
     public void OnInputUp(InputEventData eventData)
     {
-        if (eventData.SourceId == sourceId && isDraging)
+        if (eventData.SourceId == m_sourceId && isDraging)
         {
             isDraging = false;
             eventData.Use();
@@ -65,15 +63,17 @@ public class EditorRotate : MonoBehaviour, IInputHandler
         if (eventData.selectedObject == null || eventData.selectedObject.layer == 11)
         {
             //inputSource = eventData.InputSource;
-            sourceId = eventData.SourceId;
+            m_sourceId = eventData.SourceId;
             isDraging = true;
 
-            InteractionInputSources.Instance.TryGetPointerPosition(sourceId, out lastPos);
+            //InteractionInputSources.Instance.TryGetPointerPosition(sourceId, out lastPos);
+            m_inputSource = eventData.InputSource;
+            m_inputSource.TryGetPointerPosition(m_sourceId, out m_lastPos);
             eventData.Use();
         }
     }
 
-    public void OnInputPressed(InputPressedEventData eventData) { }
+    //public void OnInputPressed(InputPressedEventData eventData) { }
 
     public void OnInputPositionChanged(InputPositionEventData eventData) { }
 }

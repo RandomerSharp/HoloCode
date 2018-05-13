@@ -1,12 +1,10 @@
-﻿using MixedRealityToolkit.InputModule.EventData;
-using MixedRealityToolkit.InputModule.Focus;
-using MixedRealityToolkit.InputModule.InputHandlers;
+﻿using HoloToolkit.Unity.InputModule;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class ItemSelect : FocusTarget, IInputHandler//IPointerHandler//, IInputClickHandler, IFocusable
+public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable//FocusTarget, IInputHandler//IPointerHandler//, 
 {
     [SerializeField]
     protected UnityEvent onClick;
@@ -26,7 +24,7 @@ public class ItemSelect : FocusTarget, IInputHandler//IPointerHandler//, IInputC
         }
     }
 
-    public override void OnFocusEnter(FocusEventData eventData)
+    /*public override void OnFocusEnter(FocusEventData eventData)
     {
         base.OnFocusEnter(eventData);
         isFocused = true;
@@ -36,6 +34,18 @@ public class ItemSelect : FocusTarget, IInputHandler//IPointerHandler//, IInputC
     public override void OnFocusExit(FocusEventData eventData)
     {
         base.OnFocusExit(eventData);
+        isFocused = false;
+        boundingBox?.SetActive(false);
+    }*/
+
+    public virtual void OnFocusEnter()
+    {
+        isFocused = true;
+        boundingBox?.SetActive(true);
+    }
+
+    public virtual void OnFocusExit()
+    {
         isFocused = false;
         boundingBox?.SetActive(false);
     }
@@ -69,6 +79,7 @@ public class ItemSelect : FocusTarget, IInputHandler//IPointerHandler//, IInputC
         keyboard.gameObject.SetActive(true);
         keyboard.GetComponent<Keyboard>().InputTarget = quad.GetComponentInChildren<ParamTypein>().gameObject;
         quad.GetComponentInChildren<ParamTypein>().EnableInput = true;
+        quad.GetComponentInChildren<ParamSelect>().SetType(typeof(ProjectConfig.ProjectTemplate), "Template", 0);
     }
 
     public void CreateFile()
@@ -86,7 +97,7 @@ public class ItemSelect : FocusTarget, IInputHandler//IPointerHandler//, IInputC
             singleLine.SetActive(false);
             keyboard.SetActive(false);
 
-            GetComponentInParent<ScanDictionary>().CreateFile();
+            GetComponentInParent<ScanDirectory>().CreateFile();
         };
         keyboard.GetComponent<Keyboard>().InputTarget = singleLine;
     }
@@ -106,22 +117,53 @@ public class ItemSelect : FocusTarget, IInputHandler//IPointerHandler//, IInputC
             return;
         }
         FileAndDirectory.Instance.ProjectName = projName;
-        FileAndDirectory.Instance.SaveFile("config.taurus", string.Format("{{ \"{0}\" = \"{1}\"}}", "type", type));
+        ProjectConfig.Config a = new ProjectConfig.Config
+        {
+            type = (ProjectConfig.ProjectTemplate)GameObject.Find("HUD/Quad/SingleLineSelect").GetComponentInChildren<ParamSelect>().GetValue(),
+            console = ProjectConfig.Console.Default
+        };
 
-        CancelCreate();
+        FileAndDirectory.Instance.SaveFile(FileAndDirectory.Instance.FullFilePath("config.taurus"), JsonUtility.ToJson(a, true));
+
+        transform.parent.parent.Find("Keyboard").gameObject.SetActive(false);
+        transform.parent.gameObject.SetActive(false);
+
+        if (a.type == ProjectConfig.ProjectTemplate.NN)
+        {
+            StartCoroutine(Await(SceneManager.LoadSceneAsync("NNBuild", LoadSceneMode.Single), () =>
+            {
+                GameObject.Find("HUD").transform.Find("RotatingOrbs")?.gameObject.gameObject.SetActive(false);
+            }));
+        }
+        else if (a.console == ProjectConfig.Console.Image)
+        {
+
+        }
+        else
+        {
+            StartCoroutine(Await(SceneManager.LoadSceneAsync("Editor", LoadSceneMode.Single), () =>
+            {
+                GameObject.Find("HUD").transform.Find("RotatingOrbs")?.gameObject.gameObject.SetActive(false);
+            }));
+        }
     }
 
-    public void CancelCreate()
+    /*public void CancelCreate()
     {
         transform.parent.parent.Find("Keyboard").gameObject.SetActive(false);
         transform.parent.gameObject.SetActive(false);
-    }
+    }*/
 
 
     public void Close()
     {
         SaveFile();
         GameObject.Find("Editor").GetComponent<EditorManager>().Remove(gameObject.transform.parent.gameObject);
+    }
+
+    public void Run()
+    {
+        GameObject.Find("Editor").GetComponent<EditorManager>().Run();
     }
 
     public void SaveFile()
@@ -139,20 +181,20 @@ public class ItemSelect : FocusTarget, IInputHandler//IPointerHandler//, IInputC
         transform.parent.GetComponentInChildren<MyInputField>().PageDown();
     }
 
-    public void SaveParam()
+    /*public void SaveParam()
     {
         GetComponentInParent<Inspector>().Save();
-    }
+    }*/
 
     public void SaveBrainScript()
     {
         FileAndDirectory.Instance.SaveBrainScript(transform.parent.GetComponentInChildren<TMPro.TextMeshPro>().text);
     }
 
-    public void Cancel()
+    /*public void Cancel()
     {
         GameObject.Find("ParamInspector").SetActive(false);
-    }
+    }*/
 
     public void Delete()
     {
@@ -184,9 +226,15 @@ public class ItemSelect : FocusTarget, IInputHandler//IPointerHandler//, IInputC
 
     protected virtual IEnumerator Await(AsyncOperation aop, System.Action complated)
     {
+        float d = 0f;
         while (!aop.isDone)
         {
             yield return null;
+            d += Time.deltaTime;
+        }
+        if (d < 2.9f)
+        {
+            yield return new WaitForSeconds(3f);
         }
         complated?.Invoke();
     }
@@ -208,6 +256,11 @@ public class ItemSelect : FocusTarget, IInputHandler//IPointerHandler//, IInputC
         eventData.Use();
     }
 
-    public void OnInputPressed(InputPressedEventData eventData) { }
-    public void OnInputPositionChanged(InputPositionEventData eventData) { }
+    //public void OnInputPressed(InputPressedEventData eventData) { }
+    //public void OnInputPositionChanged(InputPositionEventData eventData) { }
+
+    public void OnInputClicked(InputClickedEventData eventData)
+    {
+        onClick.Invoke();
+    }
 }

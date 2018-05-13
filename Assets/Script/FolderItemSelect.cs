@@ -1,12 +1,8 @@
-﻿using MixedRealityToolkit.InputModule.EventData;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-#if UNITY_WSA && NETFX_CORE 
-using Windows.Storage;
-#endif
 
 public class FolderItemSelect : ItemSelect
 {
@@ -23,23 +19,23 @@ public class FolderItemSelect : ItemSelect
         }
     }
 
-    public override void OnFocusEnter(FocusEventData eventData)
+    public override void OnFocusEnter()
     {
-        base.OnFocusEnter(eventData);
+        base.OnFocusEnter();
 
         GetComponentInChildren<CubeRotate>().RotateSpeed = 3f;
     }
 
-    public override void OnFocusExit(FocusEventData eventData)
+    public override void OnFocusExit()
     {
-        base.OnFocusExit(eventData);
+        base.OnFocusExit();
 
         GetComponentInChildren<CubeRotate>().RotateSpeed = 0f;
     }
 
     public void OpenFolder()
     {
-        GetComponentInParent<ScanDictionary>().OpenFolder(gameObject);
+        GetComponentInParent<ScanDirectory>().OpenFolder(gameObject);
     }
 
     public void OpenFile()
@@ -60,11 +56,40 @@ public class FolderItemSelect : ItemSelect
     {
         string proj = gameObject.name;
         FileAndDirectory.Instance.ProjectName = proj;
+        ProjectConfig.Config a;
+        try
+        {
+            string projP = FileAndDirectory.Instance.OpenFile(FileAndDirectory.Instance.FolderPath, "config.taurus");
+            a = JsonUtility.FromJson<ProjectConfig.Config>(projP);
+        }
+        catch (System.IO.FileNotFoundException e)
+        {
+            a = default(ProjectConfig.Config);
+        }
+        catch (System.Exception e)
+        {
+            return;
+        }
         var trans = GameObject.Find("HUD").transform.Find("RotatingOrbs");
         trans.gameObject.SetActive(true);
-        StartCoroutine(Await(SceneManager.LoadSceneAsync("Editor", LoadSceneMode.Single), () =>
+
+        if (a.type == ProjectConfig.ProjectTemplate.NN)
         {
-            GameObject.Find("HUD").transform.Find("RotatingOrbs")?.gameObject.gameObject.SetActive(false);
-        }));
+            StartCoroutine(Await(SceneManager.LoadSceneAsync("NNBuild", LoadSceneMode.Single), () =>
+            {
+                GameObject.Find("HUD").transform.Find("RotatingOrbs")?.gameObject.gameObject.SetActive(false);
+            }));
+        }
+        else if (a.console == ProjectConfig.Console.Image)
+        {
+
+        }
+        else
+        {
+            StartCoroutine(Await(SceneManager.LoadSceneAsync("Editor", LoadSceneMode.Single), () =>
+            {
+                GameObject.Find("HUD").transform.Find("RotatingOrbs")?.gameObject.gameObject.SetActive(false);
+            }));
+        }
     }
 }

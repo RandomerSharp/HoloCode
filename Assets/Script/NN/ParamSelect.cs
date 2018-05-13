@@ -27,12 +27,14 @@ public class ParamSelect : MonoBehaviour
         paramName = variable;
         transform.Find("Param").GetComponent<TextMesh>().text = paramName;
         currentSelect = cur;
-
+#if UNITY_EDITOR
         if (type.IsEnum)
         {
             allSelection.AddRange(type.GetEnumNames());
         }
-
+#else
+        allSelection.AddRange(Enum.GetNames(type));
+#endif
         transform.Find("InputField/Text").GetComponent<TextMesh>().text = allSelection[cur];
     }
 

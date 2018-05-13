@@ -5,10 +5,11 @@ using System.IO;
 #if UNITY_WSA && NETFX_CORE
 using Windows.Storage;
 #endif
-public class FileAndDirectory : MixedRealityToolkit.Common.Singleton<FileAndDirectory>
+public class FileAndDirectory : HoloToolkit.Unity.Singleton<FileAndDirectory>
 {
     private string workspacePath;
     private string projectName;
+    private string picturePath;
 
     /// <summary>
     /// Workspace的路径
@@ -49,15 +50,24 @@ public class FileAndDirectory : MixedRealityToolkit.Common.Singleton<FileAndDire
         }
     }
 
+    public string PicturePath
+    {
+        get
+        {
+            return picturePath;
+        }
+    }
+
     protected override void Awake()
     {
         base.Awake();
-        //#if UNITY_EDITOR
+#if UNITY_EDITOR
         workspacePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Workspace");
-        //workspacePath = "Demo";
-        //#else
-        //rootPath = KnownFolders.DocumentsLibrary.Path;
-        //#endif
+        picturePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "Taurus");
+#else
+        workspacePath = Path.Combine(KnownFolders.DocumentsLibrary.Path, "Workspace");
+        picturePath = Path.Combine(KnownFolders.PicturesLibrary.Path, "Taurus");
+#endif
     }
 
     /// <summary>
@@ -120,6 +130,11 @@ public class FileAndDirectory : MixedRealityToolkit.Common.Singleton<FileAndDire
         return code;
     }
 
+    /// <summary>
+    /// 使用绝对路径保存文件
+    /// </summary>
+    /// <param name="filePath"></param>
+    /// <param name="content"></param>
     public void SaveFile(string filePath, string content)
     {
         using (Stream stream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write))

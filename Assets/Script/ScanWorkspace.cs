@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class ScanWorkspace : MonoBehaviour
 {
-    private string workspacePath;
+    //private string workspacePath;
     [SerializeField] private GameObject folderObj;
 
-    private void Awake()
+    private void Start()
     {
         var folders = FileAndDirectory.Instance.GetFoldersInFolder(FileAndDirectory.Instance.WorkspacePath);
         for (int i = 0; i < folders.Length; i++)

@@ -1,5 +1,6 @@
-﻿using MixedRealityToolkit.InputModule.EventData;
-using MixedRealityToolkit.InputModule.InputHandlers;
+﻿//using MixedRealityToolkit.InputModule.EventData;
+//using MixedRealityToolkit.InputModule.InputHandlers;
+using HoloToolkit.Unity.InputModule;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,14 +8,22 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-public class GenerateBrainScript : MonoBehaviour, IPointerHandler
+public class GenerateBrainScript : MonoBehaviour, IInputClickHandler//, IPointerHandler
 {
     [SerializeField]
     private GameObject codeScreen;
 
     private bool generating = false;
 
-    public void OnPointerClicked(ClickEventData eventData)
+    public void OnInputClicked(InputClickedEventData eventData)
+    {
+        if (!generating)
+        {
+            StartCoroutine(Generate());
+        }
+    }
+
+    /*public void OnPointerClicked(ClickEventData eventData)
     {
         if (!generating)
         {
@@ -24,7 +33,7 @@ public class GenerateBrainScript : MonoBehaviour, IPointerHandler
 
     public void OnPointerDown(ClickEventData eventData) { }
 
-    public void OnPointerUp(ClickEventData eventData) { }
+    public void OnPointerUp(ClickEventData eventData) { }*/
 
     private IEnumerator Generate()
     {

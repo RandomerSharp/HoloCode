@@ -1,12 +1,11 @@
-﻿using MixedRealityToolkit.Common;
-using MixedRealityToolkit.InputModule.EventData;
-using MixedRealityToolkit.InputModule.InputHandlers;
+﻿using HoloToolkit.Unity;
+using HoloToolkit.Unity.InputModule;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseNode : MonoBehaviour, IPointerHandler
+public abstract class BaseNode : MonoBehaviour, IInputClickHandler// IPointerHandler
 {
     public enum DisplayModeEnum
     {
@@ -162,7 +161,7 @@ public abstract class BaseNode : MonoBehaviour, IPointerHandler
     private bool pressB;
     private float pressDelta;
 
-    public void OnPointerUp(ClickEventData eventData) { }
+    /*public void OnPointerUp(ClickEventData eventData) { }
 
     public void OnPointerDown(ClickEventData eventData) { }
 
@@ -186,7 +185,7 @@ public abstract class BaseNode : MonoBehaviour, IPointerHandler
         //OnPointerClicked();
         isPressed = true;
         pressDelta = 0;
-    }
+    }*/
 
     private void OnPointerClicked()
     {
@@ -227,5 +226,22 @@ public abstract class BaseNode : MonoBehaviour, IPointerHandler
         if (pressB == false) yield break;
         yield return new WaitForSeconds(1.5f);
         pressB = false;
+    }
+
+    public void OnInputClicked(InputClickedEventData eventData)
+    {
+        if (isPressed)
+        {
+            if (pressDelta < 0.5f)
+            {
+                OnPointerDoubleClicked();
+                isPressed = false;
+                pressDelta = 0;
+            }
+            return;
+        }
+        //OnPointerClicked();
+        isPressed = true;
+        pressDelta = 0;
     }
 }

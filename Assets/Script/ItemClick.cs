@@ -1,10 +1,9 @@
-﻿using MixedRealityToolkit.InputModule.EventData;
-using MixedRealityToolkit.InputModule.InputHandlers;
+﻿using HoloToolkit.Unity.InputModule;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class ItemClick : MonoBehaviour, IPointerHandler
+public class ItemClick : MonoBehaviour, IInputClickHandler//IPointerHandler
 {
     [SerializeField]
     protected UnityEvent onClick;
@@ -130,11 +129,17 @@ public class ItemClick : MonoBehaviour, IPointerHandler
         GetComponentInParent<ParamSelect>().Last();
     }
 
-    public void OnPointerUp(ClickEventData eventData) { }
+    /*public void OnPointerUp(ClickEventData eventData) { }
 
     public void OnPointerDown(ClickEventData eventData) { }
 
     public void OnPointerClicked(ClickEventData eventData)
+    {
+        onClick.Invoke();
+        eventData.Use();
+    }*/
+
+    public void OnInputClicked(InputClickedEventData eventData)
     {
         onClick.Invoke();
         eventData.Use();

@@ -91,6 +91,7 @@ public class DirectoryTree
         {
             var l = files[i].Remove(0, curAbsPath.Length).Substring(1);
             if (l.Contains(".meta")) continue;
+            if (l.Contains(".taurus")) continue;
 
             if ((from item in fileList
                  where item.name == l
@@ -139,16 +140,19 @@ public class DirectoryTree
             extended = true;
 
             Transform ppp = parentTrans;
-            do
+            if (ppp.name != "DictionaryTree")
             {
-                for (int i = ppp.parent.childCount - 1; i >= 0; i--)
+                do
                 {
-                    if (ppp.parent.GetChild(i) == ppp) break;
-                    ppp.parent.GetChild(i).localPosition += Vector3.down * ItemCount;
+                    for (int i = ppp.parent.childCount - 1; i >= 0; i--)
+                    {
+                        if (ppp.parent.GetChild(i) == ppp) break;
+                        ppp.parent.GetChild(i).localPosition += Vector3.down * ItemCount;
+                    }
+                    ppp = ppp.parent;
                 }
-                ppp = ppp.parent;
+                while (ppp.name != "DictionaryTree");
             }
-            while (ppp.name != "DictionaryTree");
         }
         else
         {

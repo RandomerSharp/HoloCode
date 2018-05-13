@@ -1,4 +1,4 @@
-﻿using MixedRealityToolkit.Common;
+﻿using HoloToolkit.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ public class MySnapping : MonoBehaviour
         {
             Vector3 direction = transform.position - CameraCache.Main.transform.position;
             transform.RotateAround(CameraCache.Main.transform.position, Vector3.up, -0.5f);
-            int itemCount = GetComponent<ScanDictionary>().ItemCount;
+            int itemCount = GetComponent<ScanDirectory>().ItemCount;
             Vector3 box = new Vector3(7, 0.7f, 0.5f);
             Vector3 pos1 = transform.position - box / 2;
             Vector3 pos2 = transform.position + box / 2;

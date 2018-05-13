@@ -4,10 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
-using MixedRealityToolkit.InputModule.EventData;
-using MixedRealityToolkit.InputModule.Focus;
+using HoloToolkit.Unity.InputModule;
 
-public class EnableInput : FocusTarget //MonoBehaviour//, IFocusHandler
+public class EnableInput : MonoBehaviour, IFocusable
 {
     [SerializeField]
     private InputField inputField;
@@ -27,7 +26,7 @@ public class EnableInput : FocusTarget //MonoBehaviour//, IFocusHandler
 
     }
 
-    public override void OnFocusEnter(FocusEventData e)
+    /*public override void OnFocusEnter(FocusEventData e)
     {
         Debug.Log(gameObject.name + ": On focus enter");
         //EventSystem.current.SetSelectedGameObject(inputField.gameObject);
@@ -45,6 +44,20 @@ public class EnableInput : FocusTarget //MonoBehaviour//, IFocusHandler
         GetComponentInChildren<MyInputField>().enabled = false;
         background.color = normalColor;
         //StopAllCoroutines();
+    }*/
+
+    public void OnFocusEnter()
+    {
+        Debug.Log(gameObject.name + ": On focus enter");
+        GetComponentInChildren<MyInputField>().enabled = true;
+        background.color = highLightColor;
+    }
+
+    public void OnFocusExit()
+    {
+        Debug.Log(gameObject.name + ": On focus exit");
+        GetComponentInChildren<MyInputField>().enabled = false;
+        background.color = normalColor;
     }
 
     private void Update()

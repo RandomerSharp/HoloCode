@@ -1,11 +1,9 @@
-﻿using MixedRealityToolkit.InputModule.EventData;
-using MixedRealityToolkit.InputModule.Focus;
-using MixedRealityToolkit.InputModule.InputHandlers;
+﻿using HoloToolkit.Unity.InputModule;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyboardKey : FocusTarget, IPointerHandler
+public class KeyboardKey : MonoBehaviour, IInputClickHandler, IFocusable
 {
     public KeyCode key;
     public KeyCode shiftKey;
@@ -48,7 +46,7 @@ public class KeyboardKey : FocusTarget, IPointerHandler
         shift = false;
     }
 
-    public override void OnFocusEnter(FocusEventData e)
+    /*public override void OnFocusEnter(FocusEventData e)
     {
         GetComponent<Renderer>().material.color = focusColor;
         //enableClick = true;
@@ -58,9 +56,9 @@ public class KeyboardKey : FocusTarget, IPointerHandler
     {
         GetComponent<Renderer>().material.color = normalColor;
         //enableClick = false;
-    }
+    }*/
 
-    public void OnPointerUp(ClickEventData eventData) { }
+    /*public void OnPointerUp(ClickEventData eventData) { }
 
     public void OnPointerDown(ClickEventData eventData) { }
 
@@ -93,5 +91,45 @@ public class KeyboardKey : FocusTarget, IPointerHandler
         }
         GetComponent<Renderer>().material.color = focusColor;
         //enableClick = true;
+    }*/
+
+    public void OnFocusEnter()
+    {
+        GetComponent<Renderer>().material.color = focusColor;
+    }
+
+    public void OnFocusExit()
+    {
+        GetComponent<Renderer>().material.color = normalColor;
+    }
+
+    public void OnInputClicked(InputClickedEventData eventData)
+    {
+        GetComponent<Renderer>().material.color = normalColor;
+        //enableClick = false;
+        if (shift && hasShift)
+        {
+            if (shiftKey == KeyCode.None)
+            {
+                if (key <= KeyCode.Z && key >= KeyCode.A)
+                {
+                    shiftKey = key - (int)KeyCode.A + 'A';
+                }
+                else
+                {
+                    return;
+                }
+            }
+            keyBoard.ReceiveKey(shiftKey);
+        }
+        else
+        {
+            if (key == KeyCode.None)
+            {
+                return;
+            }
+            keyBoard.ReceiveKey(key);
+        }
+        GetComponent<Renderer>().material.color = focusColor;
     }
 }

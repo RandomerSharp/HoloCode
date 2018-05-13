@@ -1,5 +1,5 @@
-﻿using MixedRealityToolkit.Common;
-using MixedRealityToolkit.InputModule.InputSources;
+﻿using HoloToolkit.Unity;
+using HoloToolkit.Unity.InputModule;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;

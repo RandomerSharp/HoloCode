@@ -1,12 +1,9 @@
-﻿using MixedRealityToolkit.Common;
-using MixedRealityToolkit.InputModule.EventData;
-using MixedRealityToolkit.InputModule.Focus;
-using MixedRealityToolkit.InputModule.InputHandlers;
+﻿using HoloToolkit.Unity.InputModule;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventorySelect : FocusTarget, IPointerHandler
+public class InventorySelect : MonoBehaviour, IInputClickHandler, IFocusable//, IPointerHandler
 {
     [SerializeField]
     private string inventoryName;
@@ -32,7 +29,7 @@ public class InventorySelect : FocusTarget, IPointerHandler
         if (boundingBox == null) boundingBox = transform.Find("BoundingBox").gameObject;
     }
 
-    public override void OnFocusEnter(FocusEventData eventData)
+    /*public override void OnFocusEnter(FocusEventData eventData)
     {
         //isFocused = true;
         boundingBox?.SetActive(true);
@@ -42,7 +39,7 @@ public class InventorySelect : FocusTarget, IPointerHandler
     {
         //isFocused = false;
         boundingBox?.SetActive(false);
-    }
+    }*/
 
     /*private void Create()
     {
@@ -60,12 +57,27 @@ public class InventorySelect : FocusTarget, IPointerHandler
         inventoryName = newInventory;
     }
 
-    public void OnPointerClicked(ClickEventData eventData)
+    /*public void OnPointerClicked(ClickEventData eventData)
     {
         transform.parent.GetComponent<InventoryManager>().MoveToSelectObject(gameObject);
     }
 
     public void OnPointerDown(ClickEventData eventData) { }
 
-    public void OnPointerUp(ClickEventData eventData) { }
+    public void OnPointerUp(ClickEventData eventData) { }*/
+
+    public void OnInputClicked(InputClickedEventData eventData)
+    {
+        transform.parent.GetComponent<InventoryManager>().MoveToSelectObject(gameObject);
+    }
+
+    public void OnFocusEnter()
+    {
+        boundingBox?.SetActive(true);
+    }
+
+    public void OnFocusExit()
+    {
+        boundingBox?.SetActive(false);
+    }
 }

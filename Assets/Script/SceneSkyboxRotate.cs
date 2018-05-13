@@ -1,4 +1,4 @@
-﻿using MixedRealityToolkit.Common;
+﻿using HoloToolkit.Unity;
 using UnityEngine;
 
 public class SceneSkyboxRotate : Singleton<SceneSkyboxRotate>

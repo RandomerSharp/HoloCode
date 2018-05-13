@@ -1,5 +1,4 @@
-﻿using MixedRealityToolkit.InputModule.EventData;
-using MixedRealityToolkit.InputModule.InputHandlers;
+﻿using HoloToolkit.Unity.InputModule;
 using System.Linq;
 using UnityEngine;
 
@@ -113,7 +112,7 @@ public class TypeIn : MonoBehaviour, IInputHandler// IPointerHandler//IFocusable
         eventData.Use();
     }
 
-    public void OnInputPressed(InputPressedEventData eventData) { }
+    //public void OnInputPressed(InputPressedEventData eventData) { }
 
     public void OnInputPositionChanged(InputPositionEventData eventData) { }
 }

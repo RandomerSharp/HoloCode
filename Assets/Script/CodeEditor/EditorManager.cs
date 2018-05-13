@@ -1,19 +1,20 @@
-﻿using MixedRealityToolkit.Common;
-using MixedRealityToolkit.InputModule.EventData;
-using MixedRealityToolkit.InputModule.InputHandlers;
-using MixedRealityToolkit.UX.Collections;
+﻿using HoloToolkit.Unity;
+using HoloToolkit.Unity.Collections;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class EditorManager : MonoBehaviour, IPointerHandler
+public class EditorManager : MonoBehaviour//, IPointerHandler
 {
     //private GameObject workspacePanel;
     //private bool workspacePanelActive;
     [SerializeField]
     private GameObject codeTab;
+    [SerializeField]
+    private UnityAction runFunction;
     private Vector3 center;
     //public float radius;
 
@@ -101,6 +102,16 @@ public class EditorManager : MonoBehaviour, IPointerHandler
         GetComponent<ObjectCollection>().UpdateCollection();
     }
 
+    public void Run()
+    {
+        runFunction?.Invoke();
+    }
+
+    [SerializeField]
+    private void Mnist()
+    {
+        GameObject.Find("HUD").transform.Find("ImagePanel").gameObject.SetActive(true);
+    }
 
     private void OnDestroy()
     {
@@ -112,7 +123,7 @@ public class EditorManager : MonoBehaviour, IPointerHandler
         //DestroyImmediate(gameObject);
     }
 
-    public void OnPointerUp(ClickEventData eventData)
+    /*public void OnPointerUp(ClickEventData eventData)
     {
 
     }
@@ -125,5 +136,5 @@ public class EditorManager : MonoBehaviour, IPointerHandler
     public void OnPointerClicked(ClickEventData eventData)
     {
 
-    }
+    }*/
 }
