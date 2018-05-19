@@ -20,6 +20,9 @@ public class InventoryManager : MonoBehaviour
     [SerializeField]
     private GameObject inspector;
 
+    [SerializeField]
+    private GameObject nodeName;
+
     private void Awake()
     {
         inventories = new List<GameObject>();
@@ -84,6 +87,7 @@ public class InventoryManager : MonoBehaviour
                 curSelected = i;
             }
         }
+        nodeName.GetComponentInChildren<TextMesh>().text = inventories[curSelected].GetComponent<InventorySelect>().InventoryName;
     }
 
     public void CreateNode(Vector3 pos)

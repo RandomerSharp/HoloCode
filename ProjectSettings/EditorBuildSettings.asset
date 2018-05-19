@@ -17,3 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scene/NNBuild.unity
     guid: 561ef75b68f3b984f9fcfa3face99fd1
+  - enabled: 1
+    path: Assets/Scene/ShiHua.unity
+    guid: 948f9c012f5749e47a75c4e9f389ba22

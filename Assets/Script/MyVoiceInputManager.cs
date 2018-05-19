@@ -1,5 +1,5 @@
-﻿using HoloToolkit.Unity;
-using HoloToolkit.Unity.InputModule;
+﻿using MixedRealityToolkit.Common;
+using MixedRealityToolkit.InputModule.InputSources;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +40,7 @@ public class MyVoiceInputManager : Singleton<MyVoiceInputManager>
 
     private void DictationRecognizer_DictationResult(string text, ConfidenceLevel confidence)
     {
-        //Debug.Log("Result: " + text);
+        Debug.Log("Result: " + text);
         foreach (var item in keywords)
         {
             if (text == item.keyword)
@@ -62,7 +62,7 @@ public class MyVoiceInputManager : Singleton<MyVoiceInputManager>
 
     private void DictationRecognizer_DictationHypothesis(string text)
     {
-        //Debug.Log("Hypothesis: " + text);
+        Debug.Log("Hypothesis: " + text);
         var dictationHandlers = (from i in FindObjectsOfType(typeof(MonoBehaviour))
                                  where i is IMyDictationHandler
                                  select ((IMyDictationHandler)i)).ToArray();
@@ -87,7 +87,7 @@ public class MyVoiceInputManager : Singleton<MyVoiceInputManager>
 
     private void DictationRecognizer_DictationComplete(DictationCompletionCause cause)
     {
-        //Debug.Log("Complete: " + cause.ToString());
+        Debug.Log("Complete: " + cause.ToString());
         var dictationHandlers = (from i in FindObjectsOfType(typeof(MonoBehaviour))
                                  where i is IMyDictationHandler
                                  select ((IMyDictationHandler)i)).ToArray();

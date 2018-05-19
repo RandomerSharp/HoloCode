@@ -1,10 +1,13 @@
-﻿using HoloToolkit.Unity.InputModule;
+﻿using MixedRealityToolkit.InputModule.EventData;
+using MixedRealityToolkit.InputModule.Gaze;
+using MixedRealityToolkit.InputModule.InputHandlers;
+using MixedRealityToolkit.InputModule.InputSources;
 using UnityEngine;
 using UnityEngine.XR.WSA.Input;
 
-public class CreateNode : MonoBehaviour, IInputClickHandler//IPointerHandler
+public class CreateNode : MonoBehaviour, IPointerHandler//IInputClickHandler
 {
-    public void OnInputClicked(InputClickedEventData eventData)
+    /*public void OnInputClicked(InputClickedEventData eventData)
     {
         if (eventData.selectedObject == null || eventData.selectedObject.layer == LayerMask.GetMask("Environment"))
         {
@@ -17,12 +20,12 @@ public class CreateNode : MonoBehaviour, IInputClickHandler//IPointerHandler
             if (sourceKind == InteractionSourceInfo.Controller)
             {
                 Ray r;
-                /*if (InteractionInputSources.Instance.TryGetPointingRay(eventData.SourceId, out r))
+                if (InteractionInputSources.Instance.TryGetPointingRay(eventData.SourceId, out r))
                 {
                     InteractionInputSources.Instance.TryGetGripPosition(eventData.SourceId, out v);
                     //Debug.Log(v);
                     inventory.GetComponent<InventoryManager>().CreateNode((r.origin - v).normalized * 12f);
-                }*/
+                }
                 if (eventData.InputSource.TryGetPointingRay(eventData.SourceId, out r))
                 {
                     if (eventData.InputSource.TryGetGripPosition(eventData.SourceId, out v))
@@ -39,36 +42,35 @@ public class CreateNode : MonoBehaviour, IInputClickHandler//IPointerHandler
             eventData.Use();
             return;
         }
-
-        /*public void OnPointerClicked(ClickEventData eventData)
+    }*/
+    public void OnPointerClicked(ClickEventData eventData)
+    {
+        if (eventData.selectedObject == null || eventData.selectedObject.layer == LayerMask.GetMask("Environment"))
         {
-            if (eventData.selectedObject == null || eventData.selectedObject.layer == LayerMask.GetMask("Environment"))
+            var inventory = GameObject.Find("HUD/Inventory");
+            InteractionSourceKind sourceKind;
+            InteractionInputSources.Instance.TryGetSourceKind(eventData.SourceId, out sourceKind);
+            Vector3 v;
+            if (sourceKind == InteractionSourceKind.Controller)
             {
-                var inventory = GameObject.Find("HUD/Inventory");
-                InteractionSourceKind sourceKind;
-                InteractionInputSources.Instance.TryGetSourceKind(eventData.SourceId, out sourceKind);
-                Vector3 v;
-                if (sourceKind == InteractionSourceKind.Controller)
+                Ray r;
+                if (InteractionInputSources.Instance.TryGetPointingRay(eventData.SourceId, out r))
                 {
-                    Ray r;
-                    if (InteractionInputSources.Instance.TryGetPointingRay(eventData.SourceId, out r))
-                    {
-                        InteractionInputSources.Instance.TryGetGripPosition(eventData.SourceId, out v);
-                        //Debug.Log(v);
-                        inventory.GetComponent<InventoryManager>().CreateNode((r.origin - v).normalized * 12f);
-                    }
+                    InteractionInputSources.Instance.TryGetGripPosition(eventData.SourceId, out v);
+                    //Debug.Log(v);
+                    inventory.GetComponent<InventoryManager>().CreateNode((r.origin - v).normalized * 12f);
                 }
-                else
-                {
-                    inventory.GetComponent<InventoryManager>().CreateNode((GazeManager.GazeOrigin + GazeManager.GazeDirection).normalized * 12f);
-                }
-                eventData.Use();
-                return;
             }
+            else
+            {
+                inventory.GetComponent<InventoryManager>().CreateNode((GazeManager.GazeOrigin + GazeManager.GazeDirection).normalized * 12f);
+            }
+            eventData.Use();
+            return;
         }
-
-        public void OnPointerDown(ClickEventData eventData) { }
-
-        public void OnPointerUp(ClickEventData eventData) { }*/
     }
+
+    public void OnPointerDown(ClickEventData eventData) { }
+
+    public void OnPointerUp(ClickEventData eventData) { }
 }

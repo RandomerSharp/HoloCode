@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
-using HoloToolkit.Unity.InputModule;
+using MixedRealityToolkit.InputModule.Focus;
+using MixedRealityToolkit.InputModule.EventData;
 
-public class EnableInput : MonoBehaviour, IFocusable
+public class EnableInput : FocusTarget
 {
     [SerializeField]
     private InputField inputField;
@@ -23,30 +24,23 @@ public class EnableInput : MonoBehaviour, IFocusable
     private void Awake()
     {
         background.color = normalColor;
-
     }
 
-    /*public override void OnFocusEnter(FocusEventData e)
+    public override void OnFocusEnter(FocusEventData e)
     {
         Debug.Log(gameObject.name + ": On focus enter");
-        //EventSystem.current.SetSelectedGameObject(inputField.gameObject);
-        //inputField.MoveTextEnd(false);
-        //inputField.Select();
         GetComponentInChildren<MyInputField>().enabled = true;
         background.color = highLightColor;
-        //StartCoroutine(CodeInput());
     }
 
     public override void OnFocusExit(FocusEventData e)
     {
         Debug.Log(gameObject.name + ": On focus exit");
-        //EventSystem.current.SetSelectedGameObject(null);
         GetComponentInChildren<MyInputField>().enabled = false;
         background.color = normalColor;
-        //StopAllCoroutines();
-    }*/
+    }
 
-    public void OnFocusEnter()
+    /*public void OnFocusEnter()
     {
         Debug.Log(gameObject.name + ": On focus enter");
         GetComponentInChildren<MyInputField>().enabled = true;
@@ -58,7 +52,7 @@ public class EnableInput : MonoBehaviour, IFocusable
         Debug.Log(gameObject.name + ": On focus exit");
         GetComponentInChildren<MyInputField>().enabled = false;
         background.color = normalColor;
-    }
+    }*/
 
     private void Update()
     {

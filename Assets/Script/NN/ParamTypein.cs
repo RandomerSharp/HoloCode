@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using HoloToolkit.Unity.InputModule;
+using MixedRealityToolkit.InputModule.InputHandlers;
+using MixedRealityToolkit.InputModule.EventData;
+//using HoloToolkit.Unity.InputModule;
 
-public class ParamTypein : MonoBehaviour, IVKeyInput, IInputClickHandler// IPointerHandler
+public class ParamTypein : MonoBehaviour, IVKeyInput, IPointerHandler//IInputClickHandler// 
 {
     private bool enableInput = false;
     private TextMesh text;
@@ -85,7 +87,7 @@ public class ParamTypein : MonoBehaviour, IVKeyInput, IInputClickHandler// IPoin
         transform.Find("Param").GetComponent<TextMesh>().text = key;
     }
 
-    /*public void OnPointerUp(ClickEventData eventData) { }
+    public void OnPointerUp(ClickEventData eventData) { }
     public void OnPointerDown(ClickEventData eventData) { }
 
     public void OnPointerClicked(ClickEventData eventData)
@@ -97,9 +99,9 @@ public class ParamTypein : MonoBehaviour, IVKeyInput, IInputClickHandler// IPoin
         //transform.parent.parent.parent.GetComponentInChildren<Keyboard>().InputTarget = gameObject;
         GameObject.Find("HUD").GetComponentInChildren<Keyboard>().InputTarget = gameObject;
         enableInput = true;
-    }*/
+    }
 
-    public void OnInputClicked(InputClickedEventData eventData)
+    /*public void OnInputClicked(InputClickedEventData eventData)
     {
         foreach (var item in FindObjectsOfType<ParamTypein>())
         {
@@ -108,5 +110,5 @@ public class ParamTypein : MonoBehaviour, IVKeyInput, IInputClickHandler// IPoin
         //transform.parent.parent.parent.GetComponentInChildren<Keyboard>().InputTarget = gameObject;
         GameObject.Find("HUD").GetComponentInChildren<Keyboard>().InputTarget = gameObject;
         enableInput = true;
-    }
+    }*/
 }

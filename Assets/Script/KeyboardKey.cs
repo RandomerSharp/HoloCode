@@ -1,9 +1,11 @@
-﻿using HoloToolkit.Unity.InputModule;
+﻿using MixedRealityToolkit.InputModule.EventData;
+using MixedRealityToolkit.InputModule.Focus;
+using MixedRealityToolkit.InputModule.InputHandlers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyboardKey : MonoBehaviour, IInputClickHandler, IFocusable
+public class KeyboardKey : FocusTarget, IPointerHandler //MonoBehaviour, IInputClickHandler, IFocusable
 {
     public KeyCode key;
     public KeyCode shiftKey;
@@ -46,7 +48,7 @@ public class KeyboardKey : MonoBehaviour, IInputClickHandler, IFocusable
         shift = false;
     }
 
-    /*public override void OnFocusEnter(FocusEventData e)
+    public override void OnFocusEnter(FocusEventData e)
     {
         GetComponent<Renderer>().material.color = focusColor;
         //enableClick = true;
@@ -56,9 +58,9 @@ public class KeyboardKey : MonoBehaviour, IInputClickHandler, IFocusable
     {
         GetComponent<Renderer>().material.color = normalColor;
         //enableClick = false;
-    }*/
+    }
 
-    /*public void OnPointerUp(ClickEventData eventData) { }
+    public void OnPointerUp(ClickEventData eventData) { }
 
     public void OnPointerDown(ClickEventData eventData) { }
 
@@ -91,9 +93,9 @@ public class KeyboardKey : MonoBehaviour, IInputClickHandler, IFocusable
         }
         GetComponent<Renderer>().material.color = focusColor;
         //enableClick = true;
-    }*/
+    }
 
-    public void OnFocusEnter()
+    /*public void OnFocusEnter()
     {
         GetComponent<Renderer>().material.color = focusColor;
     }
@@ -101,9 +103,9 @@ public class KeyboardKey : MonoBehaviour, IInputClickHandler, IFocusable
     public void OnFocusExit()
     {
         GetComponent<Renderer>().material.color = normalColor;
-    }
+    }*/
 
-    public void OnInputClicked(InputClickedEventData eventData)
+    /*public void OnInputClicked(InputClickedEventData eventData)
     {
         GetComponent<Renderer>().material.color = normalColor;
         //enableClick = false;
@@ -131,5 +133,5 @@ public class KeyboardKey : MonoBehaviour, IInputClickHandler, IFocusable
             keyBoard.ReceiveKey(key);
         }
         GetComponent<Renderer>().material.color = focusColor;
-    }
+    }*/
 }

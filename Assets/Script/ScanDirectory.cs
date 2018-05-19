@@ -32,7 +32,7 @@ public class ScanDirectory : MonoBehaviour
         //string workspacePath = "Demo";
         //folderList = new List<GameObject>();
         //fileList = new List<GameObject>();
-        FileAndDirectory.Instance.ProjectName = "Flower";
+        //FileAndDirectory.Instance.ProjectName = "EBook";
         //UpdateDictionaryTree(FileAndDictionary.Instance.FolderPath, transform);
         dt = new DirectoryTree(FileAndDirectory.Instance.FolderPath, transform);
         dt.ScanFolder(folderObj, fileObj);
@@ -43,6 +43,7 @@ public class ScanDirectory : MonoBehaviour
     {
         //UpdateDictionaryTree(FileAndDictionary.Instance.FolderPath, transform);
         dt.ScanFolder(folderObj, fileObj);
+        dt.Extend();
     }
 
     public void OpenFolder(GameObject obj)

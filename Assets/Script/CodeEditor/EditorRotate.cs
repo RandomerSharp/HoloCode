@@ -1,4 +1,6 @@
-﻿using HoloToolkit.Unity.InputModule;
+﻿using MixedRealityToolkit.InputModule.EventData;
+using MixedRealityToolkit.InputModule.InputHandlers;
+using MixedRealityToolkit.InputModule.InputSources;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,20 +27,20 @@ public class EditorRotate : MonoBehaviour, IInputHandler
     {
         if (isDraging)
         {
-            InteractionSourceInfo source;
-            //InteractionInputSources.Instance.TryGetSourceKind(m_sourceId, out source);
-            m_inputSource.TryGetSourceKind(m_sourceId, out source);
+            InteractionSourceKind source;
+            InteractionInputSources.Instance.TryGetSourceKind(m_sourceId, out source);
+            //m_inputSource.TryGetSourceKind(m_sourceId, out source);
             Vector3 pos = Vector3.zero;
-            if (source == InteractionSourceInfo.Controller)
+            if (source == InteractionSourceKind.Controller)
             {
-                if (!m_inputSource.TryGetPointerPosition(m_sourceId, out pos))
+                if (!InteractionInputSources.Instance.TryGetPointerPosition(m_sourceId, out pos))
                 {
                     return;
                 }
             }
-            else if (source == InteractionSourceInfo.Other)
+            else if (source == InteractionSourceKind.Other)
             {
-                if (!m_inputSource.TryGetPointerPosition(m_sourceId, out pos))
+                if (!InteractionInputSources.Instance.TryGetPointerPosition(m_sourceId, out pos))
                 {
                     return;
                 }
@@ -68,12 +70,12 @@ public class EditorRotate : MonoBehaviour, IInputHandler
 
             //InteractionInputSources.Instance.TryGetPointerPosition(sourceId, out lastPos);
             m_inputSource = eventData.InputSource;
-            m_inputSource.TryGetPointerPosition(m_sourceId, out m_lastPos);
+            InteractionInputSources.Instance.TryGetPointerPosition(m_sourceId, out m_lastPos);
             eventData.Use();
         }
     }
 
-    //public void OnInputPressed(InputPressedEventData eventData) { }
+    public void OnInputPressed(InputPressedEventData eventData) { }
 
     public void OnInputPositionChanged(InputPositionEventData eventData) { }
 }

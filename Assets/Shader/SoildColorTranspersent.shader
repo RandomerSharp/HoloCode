@@ -10,7 +10,7 @@ Shader "Custom/SoildColorTransparent"
 		// No culling or depth
 		Cull Back
 		ZWrite On
-		ZTest Always
+		ZTest LEqual
 		Blend SrcAlpha One//MinusSrcAlpha
 		Tags { "RenderType" = "Transparent" "Queue" = "Transparent-100" }
 

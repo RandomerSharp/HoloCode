@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using MixedRealityToolkit.InputModule.EventData;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,16 +20,16 @@ public class FolderItemSelect : ItemSelect
         }
     }
 
-    public override void OnFocusEnter()
+    public override void OnFocusEnter(FocusEventData eventData)
     {
-        base.OnFocusEnter();
+        base.OnFocusEnter(eventData);
 
         GetComponentInChildren<CubeRotate>().RotateSpeed = 3f;
     }
 
-    public override void OnFocusExit()
+    public override void OnFocusExit(FocusEventData eventData)
     {
-        base.OnFocusExit();
+        base.OnFocusExit(eventData);
 
         GetComponentInChildren<CubeRotate>().RotateSpeed = 0f;
     }
@@ -75,14 +76,17 @@ public class FolderItemSelect : ItemSelect
 
         if (a.type == ProjectConfig.ProjectTemplate.NN)
         {
-            StartCoroutine(Await(SceneManager.LoadSceneAsync("NNBuild", LoadSceneMode.Single), () =>
+            StartCoroutine(Await(SceneManager.LoadSceneAsync("Editor", LoadSceneMode.Single), () =>
             {
                 GameObject.Find("HUD").transform.Find("RotatingOrbs")?.gameObject.gameObject.SetActive(false);
             }));
         }
         else if (a.console == ProjectConfig.Console.Image)
         {
-
+            StartCoroutine(Await(SceneManager.LoadSceneAsync("ShiHua", LoadSceneMode.Single), () =>
+            {
+                GameObject.Find("HUD").transform.Find("RotatingOrbs")?.gameObject.gameObject.SetActive(false);
+            }));
         }
         else
         {

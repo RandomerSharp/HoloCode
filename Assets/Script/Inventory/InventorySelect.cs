@@ -1,9 +1,11 @@
-﻿using HoloToolkit.Unity.InputModule;
+﻿using MixedRealityToolkit.InputModule.EventData;
+using MixedRealityToolkit.InputModule.Focus;
+using MixedRealityToolkit.InputModule.InputHandlers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventorySelect : MonoBehaviour, IInputClickHandler, IFocusable//, IPointerHandler
+public class InventorySelect : FocusTarget, IPointerHandler//IInputClickHandler, IFocusable//, IPointerHandler
 {
     [SerializeField]
     private string inventoryName;
@@ -29,7 +31,7 @@ public class InventorySelect : MonoBehaviour, IInputClickHandler, IFocusable//, 
         if (boundingBox == null) boundingBox = transform.Find("BoundingBox").gameObject;
     }
 
-    /*public override void OnFocusEnter(FocusEventData eventData)
+    public override void OnFocusEnter(FocusEventData eventData)
     {
         //isFocused = true;
         boundingBox?.SetActive(true);
@@ -39,7 +41,7 @@ public class InventorySelect : MonoBehaviour, IInputClickHandler, IFocusable//, 
     {
         //isFocused = false;
         boundingBox?.SetActive(false);
-    }*/
+    }
 
     /*private void Create()
     {
@@ -57,16 +59,16 @@ public class InventorySelect : MonoBehaviour, IInputClickHandler, IFocusable//, 
         inventoryName = newInventory;
     }
 
-    /*public void OnPointerClicked(ClickEventData eventData)
+    public void OnPointerClicked(ClickEventData eventData)
     {
         transform.parent.GetComponent<InventoryManager>().MoveToSelectObject(gameObject);
     }
 
     public void OnPointerDown(ClickEventData eventData) { }
 
-    public void OnPointerUp(ClickEventData eventData) { }*/
+    public void OnPointerUp(ClickEventData eventData) { }
 
-    public void OnInputClicked(InputClickedEventData eventData)
+    /*public void OnInputClicked(InputClickedEventData eventData)
     {
         transform.parent.GetComponent<InventoryManager>().MoveToSelectObject(gameObject);
     }
@@ -79,5 +81,5 @@ public class InventorySelect : MonoBehaviour, IInputClickHandler, IFocusable//, 
     public void OnFocusExit()
     {
         boundingBox?.SetActive(false);
-    }
+    }*/
 }

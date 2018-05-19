@@ -1,10 +1,12 @@
-﻿using HoloToolkit.Unity.InputModule;
+﻿using MixedRealityToolkit.InputModule.EventData;
+using MixedRealityToolkit.InputModule.Focus;
+using MixedRealityToolkit.InputModule.InputHandlers;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable//FocusTarget, IInputHandler//IPointerHandler//, 
+public class ItemSelect : FocusTarget, IInputHandler//IInputClickHandler, IFocusable//IPointerHandler//, 
 {
     [SerializeField]
     protected UnityEvent onClick;
@@ -24,7 +26,7 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable//FocusTa
         }
     }
 
-    /*public override void OnFocusEnter(FocusEventData eventData)
+    public override void OnFocusEnter(FocusEventData eventData)
     {
         base.OnFocusEnter(eventData);
         isFocused = true;
@@ -36,9 +38,9 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable//FocusTa
         base.OnFocusExit(eventData);
         isFocused = false;
         boundingBox?.SetActive(false);
-    }*/
+    }
 
-    public virtual void OnFocusEnter()
+    /*public virtual void OnFocusEnter()
     {
         isFocused = true;
         boundingBox?.SetActive(true);
@@ -48,7 +50,7 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable//FocusTa
     {
         isFocused = false;
         boundingBox?.SetActive(false);
-    }
+    }*/
 
     public void SelectWorkspace()
     {
@@ -125,24 +127,31 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable//FocusTa
 
         FileAndDirectory.Instance.SaveFile(FileAndDirectory.Instance.FullFilePath("config.taurus"), JsonUtility.ToJson(a, true));
 
-        transform.parent.parent.Find("Keyboard").gameObject.SetActive(false);
-        transform.parent.gameObject.SetActive(false);
 
         if (a.type == ProjectConfig.ProjectTemplate.NN)
         {
             StartCoroutine(Await(SceneManager.LoadSceneAsync("NNBuild", LoadSceneMode.Single), () =>
             {
+                transform.parent.parent.Find("Keyboard").gameObject.SetActive(false);
+                transform.parent.gameObject.SetActive(false);
                 GameObject.Find("HUD").transform.Find("RotatingOrbs")?.gameObject.gameObject.SetActive(false);
             }));
         }
         else if (a.console == ProjectConfig.Console.Image)
         {
-
+            StartCoroutine(Await(SceneManager.LoadSceneAsync("ShiHua", LoadSceneMode.Single), () =>
+            {
+                transform.parent.parent.Find("Keyboard").gameObject.SetActive(false);
+                transform.parent.gameObject.SetActive(false);
+                GameObject.Find("HUD").transform.Find("RotatingOrbs")?.gameObject.gameObject.SetActive(false);
+            }));
         }
         else
         {
             StartCoroutine(Await(SceneManager.LoadSceneAsync("Editor", LoadSceneMode.Single), () =>
             {
+                transform.parent.parent.Find("Keyboard").gameObject.SetActive(false);
+                transform.parent.gameObject.SetActive(false);
                 GameObject.Find("HUD").transform.Find("RotatingOrbs")?.gameObject.gameObject.SetActive(false);
             }));
         }
@@ -188,7 +197,12 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable//FocusTa
 
     public void SaveBrainScript()
     {
-        FileAndDirectory.Instance.SaveBrainScript(transform.parent.GetComponentInChildren<TMPro.TextMeshPro>().text);
+        //FileAndDirectory.Instance.SaveBrainScript(transform.parent.GetComponentInChildren<TMPro.TextMeshPro>().text);
+
+        string fullPath = FileAndDirectory.Instance.FullFilePath(FileAndDirectory.Instance.ProjectName);
+        Debug.Log(fullPath);
+        //FileAndDirectory.Instance.SaveFile(fullPath, GetComponentInChildren<MyInputField>().GetText());
+        FileAndDirectory.Instance.SaveFile(fullPath, transform.parent.GetComponentInChildren<TMPro.TextMeshPro>().text);
     }
 
     /*public void Cancel()
@@ -256,11 +270,11 @@ public class ItemSelect : MonoBehaviour, IInputClickHandler, IFocusable//FocusTa
         eventData.Use();
     }
 
-    //public void OnInputPressed(InputPressedEventData eventData) { }
-    //public void OnInputPositionChanged(InputPositionEventData eventData) { }
+    public void OnInputPressed(InputPressedEventData eventData) { }
+    public void OnInputPositionChanged(InputPositionEventData eventData) { }
 
-    public void OnInputClicked(InputClickedEventData eventData)
+    /*public void OnInputClicked(InputClickedEventData eventData)
     {
         onClick.Invoke();
-    }
+    }*/
 }

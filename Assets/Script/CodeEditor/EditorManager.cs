@@ -1,5 +1,5 @@
-﻿using HoloToolkit.Unity;
-using HoloToolkit.Unity.Collections;
+﻿using MixedRealityToolkit.Common;
+using MixedRealityToolkit.UX.Collections;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;

@@ -202,6 +202,7 @@ GameObject:
   - component: {fileID: 114611040596405802}
   - component: {fileID: 114010326468268690}
   - component: {fileID: 65548726014952134}
+  - component: {fileID: 114874235733604034}
   m_Layer: 0
   m_Name: CodeTabM
   m_TagString: Untagged
@@ -1833,8 +1834,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2001,6 +2002,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e5558f060ab1bf4699fd755ddab010b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114874235733604034
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1321896200705236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51d648032498c254cacbca65797ceca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114901563192860846

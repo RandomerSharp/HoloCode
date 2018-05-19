@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.IO;
+using MixedRealityToolkit.Common;
 
 #if UNITY_WSA && NETFX_CORE
 using Windows.Storage;
 #endif
-public class FileAndDirectory : HoloToolkit.Unity.Singleton<FileAndDirectory>
+public class FileAndDirectory : Singleton<FileAndDirectory>
 {
     private string workspacePath;
     private string projectName;
@@ -62,11 +63,12 @@ public class FileAndDirectory : HoloToolkit.Unity.Singleton<FileAndDirectory>
     {
         base.Awake();
 #if UNITY_EDITOR
+        //workspacePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Workspace");
         workspacePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Workspace");
         picturePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "Taurus");
 #else
-        workspacePath = Path.Combine(KnownFolders.DocumentsLibrary.Path, "Workspace");
-        picturePath = Path.Combine(KnownFolders.PicturesLibrary.Path, "Taurus");
+        workspacePath = Path.Combine(KnownFolders.DocumentLibiary.Path, "Workspace");
+        picturePath = Path.Combine(KnownFolders.PictureLibiary.Path, "Taurus");
 #endif
     }
 

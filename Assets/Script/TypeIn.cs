@@ -1,11 +1,13 @@
-﻿using HoloToolkit.Unity.InputModule;
+﻿//using HoloToolkit.Unity.InputModule;
+using MixedRealityToolkit.InputModule.EventData;
+using MixedRealityToolkit.InputModule.InputHandlers;
 using System.Linq;
 using UnityEngine;
 
 /// <summary>
 /// 控制输入状态和输入事件（例如快捷键）
 /// </summary>
-public class TypeIn : MonoBehaviour, IInputHandler// IPointerHandler//IFocusable
+public class TypeIn : MonoBehaviour, IInputHandler//IFocusable,IInputHandler
 {
     [SerializeField]
     private Color normalColor;
@@ -72,7 +74,9 @@ public class TypeIn : MonoBehaviour, IInputHandler// IPointerHandler//IFocusable
 
     public void SaveFile()
     {
-        FileAndDirectory.Instance.SaveFile(FileAndDirectory.Instance.FullFilePath(gameObject.name), GetComponentInChildren<MyInputField>().GetText());
+        string fullPath = FileAndDirectory.Instance.FullFilePath(transform.parent.gameObject.name);
+        Debug.Log(fullPath);
+        FileAndDirectory.Instance.SaveFile(fullPath, GetComponentInChildren<MyInputField>().GetText());
     }
 
     public void OnPointerClicked()
@@ -112,7 +116,7 @@ public class TypeIn : MonoBehaviour, IInputHandler// IPointerHandler//IFocusable
         eventData.Use();
     }
 
-    //public void OnInputPressed(InputPressedEventData eventData) { }
+    public void OnInputPressed(InputPressedEventData eventData) { }
 
     public void OnInputPositionChanged(InputPositionEventData eventData) { }
 }
